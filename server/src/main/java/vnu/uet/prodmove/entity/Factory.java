@@ -1,4 +1,4 @@
-package vnu.uet.prodmove.domain;
+package vnu.uet.prodmove.entity;
 
 import java.util.Set;
 import javax.persistence.Column;
@@ -14,7 +14,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Agency {
+public class Factory {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -24,8 +24,8 @@ public class Agency {
     @Column(nullable = false, length = 256)
     private String name;
 
-    @Column(length = 45)
-    private String address;
+    @Column
+    private Boolean address;
 
     @OneToMany(mappedBy = "id")
     private Set<Warehouse> warehouses;
