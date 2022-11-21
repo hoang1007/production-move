@@ -10,5 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EntityScan("vnu.uet.prodmove.domain")
 @EnableJpaRepositories("vnu.uet.prodmove.repos")
 @EnableTransactionManagement
-public class DomainConfig {
+public class ApiConfig {
+    public static final String LOG_IN = "/login";
+    public static final String SIGN_UP = "/signup";
 }

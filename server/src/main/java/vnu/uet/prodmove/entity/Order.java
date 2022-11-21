@@ -1,4 +1,4 @@
-package vnu.uet.prodmove.domain;
+package vnu.uet.prodmove.entity;
 
 import java.time.OffsetDateTime;
 import javax.persistence.Column;

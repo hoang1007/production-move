@@ -1,4 +1,4 @@
-package vnu.uet.prodmove.domain;
+package vnu.uet.prodmove.entity;
 
 import java.util.Set;
 import javax.persistence.Column;

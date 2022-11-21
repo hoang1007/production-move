@@ -1,5 +1,6 @@
-package vnu.uet.prodmove.domain;
+package vnu.uet.prodmove.entity;
 
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,22 +17,24 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Warehouse {
+public class Product {
 
     @Id
     @Column(nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 45)
-    private String address;
+    @Column(nullable = false, length = 128)
+    private String status;
+
+    @OneToMany(mappedBy = "product")
+    private Set<Order> productOrders;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "agency_id")
-    private Agency agency;
+    @JoinColumn(name = "productline_id", nullable = false)
+    private Productline productline;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "warehouse_id")
-    private Factory haveWarehouse;
+    @OneToMany(mappedBy = "productdetail")
+    private Set<Productdetail> productdetailProductdetails;
 
 }
