@@ -27,7 +27,7 @@ public class Factory {
     @Column
     private Boolean address;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "factory")
     private Set<Warehouse> warehouses;
 
 }

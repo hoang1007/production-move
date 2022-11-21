@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,10 +25,11 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(name = "customerID", nullable = false)
     private Integer customerId;
 
-    @Column
+    @Column(name = "orderDate", nullable = false)
+    @Transient
     private OffsetDateTime orderDate;
 
     @ManyToOne(fetch = FetchType.LAZY)

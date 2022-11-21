@@ -1,6 +1,7 @@
 package vnu.uet.prodmove.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -8,6 +9,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import vnu.uet.prodmove.config.UserRole;
+import vnu.uet.prodmove.utils.converter.UserRoleConverter;
 
 
 @Entity
@@ -24,6 +27,7 @@ public class Account {
     private String password;
 
     @Column(nullable = false, name = "role", length = 45)
-    private String role;
+    @Convert(converter = UserRoleConverter.class)
+    private UserRole role;
 
 }

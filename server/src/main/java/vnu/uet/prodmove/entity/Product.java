@@ -34,7 +34,7 @@ public class Product {
     @JoinColumn(name = "productlineID", nullable = false)
     private Productline productline;
 
-    @OneToMany(mappedBy = "productdetail")
-    private Set<Productdetail> productdetailProductdetails;
+    @OneToMany(mappedBy = "product")
+    private Set<Productdetail> productDetails;
 
 }
