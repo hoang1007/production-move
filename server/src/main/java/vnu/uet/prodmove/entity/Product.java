@@ -31,7 +31,7 @@ public class Product {
     private Set<Order> productOrders;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productline_id", nullable = false)
+    @JoinColumn(name = "productlineID", nullable = false)
     private Productline productline;
 
     @OneToMany(mappedBy = "productdetail")

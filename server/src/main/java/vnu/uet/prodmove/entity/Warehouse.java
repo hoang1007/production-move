@@ -26,11 +26,11 @@ public class Warehouse {
     private String address;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "agency_id")
+    @JoinColumn(name = "agencyID")
     private Agency agency;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "warehouse_id")
-    private Factory haveWarehouse;
+    @JoinColumn(name = "factoryID")
+    private Factory factory;
 
 }

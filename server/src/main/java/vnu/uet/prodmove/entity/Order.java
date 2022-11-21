@@ -30,7 +30,7 @@ public class Order {
     private OffsetDateTime orderDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "productID", nullable = false)
     private Product product;
 
 }

@@ -33,7 +33,6 @@ public class Productdetail {
     private OffsetDateTime endAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productdetail_id")
+    @JoinColumn(name = "productID")
     private Product productdetail;
-
 }
