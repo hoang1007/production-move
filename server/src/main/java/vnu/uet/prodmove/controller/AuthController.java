@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import vnu.uet.prodmove.config.ApiConfig;
 import vnu.uet.prodmove.exception.CustomException;
-import vnu.uet.prodmove.services.AccountService;
+import vnu.uet.prodmove.services.AuthService;
 import vnu.uet.prodmove.utils.dataModel.AccountModel;
 
 @RestController
@@ -19,17 +19,17 @@ import vnu.uet.prodmove.utils.dataModel.AccountModel;
 public class AuthController {
 
     @Autowired
-    private AccountService accountService;
+    private AuthService authService;
     
     @PostMapping(ApiConfig.SIGN_UP)
     public ResponseEntity<String> signup(@RequestBody AccountModel accountModel) throws CustomException {
-        accountService.signup(accountModel);
+        authService.signup(accountModel);
         return ResponseEntity.ok().body("Register successfully!");
     }
 
     @PostMapping(ApiConfig.LOG_IN)
     public ResponseEntity<Map<String, String>> login(@RequestBody AccountModel accountModel) throws CustomException {
-        String accessToken = accountService.login(accountModel);
+        String accessToken = authService.login(accountModel);
         return ResponseEntity.ok().body(Map.of("accessToken", accessToken));
 
     }

@@ -1,25 +1,35 @@
 package vnu.uet.prodmove.services;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import vnu.uet.prodmove.entity.Account;
+import vnu.uet.prodmove.config.UserRole;
+import vnu.uet.prodmove.exception.ConflictException;
 import vnu.uet.prodmove.utils.dataModel.AccountModel;
 
 @Service
 public class BigCorpManagerService {
-    
-    public void createAccount(AccountModel accountModel) {
 
+    @Autowired
+    private AccountService accountService;
+
+    public void createAccount(AccountModel accountModel) throws ConflictException {
+        accountService.create(accountModel);
     }
 
-    public Account updateAccount(String accountId) {
-
-        return null;
+    public void updateAccount(Map<String, String> body) {
+        String accountId = body.get("id");
+        AccountModel accountModel = new AccountModel(
+                body.get("username"),
+                body.get("password"),
+                UserRole.fromString(body.get("role"))
+            );
+        accountService.update(accountId, accountModel);
     }
 
-    public Account deleteAccount(String accountId) {
-
-        return null;
+    public void deleteAccount(String accountId) {
+        accountService.delete(accountId);
     }
 }

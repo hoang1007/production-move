@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import vnu.uet.prodmove.config.ApiConfig;
+import vnu.uet.prodmove.config.UserRole;
 import vnu.uet.prodmove.custom.CustomAuthenticationProvider;
 import vnu.uet.prodmove.custom.CustomUserDetailsService;
 
@@ -42,6 +43,7 @@ public class SecurityConfig {
         http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, ApiConfig.SIGN_UP, ApiConfig.LOG_IN).permitAll()
+                .antMatchers(ApiConfig.MODERATOR + "/*").hasAuthority(UserRole.MODERATOR.toString())
                 .anyRequest().authenticated();
 
         http.exceptionHandling()
