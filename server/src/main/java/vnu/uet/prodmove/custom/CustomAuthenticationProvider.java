@@ -38,7 +38,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         if (passwordEncoder.matches(password, user.getPassword())) {
             List<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority(user.getRole()));
+            authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
             return new UsernamePasswordAuthenticationToken(username, password, authorities);
         } else {
             throw new BadCredentialsException("Invalid credentials");

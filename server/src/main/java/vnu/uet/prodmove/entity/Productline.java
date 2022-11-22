@@ -283,6 +283,6 @@ public class Productline {
     private String testsBatteryLife;
 
     @OneToMany(mappedBy = "productline")
-    private Set<Product> productlineProducts;
+    private Set<Product> products;
 
 }

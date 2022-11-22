@@ -31,10 +31,10 @@ public class Product {
     private Set<Order> productOrders;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productline_id", nullable = false)
+    @JoinColumn(name = "productlineID", nullable = false)
     private Productline productline;
 
-    @OneToMany(mappedBy = "productdetail")
-    private Set<Productdetail> productdetailProductdetails;
+    @OneToMany(mappedBy = "product")
+    private Set<Productdetail> productDetails;
 
 }

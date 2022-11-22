@@ -16,7 +16,7 @@ import vnu.uet.prodmove.utils.dataModel.AccountModel;
 
 @RestController
 @RequestMapping("/")
-public class AccountController {
+public class AuthController {
 
     @Autowired
     private AccountService accountService;

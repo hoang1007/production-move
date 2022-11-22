@@ -27,7 +27,7 @@ public class Agency {
     @Column(length = 45)
     private String address;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "agency")
     private Set<Warehouse> warehouses;
 
 }
