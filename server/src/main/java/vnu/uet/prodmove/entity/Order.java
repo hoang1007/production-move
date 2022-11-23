@@ -25,9 +25,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "customerID", nullable = false)
-    private Integer customerId;
-
     @Column(name = "orderDate", nullable = false)
     @Transient
     private OffsetDateTime orderDate;
@@ -36,4 +33,7 @@ public class Order {
     @JoinColumn(name = "productID", nullable = false)
     private Product product;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customerID")
+    private Customer customer;
 }

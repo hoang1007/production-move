@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,8 +29,8 @@ public class Product {
     @Column(nullable = false, length = 128)
     private String status;
 
-    @OneToMany(mappedBy = "product")
-    private Set<Order> productOrders;
+    @OneToOne(mappedBy = "product", fetch = FetchType.LAZY)
+    private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productlineID", nullable = false)
@@ -36,5 +38,4 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private Set<Productdetail> productDetails;
-
 }

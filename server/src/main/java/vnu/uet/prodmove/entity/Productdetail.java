@@ -3,6 +3,7 @@ package vnu.uet.prodmove.entity;
 import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,8 @@ import javax.persistence.Transient;
 
 import lombok.Getter;
 import lombok.Setter;
+import vnu.uet.prodmove.utils.converter.db.ProductStageTypeConverter;
+import vnu.uet.prodmove.utils.productStage.ProductStageType;
 
 
 @Entity
@@ -29,6 +32,10 @@ public class Productdetail {
     @Column(nullable = false, columnDefinition = "longtext")
     private String detail;
 
+    @Column(nullable = false)
+    @Convert(converter = ProductStageTypeConverter.class)
+    private ProductStageType stage;
+
     @Column(name= "startAt", nullable = false)
     @Transient
     private OffsetDateTime startAt;
@@ -40,4 +47,10 @@ public class Productdetail {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productID")
     private Product product;
+
+    public Productdetail(String detail) {
+        this.detail = detail;
+        this.startAt = OffsetDateTime.now();
+        this.endAt = null;
+    }
 }
