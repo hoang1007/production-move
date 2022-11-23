@@ -10,13 +10,23 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import lombok.Getter;
 import lombok.Setter;
+import vnu.uet.prodmove.custom.CustomProductlineSerializer;
 
 
 @Entity
 @Getter
 @Setter
+// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "productlineID")
 public class Product {
 
     @Id
@@ -28,13 +38,17 @@ public class Product {
     private String status;
 
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     private Set<Order> productOrders;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productlineID", nullable = false)
+    // @JsonSerialize(using= CustomProductlineSerializer.class)
+    @JsonManagedReference
     private Productline productline;
-
+    
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     private Set<Productdetail> productDetails;
 
 }

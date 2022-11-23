@@ -19,4 +19,5 @@ public class ApiConfig {
     public static final String CREATE_ACCOUNT = "/create_account";
     public static final String DELETE_ACCOUNT = "/delete_account";
     public static final String UPDATE_ACCOUNT = "/update_account";
+    public static final String STATISTICAL_ANALYSIS = "/statistical_analysis";
 }
