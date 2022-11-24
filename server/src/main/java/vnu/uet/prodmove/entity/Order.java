@@ -9,13 +9,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Getter;
 import lombok.Setter;
 
 
 @Entity
+@Table(name = "orders")
 @Getter
 @Setter
 public class Order {
@@ -31,6 +35,7 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productID", nullable = false)
+    @JsonManagedReference
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -1,4 +1,4 @@
-package vnu.uet.prodmove.services;
+package vnu.uet.prodmove.services.implement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,14 +10,16 @@ import org.springframework.stereotype.Service;
 import vnu.uet.prodmove.custom.CustomUserDetails;
 import vnu.uet.prodmove.entity.Account;
 import vnu.uet.prodmove.exception.ConflictException;
+import vnu.uet.prodmove.services.IAccountService;
+import vnu.uet.prodmove.services.IAuthService;
 import vnu.uet.prodmove.utils.JwtTokenUtil;
 import vnu.uet.prodmove.utils.dataModel.AccountModel;
 
 @Service
-public class AuthService {
+public class AuthService implements IAuthService {
 
     @Autowired
-    private AccountService accountService;
+    private IAccountService accountService;
 
     @Autowired
     private AuthenticationManager authenticationManager;

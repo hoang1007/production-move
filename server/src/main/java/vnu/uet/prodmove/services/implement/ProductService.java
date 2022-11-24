@@ -1,4 +1,4 @@
-package vnu.uet.prodmove.services;
+package vnu.uet.prodmove.services.implement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,16 +13,17 @@ import org.springframework.stereotype.Service;
 
 import vnu.uet.prodmove.entity.Product;
 import vnu.uet.prodmove.repos.ProductRepository;
+import vnu.uet.prodmove.services.IProductService;
 
 @Service
-public class ProductService {
+public class ProductService implements IProductService {
+    
     private final int NUMBER_OF_PRODUCTS_PER_PAGE = 10;
 
     @Autowired
     private ProductRepository productRepository;
 
     public List<Product> findProducts(String filter, int pageNumber, String sortBy, String typeSort) {
-
         List<Product> products = new ArrayList<>();
         Pageable paging = PageRequest.of(
                 (pageNumber - 1) * NUMBER_OF_PRODUCTS_PER_PAGE, // page number
@@ -40,7 +41,6 @@ public class ProductService {
 
         }
         products = pageProducts.getContent();
-
         return products;
     }
 }

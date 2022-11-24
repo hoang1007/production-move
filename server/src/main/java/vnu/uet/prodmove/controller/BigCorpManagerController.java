@@ -18,7 +18,7 @@ import vnu.uet.prodmove.utils.dataModel.AccountModel;
 import vnu.uet.prodmove.config.ApiConfig;
 import vnu.uet.prodmove.entity.Product;
 import vnu.uet.prodmove.exception.ConflictException;
-import vnu.uet.prodmove.services.BigCorpManagerService;
+import vnu.uet.prodmove.services.IBigCorpManagerService;
 
 /**
  * Admin
@@ -28,7 +28,7 @@ import vnu.uet.prodmove.services.BigCorpManagerService;
 public class BigCorpManagerController {
 
     @Autowired
-    private BigCorpManagerService bigCorpManagerService;
+    private IBigCorpManagerService bigCorpManagerService;
     
     /**
      * Cấp tài khoản cho các role khác

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import vnu.uet.prodmove.config.ApiConfig;
 import vnu.uet.prodmove.exception.CustomException;
-import vnu.uet.prodmove.services.AuthService;
+import vnu.uet.prodmove.services.IAuthService;
 import vnu.uet.prodmove.utils.dataModel.AccountModel;
 
 @RestController
@@ -19,7 +19,7 @@ import vnu.uet.prodmove.utils.dataModel.AccountModel;
 public class AuthController {
 
     @Autowired
-    private AuthService authService;
+    private IAuthService authService;
     
     @PostMapping(ApiConfig.SIGN_UP)
     public ResponseEntity<String> signup(@RequestBody AccountModel accountModel) throws CustomException {

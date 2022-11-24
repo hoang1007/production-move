@@ -1,4 +1,4 @@
-package vnu.uet.prodmove.services;
+package vnu.uet.prodmove.services.implement;
 
 import java.util.List;
 
@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 
 import vnu.uet.prodmove.entity.Product;
 import vnu.uet.prodmove.repos.ProductRepository;
+import vnu.uet.prodmove.services.IManufactoringBaseService;
 
 @Service
-public class ManufactoringBaseService {
+public class ManufactoringBaseService implements IManufactoringBaseService {
     @Autowired
     private ProductRepository productRepository;
 

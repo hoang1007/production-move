@@ -43,7 +43,8 @@ public class SecurityConfig {
         http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, ApiConfig.SIGN_UP, ApiConfig.LOG_IN).permitAll()
-                .antMatchers(ApiConfig.MODERATOR + "/*").hasAuthority(UserRole.MODERATOR.toString())
+                .antMatchers(ApiConfig.MODERATOR).hasAuthority(UserRole.MODERATOR.toString())
+                .antMatchers(ApiConfig.AGENCY).hasAuthority(UserRole.AGENCY.toString())
                 .anyRequest().authenticated();
 
         http.exceptionHandling()

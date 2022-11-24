@@ -1,4 +1,4 @@
-package vnu.uet.prodmove.services;
+package vnu.uet.prodmove.services.implement;
 
 import java.util.List;
 import java.util.Map;
@@ -9,13 +9,15 @@ import org.springframework.stereotype.Service;
 import vnu.uet.prodmove.config.UserRole;
 import vnu.uet.prodmove.entity.Product;
 import vnu.uet.prodmove.exception.ConflictException;
+import vnu.uet.prodmove.services.IAccountService;
+import vnu.uet.prodmove.services.IBigCorpManagerService;
 import vnu.uet.prodmove.utils.dataModel.AccountModel;
 
 @Service
-public class BigCorpManagerService {
+public class BigCorpManagerService implements IBigCorpManagerService {
 
     @Autowired
-    private AccountService accountService;
+    private IAccountService accountService;
 
     @Autowired
     private ProductService productService;

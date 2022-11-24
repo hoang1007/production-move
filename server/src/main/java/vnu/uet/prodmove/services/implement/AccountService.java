@@ -1,4 +1,4 @@
-package vnu.uet.prodmove.services;
+package vnu.uet.prodmove.services.implement;
 
 import java.util.Optional;
 
@@ -9,10 +9,11 @@ import org.springframework.stereotype.Service;
 import vnu.uet.prodmove.entity.Account;
 import vnu.uet.prodmove.exception.ConflictException;
 import vnu.uet.prodmove.repos.AccountRepository;
+import vnu.uet.prodmove.services.IAccountService;
 import vnu.uet.prodmove.utils.dataModel.AccountModel;
 
 @Service
-public class AccountService {
+public class AccountService implements IAccountService {
 
     @Autowired
     private AccountRepository accountRepository;
