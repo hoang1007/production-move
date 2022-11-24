@@ -2,12 +2,9 @@ package vnu.uet.prodmove.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import vnu.uet.prodmove.custom.CustomUserDetails;
-import vnu.uet.prodmove.entity.Account;
 import vnu.uet.prodmove.repos.ProductlineRepository;
 import org.springframework.web.bind.annotation.RequestMapping;
 

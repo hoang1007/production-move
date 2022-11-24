@@ -25,13 +25,14 @@ public class ProductService {
 
         List<Product> products = new ArrayList<>();
         Pageable paging = PageRequest.of(
-            (pageNumber - 1) * NUMBER_OF_PRODUCTS_PER_PAGE,                                          // page number
-            NUMBER_OF_PRODUCTS_PER_PAGE,                                                            // number of products per page
-            !typeSort.isEmpty() && !sortBy.isEmpty()? Sort.by(Direction.fromString(typeSort), sortBy) : Sort.unsorted()  // sort
+                (pageNumber - 1) * NUMBER_OF_PRODUCTS_PER_PAGE, // page number
+                NUMBER_OF_PRODUCTS_PER_PAGE, // number of products per page
+                !typeSort.isEmpty() && !sortBy.isEmpty() ? Sort.by(Direction.fromString(typeSort), sortBy)
+                        : Sort.unsorted() // sort
         );
-        
+
         Page<Product> pageProducts;
-        
+
         // do filter
         pageProducts = productRepository.findAll(paging);
         if (filter == null) {

@@ -3,6 +3,7 @@ package vnu.uet.prodmove.entity;
 import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,7 +15,6 @@ import javax.persistence.Transient;
 
 import lombok.Getter;
 import lombok.Setter;
-
 
 @Entity
 @Getter
@@ -40,4 +40,10 @@ public class Productdetail {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productID")
     private Product product;
+
+    public Productdetail(String detail) {
+        this.detail = detail;
+        this.startAt = OffsetDateTime.now();
+        this.endAt = null;
+    }
 }

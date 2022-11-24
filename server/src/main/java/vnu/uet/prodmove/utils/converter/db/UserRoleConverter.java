@@ -1,4 +1,4 @@
-package vnu.uet.prodmove.utils.converter;
+package vnu.uet.prodmove.utils.converter.db;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

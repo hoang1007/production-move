@@ -16,11 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import vnu.uet.prodmove.utils.dataModel.AccountModel;
 import vnu.uet.prodmove.config.ApiConfig;
-import vnu.uet.prodmove.entity.Account;
 import vnu.uet.prodmove.entity.Product;
-import vnu.uet.prodmove.entity.Productline;
 import vnu.uet.prodmove.exception.ConflictException;
-import vnu.uet.prodmove.services.AuthService;
 import vnu.uet.prodmove.services.BigCorpManagerService;
 
 /**
