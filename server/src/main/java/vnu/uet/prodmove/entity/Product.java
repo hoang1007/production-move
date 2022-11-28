@@ -12,12 +12,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Getter;
 import lombok.Setter;
 
 
 @Entity
+@Table(name = "product")
 @Getter
 @Setter
 public class Product {
@@ -31,13 +37,16 @@ public class Product {
     private String status;
 
     @OneToOne(mappedBy = "product", fetch = FetchType.LAZY)
+    @JsonBackReference
     private Order order;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productlineID", nullable = false)
+    @JsonManagedReference
     private Productline productline;
-
+    
     @OneToMany(mappedBy = "product")
     @OrderBy("startAt DESC")
+    @JsonIgnore
     private Set<Productdetail> productDetails;
 }
