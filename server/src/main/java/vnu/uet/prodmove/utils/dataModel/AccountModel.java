@@ -3,7 +3,7 @@ package vnu.uet.prodmove.utils.dataModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import vnu.uet.prodmove.config.UserRole;
+import vnu.uet.prodmove.enums.UserRole;
 
 @Data
 @AllArgsConstructor

@@ -6,8 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import vnu.uet.prodmove.config.UserRole;
 import vnu.uet.prodmove.entity.Product;
+import vnu.uet.prodmove.enums.UserRole;
 import vnu.uet.prodmove.exception.ConflictException;
 import vnu.uet.prodmove.services.IAccountService;
 import vnu.uet.prodmove.services.IBigCorpManagerService;
