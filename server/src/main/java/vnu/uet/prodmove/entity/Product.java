@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -37,5 +38,6 @@ public class Product {
     private Productline productline;
 
     @OneToMany(mappedBy = "product")
+    @OrderBy("startAt DESC")
     private Set<Productdetail> productDetails;
 }

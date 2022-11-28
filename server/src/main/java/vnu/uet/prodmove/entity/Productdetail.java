@@ -29,9 +29,6 @@ public class Productdetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, columnDefinition = "longtext")
-    private String detail;
-
     @Column(nullable = false)
     @Convert(converter = ProductStageTypeConverter.class)
     private ProductStageType stage;
@@ -48,9 +45,15 @@ public class Productdetail {
     @JoinColumn(name = "productID")
     private Product product;
 
-    public Productdetail(String detail) {
-        this.detail = detail;
-        this.startAt = OffsetDateTime.now();
-        this.endAt = null;
-    }
+    @ManyToOne
+    @JoinColumn(name = "warrantyCenterID")
+    private WarrantyCenter warrantyCenter;
+
+    @ManyToOne
+    @JoinColumn(name = "warehouseID")
+    private Warehouse warehouse;
+
+    @ManyToOne
+    @JoinColumn(name = "customerID")
+    private Customer customer;
 }
