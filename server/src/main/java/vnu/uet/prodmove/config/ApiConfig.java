@@ -23,4 +23,8 @@ public class ApiConfig {
 
     //agency
     public static final String AGENCY = "/agency";
+
+    // factory
+    public static final String FACTORY = "/factory";
+    public static final String EXPORT_TO_AGENCY = "/export";
 }

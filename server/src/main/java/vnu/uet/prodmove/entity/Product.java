@@ -49,4 +49,9 @@ public class Product {
     @OrderBy("startAt DESC")
     @JsonIgnore
     private Set<Productdetail> productDetails;
+
+    public void addProductDetail(Productdetail productDetail) {
+        productDetails.add(productDetail);
+        productDetail.setProduct(this);
+    }
 }

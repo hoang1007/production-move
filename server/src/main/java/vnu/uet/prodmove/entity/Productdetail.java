@@ -34,9 +34,6 @@ public class Productdetail {
     @Convert(converter = ProductStageConverter.class)
     private ProductStage stage;
 
-    @Column(nullable = false, columnDefinition = "longtext")
-    private String detail;
-
     @Column(name= "startAt", nullable = false)
     @Transient
     private OffsetDateTime startAt;
@@ -50,6 +47,7 @@ public class Productdetail {
     private Product product;
 
     @ManyToOne
+    @Transient
     @JoinColumn(name = "warrantyCenterID")
     private WarrantyCenter warrantyCenter;
 
@@ -60,4 +58,36 @@ public class Productdetail {
     @ManyToOne
     @JoinColumn(name = "customerID")
     private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "factoryID")
+    private Factory factory;
+
+    @ManyToOne
+    @JoinColumn(name = "agencyID")
+    private Agency agency;
+
+    /**
+     * Kiểm tra xem trạng thái đã hoàn thành hay chưa.
+     * @return true nếu đã hoàn thành, false nếu chưa hoàn thành.
+     */
+    public boolean completed() {
+        return this.endAt != null;
+    }
+
+    /**
+     * Đánh dấu trạng thái đã hoàn thành.
+     * Cập nhật trường {@value #endAt} thành thời gian hiện tại.
+     */
+    public void markCompleted() {
+        this.endAt = OffsetDateTime.now();
+    }
+
+    /**
+     * Đánh dấu trạng thái chưa hoàn thành.
+     * Cập nhật trường {@value #endAt} thành null.
+     */
+    public void markUncompleted() {
+        this.endAt = null;
+    }
 }

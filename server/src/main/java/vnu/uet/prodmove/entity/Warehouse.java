@@ -36,4 +36,11 @@ public class Warehouse {
     @JoinColumn(name = "factoryID")
     private Factory factory;
 
+    public boolean isAgency() {
+        return agency != null && factory == null;
+    }
+
+    public boolean isFactory() {
+        return agency == null && factory != null;
+    }
 }
