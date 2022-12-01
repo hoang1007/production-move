@@ -20,17 +20,17 @@ import lombok.Setter;
 public class Customer {
 
     @Id
-    @Column(nullable = false, updatable = false)
+    @Column(name="ID", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 85)
+    @Column(name="fullname", length = 85)
     private String fullname;
 
-    @Column(unique = true, length = 45)
+    @Column(name="phoneNumber", unique = true, length = 45)
     private String phoneNumber;
 
-    @Column(unique = true, length = 45)
+    @Column(name="email", unique = true, length = 45)
     private String email;
 
     @OneToMany(mappedBy = "customer")

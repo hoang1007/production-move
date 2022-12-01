@@ -1,4 +1,4 @@
-package vnu.uet.prodmove.utils;
+package vnu.uet.prodmove.utils.token;
 
 import java.io.Serializable;
 import java.util.Date;

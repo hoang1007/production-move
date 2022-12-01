@@ -16,11 +16,21 @@ public class ApiConfig {
 
     // moderator
     public static final String MODERATOR = "/moderator";
-    public static final String CREATE_ACCOUNT = "/create_account";
-    public static final String DELETE_ACCOUNT = "/delete_account";
-    public static final String UPDATE_ACCOUNT = "/update_account";
-    public static final String STATISTICAL_ANALYSIS = "/statistical_analysis";
+    public static final String MODERATOR_CREATE_ACCOUNT = "/create_account";
+    public static final String MODERATOR_DELETE_ACCOUNT = "/delete_account";
+    public static final String MODERATOR_UPDATE_ACCOUNT = "/update_account";
+    public static final String MODERATOR_STATISTICAL_ANALYSIS = "/statistical_analysis";
 
     //agency
     public static final String AGENCY = "/agency";
+    public static final String AGENCY_IMPORT_PRODUCTS = "/import_products";
+    public static final String AGENCY_CREATE_WAREHOUSE = "/create_warehouse";
+    public static final String AGENCY_ALL_WAREHOUSE = "/warehouses";
+    public static final String AGENCY_SALE_PRODUCT = "/sale_product";
+
+    //warehouse
+    public static final String WAREHOUSE = "/warehouse";
+    public static final String WAREHOUSE_CREATE = "/create";
+    public static final String WAREHOUSE_UPDATE = "/update";
+
 }

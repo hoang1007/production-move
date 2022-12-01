@@ -36,21 +36,21 @@ public class BigCorpManagerController {
      * @return
      * @throws ConflictException
      */
-    @PostMapping(ApiConfig.CREATE_ACCOUNT)
+    @PostMapping(ApiConfig.MODERATOR_CREATE_ACCOUNT)
     public ResponseEntity<Map<String, String>> createAccount(@RequestBody AccountModel accountModel)
             throws ConflictException {
         bigCorpManagerService.createAccount(accountModel);
         return ResponseEntity.ok().body(Map.of("message", "Create new account successfully"));
     }
     
-    @PutMapping(ApiConfig.UPDATE_ACCOUNT)
+    @PutMapping(ApiConfig.MODERATOR_UPDATE_ACCOUNT)
     public ResponseEntity<Map<String, String>> updateAccount(@RequestBody Map<String, String> body)
             throws ConflictException {
         bigCorpManagerService.updateAccount(body);
         return ResponseEntity.ok().body(Map.of("message", "Update successfully"));
     }
 
-    @DeleteMapping(ApiConfig.DELETE_ACCOUNT)
+    @DeleteMapping(ApiConfig.MODERATOR_DELETE_ACCOUNT)
     public ResponseEntity<Map<String, String>> deleteAccount(@RequestBody String accountId) throws ConflictException {
         bigCorpManagerService.deleteAccount(accountId);
         return ResponseEntity.ok().body(Map.of("message", "Delete successfully"));
@@ -65,7 +65,7 @@ public class BigCorpManagerController {
      * @param typeSort asc | desc
      * @return
      */
-    @GetMapping(ApiConfig.STATISTICAL_ANALYSIS)
+    @GetMapping(ApiConfig.MODERATOR_STATISTICAL_ANALYSIS)
     public ResponseEntity<?> statisticalAnalysis(
         @RequestParam(name="filter") String filter,
         @RequestParam(name="page") String pageNumber,

@@ -12,8 +12,8 @@ import vnu.uet.prodmove.entity.Account;
 import vnu.uet.prodmove.exception.ConflictException;
 import vnu.uet.prodmove.services.IAccountService;
 import vnu.uet.prodmove.services.IAuthService;
-import vnu.uet.prodmove.utils.JwtTokenUtil;
 import vnu.uet.prodmove.utils.dataModel.AccountModel;
+import vnu.uet.prodmove.utils.token.JwtTokenUtil;
 
 @Service
 public class AuthService implements IAuthService {
