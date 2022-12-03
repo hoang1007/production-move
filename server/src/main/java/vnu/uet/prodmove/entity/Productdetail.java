@@ -42,6 +42,9 @@ public class Productdetail {
     @Transient
     private OffsetDateTime endAt;
 
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productID")
     private Product product;
