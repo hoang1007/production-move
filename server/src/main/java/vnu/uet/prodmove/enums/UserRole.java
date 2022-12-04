@@ -1,4 +1,4 @@
-package vnu.uet.prodmove.config;
+package vnu.uet.prodmove.enums;
 
 public enum UserRole {
     /** Ban điều hành BigCorp */

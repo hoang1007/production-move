@@ -33,4 +33,8 @@ public class ApiConfig {
     public static final String WAREHOUSE_CREATE = "/create";
     public static final String WAREHOUSE_UPDATE = "/update";
 
+
+    // factory
+    public static final String FACTORY = "/factory";
+    public static final String EXPORT_TO_AGENCY = "/export";
 }

@@ -16,9 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import vnu.uet.prodmove.config.ApiConfig;
-import vnu.uet.prodmove.config.UserRole;
 import vnu.uet.prodmove.custom.CustomAuthenticationProvider;
 import vnu.uet.prodmove.custom.CustomUserDetailsService;
+import vnu.uet.prodmove.enums.UserRole;
 
 @Configuration
 @EnableWebSecurity

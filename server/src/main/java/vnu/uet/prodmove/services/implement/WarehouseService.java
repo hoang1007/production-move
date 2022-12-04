@@ -17,26 +17,25 @@ public class WarehouseService implements IWarehouseService {
     private WarehouseRepository warehouseRepository;
 
     @Autowired
-    private IProductdetailService productdetailService;
+    private IProductdetailService productDetailService;
 
     @Override
-    public Warehouse create(WarehouseModel warehouse) {
-        Warehouse newWarehouse = new Warehouse();
-        newWarehouse.setAddress(warehouse.getAddress());
-        return warehouseRepository.save(newWarehouse);
+    public Warehouse create(Warehouse warehouse) {
+        return warehouseRepository.save(warehouse);
     }
 
     @Override
     public void storeProductsInWarehouse(Warehouse warehouse, Iterable<Product> products) {
         if (warehouse == null) {
             System.out.println("WAREHOUSE IS NULL");
+            throw new NullPointerException("warehouse is not null.");
         }
 
         for (Product product : products) {
-            product.getProductDetails().setWarehouse(warehouse);
+            product.getProductDetails().iterator().next().setWarehouse(warehouse);
         }
 
-        productdetailService.saveProducts(products);
+        productDetailService.saveProducts(products);
     }
     
 }

@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -19,7 +20,7 @@ import lombok.Setter;
 
 
 @Entity
-@Table(name = "orders")
+@Table(name = "order")
 @Getter
 @Setter
 public class Order {
@@ -33,10 +34,10 @@ public class Order {
     @Transient
     private OffsetDateTime orderDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productID", nullable = false)
-    @JsonManagedReference
-    private Product product;
+    // @OneToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "productID", nullable = false)
+    // @JsonManagedReference
+    // private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customerID")

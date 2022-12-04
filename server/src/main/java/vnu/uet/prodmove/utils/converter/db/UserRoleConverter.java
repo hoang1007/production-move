@@ -3,7 +3,7 @@ package vnu.uet.prodmove.utils.converter.db;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import vnu.uet.prodmove.config.UserRole;
+import vnu.uet.prodmove.enums.UserRole;
 
 @Converter(autoApply = true)
 public class UserRoleConverter implements AttributeConverter<UserRole, String> {

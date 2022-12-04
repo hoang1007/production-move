@@ -1,5 +1,7 @@
 package vnu.uet.prodmove.entity;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,7 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -40,14 +44,21 @@ public class Product {
     @Column(name="status", nullable = false, length = 128)
     private String status;
 
-    @OneToOne(mappedBy = "product", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Order order;
+    // @OneToOne(mappedBy = "product", fetch = FetchType.LAZY)
+    // @JsonIgnore
+    // private Order order;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productlineID", nullable = false)
     private Productline productline;
     
-    @OneToOne(mappedBy = "product", fetch = FetchType.EAGER)
-    private Productdetail productDetails;
+    @OrderBy("startAt ASC")
+    @JsonIgnore
+    @OneToMany(mappedBy ="product", fetch = FetchType.EAGER)
+    private Set<ProductDetail> productDetails;
+
+    public void addProductDetail(ProductDetail productDetail) {
+        productDetails.add(productDetail);
+        productDetail.setProduct(this);
+    }
 }

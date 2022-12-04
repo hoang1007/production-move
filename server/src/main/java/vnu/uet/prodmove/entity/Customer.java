@@ -34,6 +34,6 @@ public class Customer {
     private String email;
 
     @OneToMany(mappedBy = "customer")
-    private Set<Order> customerOrders;
+    private Set<Order> orders;
 
 }

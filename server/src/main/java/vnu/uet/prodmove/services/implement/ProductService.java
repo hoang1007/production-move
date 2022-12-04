@@ -20,7 +20,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import vnu.uet.prodmove.entity.Product;
-import vnu.uet.prodmove.entity.Productdetail;
+import vnu.uet.prodmove.entity.ProductDetail;
 import vnu.uet.prodmove.repos.ProductRepository;
 import vnu.uet.prodmove.services.IProductService;
 import vnu.uet.prodmove.utils.dataModel.ProductModel;
@@ -33,34 +33,30 @@ public class ProductService implements IProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
-    private EntityManager entityManager;
+    @Override
+    public Collection<Product> findAllByIds(Collection<Integer> ids) {
+        return productRepository.findAllById(ids);
+    }
 
     @Override
-    public List<Product> findProducts(String filter, int pageNumber, String sortBy, String typeSort) {
-        List<Product> products = new ArrayList<>();
+    public Collection<Product> findProducts(String filter, int pageNumber, String sortBy, String typeSort) {
         Pageable paging = PageRequest.of(
-                (pageNumber - 1) * NUMBER_OF_PRODUCTS_PER_PAGE, // page number
-                NUMBER_OF_PRODUCTS_PER_PAGE, // number of products per page
-                !typeSort.isEmpty() && !sortBy.isEmpty() ? Sort.by(Direction.fromString(typeSort), sortBy)
-                        : Sort.unsorted() // sort
+            (pageNumber - 1) * NUMBER_OF_PRODUCTS_PER_PAGE, // page number
+            NUMBER_OF_PRODUCTS_PER_PAGE, // number of products per page
+            !typeSort.isEmpty() && !sortBy.isEmpty() ? Sort.by(Direction.fromString(typeSort), sortBy)
+            : Sort.unsorted() // sort
         );
-
+            
         Page<Product> pageProducts;
 
-        // do filter
+        // Doing filter
         pageProducts = productRepository.findAll(paging);
         if (filter == null) {
         } else {
 
         }
-        products = pageProducts.getContent();
-        return products;
-    }
 
-    @Override
-    public Collection<Product> findAllProductsById(Collection<Integer> ids) {
-        return productRepository.findAllById(ids);
+        return pageProducts.getContent();
     }
 
     @Override
@@ -79,14 +75,16 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<Product> findProductWithAttributes() {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Product> cq = builder.createQuery(Product.class);
-        Root<Product> root = cq.from(Product.class);
-        Join<Productdetail, Product> productDetails = root.join("productID");
+    public Collection<Product> findProductWithAttributes(Collection<String> attributes) {
+        // CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        // CriteriaQuery<Product> cq = builder.createQuery(Product.class);
+        // Root<Product> root = cq.from(Product.class);
+        // Join<ProductDetail, Product> productDetails = root.join("productID");
 
-        cq.multiselect(root.get("id"), root.get("status"));
-        List<Product> resultList = entityManager.createQuery(cq).getResultList();
-        return resultList;
+        // cq.multiselect(root.get("id"), root.get("status"));
+        // List<Product> resultList = entityManager.createQuery(cq).getResultList();
+        // return resultList;
+        return null;
     }
+
 }

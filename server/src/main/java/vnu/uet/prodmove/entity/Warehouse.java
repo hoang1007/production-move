@@ -20,7 +20,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
@@ -28,7 +31,10 @@ import lombok.Setter;
 @Table(name = "warehouse")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Builder(toBuilder = true)
 public class Warehouse {
 
     @Id
@@ -49,5 +55,12 @@ public class Warehouse {
     private Factory factory;
 
     @OneToMany(mappedBy = "warehouse", fetch = FetchType.EAGER)
-    private Set<Productdetail> productdetails;
+    private Set<ProductDetail> productdetails;
+    public boolean isAgency() {
+        return agency != null && factory == null;
+    }
+
+    public boolean isFactory() {
+        return agency == null && factory != null;
+    }
 }

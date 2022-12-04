@@ -2,12 +2,13 @@ package vnu.uet.prodmove.services.implement;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import vnu.uet.prodmove.config.UserRole;
 import vnu.uet.prodmove.entity.Product;
+import vnu.uet.prodmove.enums.UserRole;
 import vnu.uet.prodmove.exception.ConflictException;
 import vnu.uet.prodmove.services.IAccountService;
 import vnu.uet.prodmove.services.IBigCorpManagerService;
@@ -41,7 +42,7 @@ public class BigCorpManagerService implements IBigCorpManagerService {
     }
 
     public List<Product> getProducts(String filter, int pageNumber, String sortBy, String typeSort) {
-        List<Product> products = productService.findProducts(filter, pageNumber, sortBy, typeSort);
+        List<Product> products = productService.findProducts(filter, pageNumber, sortBy, typeSort).stream().collect(Collectors.toList());
         return products;
     }
 }

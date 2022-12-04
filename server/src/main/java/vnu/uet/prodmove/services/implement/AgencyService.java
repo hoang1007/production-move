@@ -1,23 +1,29 @@
 package vnu.uet.prodmove.services.implement;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vnu.uet.prodmove.entity.Agency;
 import vnu.uet.prodmove.entity.Product;
+import vnu.uet.prodmove.entity.ProductDetail;
 import vnu.uet.prodmove.entity.Warehouse;
+import vnu.uet.prodmove.enums.ProductStage;
 import vnu.uet.prodmove.exception.NotFoundException;
 import vnu.uet.prodmove.repos.AgencyRepository;
-import vnu.uet.prodmove.repos.WarehouseRepository;
 import vnu.uet.prodmove.services.IAgencyService;
 import vnu.uet.prodmove.services.IProductService;
-import vnu.uet.prodmove.services.IWarehouseService;
+import vnu.uet.prodmove.services.IProductdetailService;
 import vnu.uet.prodmove.utils.dataModel.WarehouseModel;
+import vnu.uet.prodmove.utils.querier.ObjectQuerier;
+import vnu.uet.prodmove.utils.querier.ProductDetailQuerier;
 
 @Service
 public class AgencyService implements IAgencyService {
@@ -26,53 +32,76 @@ public class AgencyService implements IAgencyService {
     private AgencyRepository agencyRepository;
 
     @Autowired
-    private IWarehouseService warehouseService;
+    private WarehouseService warehouseService;
 
     @Autowired
     private IProductService productService;
 
+    @Autowired
+    private IProductdetailService productDetailService;
+
     @Override
-    public Agency findById(Integer id) {
+    public Agency findById(Integer id) throws NotFoundException {
         Optional<Agency> wrapperAgency = agencyRepository.findById(id);
         if (wrapperAgency.isPresent()) {
             return wrapperAgency.get();
         } else {
-            return null;
+            throw new NotFoundException("Cannot find this agency.");
         }
     }
 
     @Override
-    public void storeProductsInWarehouse(int agencyId, int warehouseId, Collection<Integer> productIds) throws NotFoundException {
-        Agency agency = this.findById(agencyId);
-        Warehouse warehouse = agency.getWarehouses().stream()
-                                    .filter(item -> item.getAgency().getId() == agencyId)
-                                    .findAny().orElseGet(() -> null);
-        if(warehouse == null) 
-            throw new NotFoundException("ware house is not found");
+    public void importPendingProductsFromFactory(Integer agencyId, Integer warehouseId, Collection<String> productIds) throws NotFoundException {
+        Agency agency = this.findById(warehouseId);
+        Warehouse warehouse = agency.getWarehouses()
+                .stream()
+                .filter(item -> item.getId() == warehouseId)
+                .findFirst()
+                .orElseGet(() -> null);
+        if (warehouse == null)
+            throw new NotFoundException("Cannot find warehouse in agency.");
 
-        Collection<Product> products = productService.findAllProductsById(productIds);
-        warehouseService.storeProductsInWarehouse(warehouse, products);
-    }
-
-   
-
-    @Override
-    public void createWarehouse(Agency agency, WarehouseModel warehouseModel) {
+        List<ProductDetail> oldProductDetails = new ArrayList<>();
+        List<ProductDetail> newProductDetails = new ArrayList<>();
         
+        List<Product> products = (List<Product>) productService
+                .findAllByIds(productIds.stream().map(id -> Integer.parseInt(id)).collect(Collectors.toList()));
+
+        for (Product product : products) {
+            ProductDetail lastProductDetail = ProductDetailQuerier.of(product).getLast();
+            lastProductDetail.markCompleted();
+            oldProductDetails.add(lastProductDetail);
+            ProductDetail newProductDetail = lastProductDetail.toBuilder().warehouse(warehouse)
+                    .stage(ProductStage.EXPORT_TO_AGENCY).build();
+            newProductDetail.markUncompleted();
+            newProductDetails.add(newProductDetail);
+        }
+        productDetailService.saveAll(oldProductDetails);
+        productDetailService.saveAll(newProductDetails);
     }
 
     @Override
-    public Set<Warehouse> getAllWarehouses(Integer agencyId) throws NotFoundException {
-        Optional<Agency> wrapperAgency = agencyRepository.findById(agencyId);
-        if (!wrapperAgency.isPresent()) {
-            throw new NotFoundException("Agency is not found");
-        }
-        Set<Warehouse> warehouses = wrapperAgency.get().getWarehouses();
+    public Warehouse createWarehouse(Integer agencyId, WarehouseModel warehouseModel) throws NotFoundException {
+        Agency agency = this.findById(agencyId);
+        Warehouse warehouse = new Warehouse();
+        warehouse.setAddress(warehouseModel.getAddress());
+        warehouse.setAgency(agency);
+        return warehouseService.create(warehouse);
+    }
+
+    @Override
+    public Collection<Warehouse> getAllWarehouses(Integer agencyId) throws NotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Agency agency = this.findById(agencyId);
+        Set<Warehouse> warehouses = agency.getWarehouses().stream()
+                .map(warehouse -> {
+                    try {
+                        return ObjectQuerier.of(warehouse).include("id", "address", "productdetails").get();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }).collect(Collectors.toSet());
         return warehouses;
     }
 
-    @Override
-    public void saleProductsById(Collection<Integer> productIds) {
-        
-    }
 }

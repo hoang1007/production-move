@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
-import vnu.uet.prodmove.config.UserRole;
+import vnu.uet.prodmove.enums.UserRole;
 import vnu.uet.prodmove.utils.converter.db.UserRoleConverter;
 
 
