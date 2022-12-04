@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vnu.uet.prodmove.entity.Agency;
+import vnu.uet.prodmove.entity.Customer;
 import vnu.uet.prodmove.entity.Product;
 import vnu.uet.prodmove.entity.ProductDetail;
 import vnu.uet.prodmove.entity.Warehouse;
@@ -19,8 +20,10 @@ import vnu.uet.prodmove.enums.ProductStage;
 import vnu.uet.prodmove.exception.NotFoundException;
 import vnu.uet.prodmove.repos.AgencyRepository;
 import vnu.uet.prodmove.services.IAgencyService;
+import vnu.uet.prodmove.services.ICustomerService;
 import vnu.uet.prodmove.services.IProductService;
 import vnu.uet.prodmove.services.IProductdetailService;
+import vnu.uet.prodmove.utils.builder.ProductDetailBuilder;
 import vnu.uet.prodmove.utils.dataModel.WarehouseModel;
 import vnu.uet.prodmove.utils.querier.ObjectQuerier;
 import vnu.uet.prodmove.utils.querier.ProductDetailQuerier;
@@ -39,6 +42,9 @@ public class AgencyService implements IAgencyService {
 
     @Autowired
     private IProductdetailService productDetailService;
+
+    @Autowired
+    private ICustomerService customerService;
 
     @Override
     public Agency findById(Integer id) throws NotFoundException {
@@ -90,12 +96,13 @@ public class AgencyService implements IAgencyService {
     }
 
     @Override
-    public Collection<Warehouse> getAllWarehouses(Integer agencyId) throws NotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    public Collection<Warehouse> getAllWarehouses(Integer agencyId)
+            throws NotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Agency agency = this.findById(agencyId);
         Set<Warehouse> warehouses = agency.getWarehouses().stream()
-                .map(warehouse -> {
+        .map(warehouse -> {
                     try {
-                        return ObjectQuerier.of(warehouse).include("id", "address", "productdetails").get();
+                        return ObjectQuerier.of(warehouse).include("id", "address").get();
                     } catch (Exception e) {
                         e.printStackTrace();
                         return null;
@@ -103,5 +110,11 @@ public class AgencyService implements IAgencyService {
                 }).collect(Collectors.toSet());
         return warehouses;
     }
-
+    
+    @Override
+    public void sellProducts(Integer customerId, Collection<Integer> productIds) throws NotFoundException {
+        List<Product> products = (List<Product>) productService.findAllByIds(productIds);
+        Customer customer = customerService.findById(customerId);
+        customerService.buyProducts(products, customer);
+    }
 }

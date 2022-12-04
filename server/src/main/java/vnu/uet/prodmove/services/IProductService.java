@@ -1,12 +1,14 @@
 package vnu.uet.prodmove.services;
 
 import java.util.Collection;
-import java.util.List;
 
 import vnu.uet.prodmove.entity.Product;
 import vnu.uet.prodmove.utils.dataModel.ProductModel;
 
 public interface IProductService {
+
+    void saveAll(Collection<Product> products);
+    
     /**
      * Find all products by list of IDs
      * @param ids
@@ -41,12 +43,5 @@ public interface IProductService {
      * @return Collection of Products which satisfied all conditions
      */
     Collection<Product> findProducts(String filter, int pageNumber, String sortBy, String typeSort);
-
-    /**
-     * Find All products with specific attributes.
-     * @param attributes collection of attributes
-     * @return collection of Products.
-     */
-    Collection<Product> findProductWithAttributes(Collection<String> attributes);
 
 }

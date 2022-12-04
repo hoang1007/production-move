@@ -1,7 +1,7 @@
 package vnu.uet.prodmove.controller;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,14 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import vnu.uet.prodmove.config.ApiConfig;
-import vnu.uet.prodmove.entity.Agency;
 import vnu.uet.prodmove.entity.Warehouse;
 import vnu.uet.prodmove.exception.NotFoundException;
-import vnu.uet.prodmove.repos.AgencyRepository;
-import vnu.uet.prodmove.repos.ProductRepository;
 import vnu.uet.prodmove.services.IAgencyService;
-import vnu.uet.prodmove.services.implement.ProductService;
-import vnu.uet.prodmove.utils.dataModel.AgencyModel;
 import vnu.uet.prodmove.utils.dataModel.WarehouseModel;
 
 @RestController
@@ -88,32 +83,22 @@ public class AgencyController {
         }
     }
 
-    @PostMapping(ApiConfig.AGENCY_SALE_PRODUCT)
-    public ResponseEntity<?> saleProducts(@RequestBody Set<Integer> productIds) {
-        // agencyService.saleProductsById(productIds);
-        return ResponseEntity.ok().build();
-    }
-
-
-
-
-
-
-
-
-    // // test
-
-    @Autowired
-    private AgencyRepository agencyRep;
-
-    @Autowired
-    private ProductRepository productRep;
-
-    @Autowired
-    private ProductService productService;
-
-    @PostMapping("/test")
-    public ResponseEntity<?> createAgency(@RequestBody AgencyModel agencyModel) {
-        return ResponseEntity.ok().build();
+    /**
+     * Sell products to a customer
+     * @param info Includes customerId and array of ID products.
+     * @return
+     */
+    @PostMapping(ApiConfig.AGENCY_SELL_PRODUCT)
+    public ResponseEntity<Map<String, String>> sellProducts(@RequestBody Map<String, Object> info) {
+        try {
+            Integer customerId = (Integer)info.get("customerId");
+            List<Integer> productIds = (List<Integer>) info.get("productIds");
+            agencyService.sellProducts(customerId, productIds);
+            return ResponseEntity.ok().body(Map.of("message", "Sell successfully."));
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(Map.of("message", e.getMessage()));
+        }
     }
 }

@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -44,18 +45,24 @@ public class Product {
     @Column(name="status", nullable = false, length = 128)
     private String status;
 
-    // @OneToOne(mappedBy = "product", fetch = FetchType.LAZY)
-    // @JsonIgnore
-    // private Order order;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productlineID", nullable = false)
     private Productline productline;
     
     @OrderBy("startAt ASC")
-    @JsonIgnore
     @OneToMany(mappedBy ="product", fetch = FetchType.EAGER)
     private Set<ProductDetail> productDetails;
+
+    @OneToOne(mappedBy = "product", fetch = FetchType.EAGER)
+    private Order order;
+
+    @ManyToOne
+    @JoinTable(
+        name="orders",
+        joinColumns = {@JoinColumn(name="productID", referencedColumnName="ID")},
+        inverseJoinColumns={@JoinColumn(name="customerID", referencedColumnName="ID")}
+    )
+    private Customer customer;
 
     public void addProductDetail(ProductDetail productDetail) {
         productDetails.add(productDetail);

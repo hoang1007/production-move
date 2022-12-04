@@ -34,4 +34,11 @@ public interface IAgencyService {
      */
     Collection<Warehouse> getAllWarehouses(Integer agencyId) throws NotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException;
     
+    /**
+     * Sell products to customer.
+     * @param customerId ID of the customer
+     * @param productIds Collection of product IDs.
+     */
+    void sellProducts(Integer customerId, Collection<Integer> productIds) throws NotFoundException;
+
 }

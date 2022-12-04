@@ -13,14 +13,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import lombok.Getter;
 import lombok.Setter;
 
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 @Getter
 @Setter
 public class Order {
@@ -34,12 +32,11 @@ public class Order {
     @Transient
     private OffsetDateTime orderDate;
 
-    // @OneToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "productID", nullable = false)
-    // @JsonManagedReference
-    // private Product product;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "productID", nullable = false)
+    private Product product;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customerID")
     private Customer customer;
 }

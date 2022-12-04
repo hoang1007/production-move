@@ -38,10 +38,8 @@ public class ManufactoringBaseService implements IManufactoringBaseService {
 
         for (int i = 0; i < quantity; i++) {
             Product product = new Product();
-
             product.setProductline(productline);
-            product.addProductDetail(ProductDetailBuilder.newProduction(warehouse));
-            
+            product.addProductDetail(ProductDetailBuilder.of(product).newProduction(warehouse));
             products.add(product);
         }
 
@@ -55,8 +53,7 @@ public class ManufactoringBaseService implements IManufactoringBaseService {
         List<Product> products = new ArrayList<Product>();
         for (int productId : productIds) {
             Product product = productRepository.getReferenceById(productId);
-            product.addProductDetail(ProductDetailBuilder.exportToAgency(agency));
-
+            product.addProductDetail(ProductDetailBuilder.of(product).exportToAgency(agency));
             products.add(product);
         }
 
