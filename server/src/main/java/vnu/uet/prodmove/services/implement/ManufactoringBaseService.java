@@ -50,10 +50,11 @@ public class ManufactoringBaseService implements IManufactoringBaseService {
     public void exportToAgency(Iterable<Integer> productIds, Integer agencyId) {
         Agency agency = agencyRepository.getReferenceById(agencyId);
         
-        List<Product> products = new ArrayList<Product>();
-        for (int productId : productIds) {
-            Product product = productRepository.getReferenceById(productId);
+        List<Product> products = productRepository.findAllById(productIds);
+    
+        for (Product product : products) {
             product.addProductDetail(ProductDetailBuilder.of(product).exportToAgency(agency));
+
             products.add(product);
         }
 

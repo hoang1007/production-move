@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * This class is used to filter attributes to response.
+ * This class is used to filter attributes to response Object.
  */
 public class ObjectQuerier<T> {
     private T obj;

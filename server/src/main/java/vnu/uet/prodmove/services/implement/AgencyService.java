@@ -23,7 +23,6 @@ import vnu.uet.prodmove.services.IAgencyService;
 import vnu.uet.prodmove.services.ICustomerService;
 import vnu.uet.prodmove.services.IProductService;
 import vnu.uet.prodmove.services.IProductdetailService;
-import vnu.uet.prodmove.utils.builder.ProductDetailBuilder;
 import vnu.uet.prodmove.utils.dataModel.WarehouseModel;
 import vnu.uet.prodmove.utils.querier.ObjectQuerier;
 import vnu.uet.prodmove.utils.querier.ProductDetailQuerier;
@@ -100,7 +99,7 @@ public class AgencyService implements IAgencyService {
             throws NotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Agency agency = this.findById(agencyId);
         Set<Warehouse> warehouses = agency.getWarehouses().stream()
-        .map(warehouse -> {
+                .map(warehouse -> {
                     try {
                         return ObjectQuerier.of(warehouse).include("id", "address").get();
                     } catch (Exception e) {
@@ -110,11 +109,48 @@ public class AgencyService implements IAgencyService {
                 }).collect(Collectors.toSet());
         return warehouses;
     }
-    
+
     @Override
     public void sellProducts(Integer customerId, Collection<Integer> productIds) throws NotFoundException {
         List<Product> products = (List<Product>) productService.findAllByIds(productIds);
         Customer customer = customerService.findById(customerId);
         customerService.buyProducts(products, customer);
     }
+
+    @Override
+    public void recallProducts(Integer productlineId) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void receiveNeedRepairProducts(Iterable<Integer> productIds) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void receiveProductsFromWarrantyCenter(Iterable<Integer> productIds, Integer warrantyCenterId) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void returnProductsToFactory(Iterable<Integer> productIds, Integer factoryId) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void returnToCustomer(Integer productId, Integer customerId) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void transferProductToWarrantyCenter(Iterable<Integer> productIds, Integer warrantyCenterId) {
+        // TODO Auto-generated method stub
+        
+    }
+    
 }
