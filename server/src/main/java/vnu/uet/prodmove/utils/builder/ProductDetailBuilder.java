@@ -2,16 +2,15 @@ package vnu.uet.prodmove.utils.builder;
 
 import vnu.uet.prodmove.entity.Agency;
 import vnu.uet.prodmove.entity.Customer;
+import vnu.uet.prodmove.entity.Factory;
 import vnu.uet.prodmove.entity.Product;
 import vnu.uet.prodmove.entity.ProductDetail;
 import vnu.uet.prodmove.entity.Warehouse;
+import vnu.uet.prodmove.entity.WarrantyCenter;
 import vnu.uet.prodmove.enums.ProductStage;
-import vnu.uet.prodmove.utils.querier.ProductDetailQuerier;
 
 /**
  * Hỗ trợ khởi tạo {@link Productdetail} theo các trạng thái của sản phẩm.
- * <p>
- * Tự động cập nhật các trường thông tin của {@link Productdetail} theo trạng thái của sản phẩm. VD: completed...
  */
 public class ProductDetailBuilder {
     private ProductDetail detail;
@@ -49,36 +48,27 @@ public class ProductDetailBuilder {
         return detail;
     }
 
-    public ProductDetail repairing(Product product) {
-        var needRepair = ProductDetailQuerier.of(product).getLast();
-
-        if (needRepair.getStage() == ProductStage.NEED_REPAIR) {
-            needRepair.markCompleted();
-
-            detail.setWarrantyCenter(needRepair.getWarrantyCenter());
-            detail.setStage(ProductStage.REPAIRING);
-            return detail;
-        } else {
-            throw new IllegalArgumentException("Product is not in need repair stage");
-        }
+    public ProductDetail repairing(WarrantyCenter warrantyCenter) {
+        detail.setWarrantyCenter(warrantyCenter);
+        detail.setStage(ProductStage.REPAIRING);
+        return detail;
     }
 
-    public ProductDetail repaired(Product product) {
-        var querier = new ProductDetailQuerier(product);
-        querier.filter(ProductStage.NEED_REPAIR, ProductStage.REPAIRING);
+    public ProductDetail repaired(WarrantyCenter warrantyCenter, Agency agency) {
+        detail.setAgency(agency);
+        detail.setWarrantyCenter(warrantyCenter);
+        return detail;
+    }
 
-        var repairing = querier.getLast();
-    
-        if (repairing.getStage() == ProductStage.REPAIRING) {
-            repairing.markCompleted();
+    public ProductDetail needReturnToFactory(WarrantyCenter warrantyCenter) {
+        detail.setWarrantyCenter(warrantyCenter);
+        detail.setStage(ProductStage.NEED_RETURN_TO_FACTORY);
+        return detail;
+    }
 
-            var needRepair = querier.filter(ProductStage.NEED_REPAIR).getLast();
-
-            detail.setAgency(needRepair.getAgency());
-
-            return detail;
-        } else {
-            throw new IllegalArgumentException("Product is not in repairing stage");
-        }
+    public ProductDetail returnedToFactory(Factory factory) {
+        detail.setFactory(factory);
+        detail.setStage(ProductStage.RETURNED_TO_FACTORY);
+        return detail;
     }
 }

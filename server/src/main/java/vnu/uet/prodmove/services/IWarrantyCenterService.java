@@ -4,17 +4,15 @@ public interface IWarrantyCenterService {
     /**
      * Nhận sản phẩm cần bảo hành hoặc bị triệu hồi từ đại lý phân phối
      * @param productIds Danh sách mã sản phẩm
-     * @param agencyId Mã đại lý phân phối
-     * @param warrantyCenterId Mã trung tâm bảo hành
      */
-    public void receiveProductsFromAgency(Iterable<Integer> productIds, Integer agencyId, Integer warrantyCenterId);
+    public void receiveProductsFromAgency(Iterable<Integer> productIds);
 
     /**
      * Chuyển sản phẩm đã sửa chữa xong tới đại lý phân phối
      * @param productIds Danh sách mã sản phẩm
      * @param agencyId Mã đại lý phân phối
      */
-    public void returnProductsToAgency(Iterable<Integer> productIds, Integer agencyId);
+    public void returnProductsToAgency(Iterable<Integer> productIds);
 
     /**
      * Chuyển sản phẩm không thể sửa chữa cho cơ sở sản xuất
@@ -22,4 +20,10 @@ public interface IWarrantyCenterService {
      * @param factoryId Mã cơ sở sản xuất
      */
     public void returnProductsToFactory(Iterable<Integer> productIds, Integer factoryId);
+
+    /**
+     * Thông báo tới các bên liên quan về sản phẩm không thể sửa chữa
+     * @param productIds Danh sách mã sản phẩm
+     */
+    public void annouceCannotRepairProducts(Iterable<Integer> productIds);
 }
