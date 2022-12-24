@@ -1,5 +1,6 @@
 package vnu.uet.prodmove.services.implement;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,7 +43,7 @@ public class BigCorpManagerService implements IBigCorpManagerService {
     }
 
     public List<Product> getProducts(String filter, int pageNumber, String sortBy, String typeSort) {
-        List<Product> products = productService.findProducts(filter, pageNumber, sortBy, typeSort).stream().collect(Collectors.toList());
+        List<Product> products = (List<Product>)((Collection)productService.findProducts(filter, pageNumber, sortBy, typeSort)).stream().collect(Collectors.toList());
         return products;
     }
 }

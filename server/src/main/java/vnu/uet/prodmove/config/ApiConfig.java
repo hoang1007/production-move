@@ -27,6 +27,7 @@ public class ApiConfig {
     public static final String AGENCY_CREATE_WAREHOUSE = "/create_warehouse";
     public static final String AGENCY_ALL_WAREHOUSE = "/warehouses";
     public static final String AGENCY_SELL_PRODUCT = "/sell_product";
+    public static final String AGENCY_TRANSFER_TO_WARRANTY = "/transfer_to_warranty";
 
     //warehouse
     public static final String WAREHOUSE = "/warehouse";

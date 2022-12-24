@@ -101,5 +101,4 @@ public class ProductDetail {
         this.endAt = null;
     }
 
-
 }

@@ -1,6 +1,12 @@
 package vnu.uet.prodmove.services;
 
+import vnu.uet.prodmove.entity.WarrantyCenter;
+import vnu.uet.prodmove.exception.NotFoundException;
+
 public interface IWarrantyCenterService {
+
+    WarrantyCenter findById(Integer id) throws NotFoundException;
+
     /**
      * Nhận sản phẩm cần bảo hành hoặc bị triệu hồi từ đại lý phân phối
      * @param productIds Danh sách mã sản phẩm

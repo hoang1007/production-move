@@ -42,17 +42,18 @@ public interface IAgencyService {
     void sellProducts(Integer customerId, Collection<Integer> productIds) throws NotFoundException;
 
     /**
-     * Nhận các sản phẩm cần bảo hành từ khách hàng
+     * Nhận các sản phẩm cần bảo hành từ khách hàng và lưu vào kho để chờ gửi xuống trung tâm bảo hành.
      * @param productIds Danh sách mã sản phẩm
      */
-    public void receiveNeedRepairProducts(Iterable<Integer> productIds);
+    public void receiveNeedRepairProducts(Iterable<Integer> productIds, Integer warehouseId) throws NotFoundException;
 
     /**
      * Chuyển các sản phẩm cần bảo hành đến trung tâm bảo hành
      * @param productIds Danh sách mã sản phẩm
      * @param warrantyCenterId Mã trung tâm bảo hành
      */
-    public void transferProductToWarrantyCenter(Iterable<Integer> productIds, Integer warrantyCenterId);
+    public void transferProductToWarrantyCenter(Iterable<Integer> productIds, Integer warrantyCenterId) 
+            throws NotFoundException;
 
     /**
      * Nhận các sản phẩm đã được bảo hành từ trung tâm bảo hành

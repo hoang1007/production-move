@@ -1,0 +1,94 @@
+.container {
+    height: var(--header-height);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-input {
+    flex: 3;
+    margin: 0 4rem;
+    .icon-search, input {
+
+        font-size: 1.6rem;
+    }
+}
+
+.actions {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+
+    .noti {
+
+    }
+
+    .user {
+    
+    }
+}
+
+.noti{
+    margin-left: auto;
+    margin-right: 1rem;
+    color: rgb(159, 157, 157);
+    position: relative;
+    cursor: pointer;
+    transition: opacity 0.2s linear;
+
+    &:hover {
+        opacity: 0.8;
+    }
+
+    .icon {
+        font-size: 2.4rem;
+    }
+
+    .no-noti {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(50%, -50%);
+        width: 15px;
+        background-color: red;
+        color: white;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+
+.user {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.2s linear;
+    margin: 0 1rem;
+    border-radius: 10px;
+    
+    &:hover {
+        opacity: 0.8;
+        background-color: #ccc;
+    }
+
+    .avatar {
+        margin: 0 1rem;
+        height: 50%;
+        border-radius: 50%;
+        box-shadow: 0 0 4px black;
+    }
+    
+    .username {
+        margin: 0 1rem;
+
+    }
+}

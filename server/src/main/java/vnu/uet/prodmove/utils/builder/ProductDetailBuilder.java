@@ -5,6 +5,7 @@ import vnu.uet.prodmove.entity.Customer;
 import vnu.uet.prodmove.entity.Product;
 import vnu.uet.prodmove.entity.ProductDetail;
 import vnu.uet.prodmove.entity.Warehouse;
+import vnu.uet.prodmove.entity.WarrantyCenter;
 import vnu.uet.prodmove.enums.ProductStage;
 import vnu.uet.prodmove.utils.querier.ProductDetailQuerier;
 
@@ -49,8 +50,17 @@ public class ProductDetailBuilder {
         return detail;
     }
 
-    public ProductDetail repairing(Product product) {
-        var needRepair = ProductDetailQuerier.of(product).getLast();
+    public ProductDetail waitToRepair() {
+        detail = ProductDetailQuerier.of(this.detail.getProduct()).getLast();
+        if (detail.getStage() == ProductStage.SOLD) {
+            detail.setStage(ProductStage.NEED_REPAIR);
+            return detail;
+        }
+        throw new IllegalArgumentException("Product is not sold yet.");
+    }
+
+    public ProductDetail repairing() {
+        var needRepair = ProductDetailQuerier.of(this.detail.getProduct()).getLast();
 
         if (needRepair.getStage() == ProductStage.NEED_REPAIR) {
             needRepair.markCompleted();
@@ -63,8 +73,8 @@ public class ProductDetailBuilder {
         }
     }
 
-    public ProductDetail repaired(Product product) {
-        var querier = new ProductDetailQuerier(product);
+    public ProductDetail repaired() {
+        var querier = new ProductDetailQuerier(this.detail.getProduct());
         querier.filter(ProductStage.NEED_REPAIR, ProductStage.REPAIRING);
 
         var repairing = querier.getLast();

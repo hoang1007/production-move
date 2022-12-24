@@ -1,0 +1,47 @@
+@import "normalize.css";
+@import 'react-toastify/dist/ReactToastify.css';
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --scrollbar-width: 4px;
+    --header-height: 5.6rem;
+    --header-padding: 2rem 0;
+    --header-margin: 1rem 0;
+}
+
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-size: 1.6rem;
+}
+
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: var(--scrollbar-width);
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: rgb(115, 113, 113);
+}
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: white;
+}
+
+.App {
+    width: 100vw;
+    height: 100vh;
+}
+
+img {
+    display: inline-block;
+}

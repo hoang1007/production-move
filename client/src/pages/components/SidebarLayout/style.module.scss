@@ -1,0 +1,42 @@
+.container {
+    display: flex;
+    flex-direction: row;
+
+    &>div {
+        width: 100%;
+    }
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: var(--header-height);
+    margin: var(--header-margin);
+    padding: var(--header-padding);
+    cursor: pointer;
+
+    .logo {
+        height: 100%;
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 0 4px black;
+        padding: 0.2rem;
+    }
+
+    .title {
+        font-weight: 500;
+    }
+}
+
+.nav {
+    padding: 0.2rem;
+    margin: 0.4rem 0.4rem;
+
+    .title {
+        text-transform: uppercase;
+        color: rgb(133, 128, 128);
+        padding: 0.2rem;
+        margin-bottom: 1rem;
+    }
+}
