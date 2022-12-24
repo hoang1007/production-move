@@ -1,7 +1,7 @@
 import React from 'react';
 import Login from '~/pages/public/Login';
 
-import Agency from '~/pages/private/Agency';
+import {SidebarAgency, ContentAgency} from '~/pages/private/Agency'
 
 const routes: { [key: string]: any } = {
     root: '/',
@@ -16,48 +16,69 @@ const routes: { [key: string]: any } = {
     private: {
         admin: {
             path: '/admin',
-            element: <></>,
-            roles: []
+            roles: [],
+            Sidebar: <></>,
+            Content: []
         },
 
         manufacturingBase: {
             path: '/manufacturingBase',
-            element: <></>,
-            roles: []
+            roles: [],
+            Sidebar: <></>,
+            Content: []
         },
 
         agency: {
-            path: '/agency', // mặc định vào luôn dashboard
-            element: <Agency/>,
+            title: 'AGENCY',
+            path: '/agency',
             roles: [],
-            children: [
+            Sidebar: <SidebarAgency/>,
+            Content: [
                 {
-                    path: '/import',
-                    element: <></>
+                    title: 'Dashboard',
+                    path: '/agency/dashboard',
+                    element: <ContentAgency.Dashboard/>
                 },
                 {
-                    path: '/warranty',
-                    element: <></>
+                    title: 'Import new mobile phone',
+                    path: '/agency/import',
+                    element: <ContentAgency.Import/>
                 },
                 {
-                    path: '/order',
-                    element: <></>
+                    title: 'Defective & Repaired mobile phone',
+                    path: '/agency/warranty',
+                    element: <ContentAgency.Warranty/>
                 },
                 {
-                    path: '/stock',
-                    element: <></>
-                }
+                    title: 'Orders',
+                    path: '/agency/order',
+                    element: <ContentAgency.Order/>
+                },
+                {
+                    title: 'Your stock',
+                    path: '/agency/stock',
+                    element: <ContentAgency.Stock/>
+                },
             ]
-            
         },
 
         warranty: {
             path: '/warranty',
-            element: <></>,
-            roles: []
+            roles: [],
+            Sidebar: <></>,
+            Content: []
         }
 
     }
+}
+
+// cái này dùng trong Sidebar ở chỗ Button nhé
+export const agencyRoutes = {
+    dashboard: '/agency/dashboard',
+    import: '/agency/import',
+    warranty: '/agency/warranty',
+    order: '/agency/order',
+    stock: '/agency/stock',
 }
 
 export default routes;

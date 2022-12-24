@@ -9,10 +9,15 @@
 
 .search-input {
     flex: 3;
-    margin: 0 4rem;
-    .icon-search, input {
+    margin: 0 4rem !important;
+    border-radius: 30px;
 
+    .icon-search, input {
         font-size: 1.6rem;
+    }
+
+    input:focus {
+        border-color: #ccc;
     }
 }
 

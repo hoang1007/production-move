@@ -1,9 +1,9 @@
-import Layout from '~/pages/Layout';
+import RoutesApp from '~/routes';
 
 function App() {
   return (
     <div className="App">
-      <Layout/>
+      <RoutesApp/>
     </div>
   );
 }

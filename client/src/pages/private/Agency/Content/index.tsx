@@ -1,15 +1,5 @@
-import ContentLayout from '~/pages/components/ContentLayout';
-
-import style from './style.module.scss';
-import ClassNames from '~/utils/classNames';
-const cx = ClassNames(style);
-
-function Content() {
-    return ( 
-        <ContentLayout title={"Dashboard"}>
-            {/* Write your code here */}
-        </ContentLayout>
-     );
-}
-
-export default Content;
+export { default as Dashboard } from './Dashboard';
+export { default as Import } from './Import';
+export { default as Stock } from './Stock';
+export { default as Warranty } from './Warranty';
+export { default as Order } from './Order';

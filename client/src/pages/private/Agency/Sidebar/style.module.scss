@@ -1,0 +1,17 @@
+#container {
+    .navigation-btn {
+        color: rgb(143, 140, 140);
+        padding: 0.4rem;
+        font-size: 1.6rem;
+        justify-content: flex-start;
+    
+        &:hover {
+            background-color: #ccc;
+        }
+    
+        .icon {
+            margin: 0 1rem;
+        }
+    
+    }
+}

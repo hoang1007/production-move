@@ -1,11 +1,26 @@
+import { Outlet } from 'react-router-dom';
+
 import './style.scss'
+import SidebarLayout from '~/pages/components/SidebarLayout'
+import HeaderLayout from '~/pages/components/HeaderLayout';
 
-import RoutesApp from "~/routes";
+interface Props {
+    Sidebar: {
+        title: 'BIGCORP' | 'AGENCY' | 'WARRANTY' | 'MANUFACTURING BASE',
+        element: React.ReactNode,
+    },
+}
 
-const Layout = () => {
+const Layout = ({Sidebar}: Props) => {
     return (
         <div className={'layout'}>
-            <RoutesApp/>
+            <SidebarLayout title={Sidebar.title}>
+                {Sidebar.element}
+            </SidebarLayout>
+            <div className="main">
+                <HeaderLayout />
+                <Outlet/>
+            </div>
         </div>
     )
 }

@@ -5,7 +5,12 @@ import {
     IconDefinition,
     faUser, 
     faMagnifyingGlass,
-    faBell
+    faBell,
+    faBorderNone,
+    faCubesStacked,
+    faCartShopping,
+    faScrewdriverWrench,
+    faPlus
 } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faGooglePlus } from '@fortawesome/free-brands-svg-icons';
 import Tippy from '@tippyjs/react';
@@ -59,3 +64,9 @@ export const FacebookIcon = CreateIcon(faFacebook);
 export const GoogleIcon = CreateIcon(faGooglePlus);
 export const SearchIcon = CreateIcon(faMagnifyingGlass);
 export const NotificationIcon = CreateIcon(faBell);
+export const GridIcon = CreateIcon(faBorderNone);
+export const StockIcon = CreateIcon(faCubesStacked);
+export const GroceryIcon = CreateIcon(faCartShopping)
+export const RepairedIcon = CreateIcon(faScrewdriverWrench);
+export const PlusIcon = CreateIcon(faPlus);
+
