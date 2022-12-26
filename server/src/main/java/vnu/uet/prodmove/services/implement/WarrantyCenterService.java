@@ -3,6 +3,7 @@ package vnu.uet.prodmove.services.implement;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import vnu.uet.prodmove.entity.WarrantyCenter;
 import vnu.uet.prodmove.exception.NotFoundException;
@@ -11,6 +12,8 @@ import vnu.uet.prodmove.repos.WarrantyCenterRepository;
 import vnu.uet.prodmove.services.IWarrantyCenterService;
 import vnu.uet.prodmove.utils.builder.ProductDetailBuilder;
 
+
+@Service
 public class WarrantyCenterService implements IWarrantyCenterService {
 
     @Autowired

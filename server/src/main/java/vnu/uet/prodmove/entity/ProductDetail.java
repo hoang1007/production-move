@@ -52,28 +52,28 @@ public class ProductDetail {
     @Transient
     private OffsetDateTime endAt;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productID", referencedColumnName = "ID")
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @Transient
     @JoinColumn(name = "warrantyCenterID")
     private WarrantyCenter warrantyCenter;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "warehouseID")
     private Warehouse warehouse;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customerID")
     private Customer customer;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "factoryID")
     private Factory factory;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "agencyID")
     private Agency agency;
 

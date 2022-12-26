@@ -15,7 +15,7 @@ import lombok.Setter;
 
 
 @Entity
-@Table(name = "warranty_center")
+@Table
 @Getter
 @Setter
 public class WarrantyCenter {
@@ -30,8 +30,5 @@ public class WarrantyCenter {
 
     @Column(name="address", length = 45)
     private String address;
-
-    @OneToMany(mappedBy="warrantyCenter")
-    private Set<ProductDetail> productDetails;
 
 }

@@ -17,7 +17,6 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Getter;
@@ -25,7 +24,6 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-
 
 @Entity
 @Table(name = "product")
@@ -36,32 +34,31 @@ import lombok.Setter;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Product {
 
-    @Id @NonNull
-    @Column(name="ID", nullable = false, updatable = false)
+    @Id
+    @NonNull
+    @Column(name = "ID", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NonNull
-    @Column(name="status", nullable = false, length = 128)
+    @Column(name = "status", nullable = false, length = 128)
     private String status;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productlineID", nullable = false)
     private Productline productline;
-    
+
     @OrderBy("startAt ASC")
-    @OneToMany(mappedBy ="product", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private Set<ProductDetail> productDetails;
 
     @OneToOne(mappedBy = "product", fetch = FetchType.EAGER)
     private Order order;
 
     @ManyToOne
-    @JoinTable(
-        name="orders",
-        joinColumns = {@JoinColumn(name="productID", referencedColumnName="ID")},
-        inverseJoinColumns={@JoinColumn(name="customerID", referencedColumnName="ID")}
-    )
+    @JoinTable(name = "orders", joinColumns = {
+            @JoinColumn(name = "productID", referencedColumnName = "ID") }, inverseJoinColumns = {
+                    @JoinColumn(name = "customerID", referencedColumnName = "ID") })
     private Customer customer;
 
     public void addProductDetail(ProductDetail productDetail) {

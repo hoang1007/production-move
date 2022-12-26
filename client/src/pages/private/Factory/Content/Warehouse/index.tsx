@@ -26,7 +26,7 @@ function Warehouse() {
 
     return (
         <Container id={cx('container')}>
-            <Button className={cx('button')} endIcon={<PlusIcon className={cx('icon')}/>}>Thêm</Button>
+            <Button className={cx('button')} endIcon={<PlusIcon className={cx('icon')} />}>Thêm</Button>
             <DataGrid
                 className={cx('table')}
                 rows={data}
