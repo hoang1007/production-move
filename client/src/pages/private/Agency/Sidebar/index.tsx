@@ -1,9 +1,8 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import SidebarLayout from '~/pages/components/SidebarLayout';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import { GridIcon, StockIcon, GroceryIcon, RepairedIcon, PlusIcon } from '~/components/Icon';
+import { GridIcon, StockIcon, GroceryIcon, RepairedIcon, PlusIcon, WarehouseIcon } from '~/components/Icon';
 import { agencyRoutes } from '~/config/routes';
 
 import style from './style.module.scss';
@@ -13,25 +12,30 @@ const cx = ClassNames(style);
 function Sidebar() {
     const navigate = useNavigate()
 
-        return (
-                <Stack id={cx('container')} direction="column" spacing={2}>
-                        <Button variant="text" className={cx('navigation-btn')} startIcon={<GridIcon className={cx('icon')} />} onClick={() => navigate(agencyRoutes.dashboard)}>
-                                Dashboard
-                        </Button>
-                        <Button variant="text" className={cx('navigation-btn')} startIcon={<PlusIcon className={cx('icon')} />} onClick={() => navigate(agencyRoutes.import)}>
-                                Import
-                        </Button>
-                        <Button variant="text" className={cx('navigation-btn')} startIcon={<RepairedIcon className={cx('icon')} />} onClick={() => navigate(agencyRoutes.warranty)}>
-                                Warranty
-                        </Button>
-                        <Button variant="text" className={cx('navigation-btn')} startIcon={<GroceryIcon className={cx('icon')} />} onClick={() => navigate(agencyRoutes.order)}>
-                                Order
-                        </Button>
-                        <Button variant="text" className={cx('navigation-btn')} startIcon={<StockIcon className={cx('icon')} />} onClick={() => navigate(agencyRoutes.stock)}>
-                                Stock
-                        </Button>
-                </Stack>
-        );
+	const handleNavigate = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, route: string) => {
+		// (event.target as Element).classList.add('active-route');
+		navigate(route)
+	}
+
+	return (
+		<Stack id={cx('container')} direction="column" spacing={2}>
+			<Button variant="text" className={cx('navigation-btn')} startIcon={<GridIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, agencyRoutes.dashboard) }}>
+				Dashboard
+			</Button>
+			<Button variant="text" className={cx('navigation-btn')} startIcon={<PlusIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, agencyRoutes.import) }}>
+				Import
+			</Button>
+			<Button variant="text" className={cx('navigation-btn')} startIcon={<RepairedIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, agencyRoutes.warranty) }}>
+				Warranty
+			</Button>
+			<Button variant="text" className={cx('navigation-btn')} startIcon={<WarehouseIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, agencyRoutes.warehouse) }}>
+				Warehouse
+			</Button>
+			<Button variant="text" className={cx('navigation-btn')} startIcon={<GroceryIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, agencyRoutes.order) }}>
+				Order
+			</Button>
+		</Stack>
+	);
 }
 
 export default Sidebar;

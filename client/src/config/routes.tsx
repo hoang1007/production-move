@@ -1,7 +1,17 @@
 import React from 'react';
 import Login from '~/pages/public/Login';
 
-import {SidebarAgency, ContentAgency} from '~/pages/private/Agency'
+import { SidebarAgency, ContentAgency } from '~/pages/private/Agency'
+
+// cái này dùng trong Sidebar ở chỗ Button nhé
+export const agencyRoutes = {
+    root: '/agency',
+    dashboard: '/agency/dashboard',
+    import: '/agency/import',
+    warranty: '/agency/warranty',
+    order: '/agency/order',
+    warehouse: '/agency/warehouses',
+}
 
 const routes: { [key: string]: any } = {
     root: '/',
@@ -30,34 +40,34 @@ const routes: { [key: string]: any } = {
 
         agency: {
             title: 'AGENCY',
-            path: '/agency',
-            roles: [],
+            path: agencyRoutes.root,
+            roles: ['AGENCY'],
             Sidebar: <SidebarAgency/>,
             Content: [
                 {
                     title: 'Dashboard',
-                    path: '/agency/dashboard',
+                    path: agencyRoutes.dashboard,
                     element: <ContentAgency.Dashboard/>
                 },
                 {
                     title: 'Import new mobile phone',
-                    path: '/agency/import',
+                    path: agencyRoutes.import,
                     element: <ContentAgency.Import/>
                 },
                 {
                     title: 'Defective & Repaired mobile phone',
-                    path: '/agency/warranty',
+                    path: agencyRoutes.warranty,
                     element: <ContentAgency.Warranty/>
                 },
                 {
                     title: 'Orders',
-                    path: '/agency/order',
+                    path: agencyRoutes.order,
                     element: <ContentAgency.Order/>
                 },
-                {
-                    title: 'Your stock',
-                    path: '/agency/stock',
-                    element: <ContentAgency.Stock/>
+                 {
+                    title: 'All warehouses',
+                    path: agencyRoutes.warehouse,
+                    element: <ContentAgency.Warehouse/>
                 },
             ]
         },
@@ -72,13 +82,6 @@ const routes: { [key: string]: any } = {
     }
 }
 
-// cái này dùng trong Sidebar ở chỗ Button nhé
-export const agencyRoutes = {
-    dashboard: '/agency/dashboard',
-    import: '/agency/import',
-    warranty: '/agency/warranty',
-    order: '/agency/order',
-    stock: '/agency/stock',
-}
+
 
 export default routes;

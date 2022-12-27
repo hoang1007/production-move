@@ -13,7 +13,8 @@ interface Props {
     children: React.ReactNode
 }
 
-const Sidebar = ({title, children}: Props) => {
+const Sidebar = ({ title, children }: Props) => {
+    
     return (
         <div className={'sidebar-layout'}>
             <div className={cx('header')}>

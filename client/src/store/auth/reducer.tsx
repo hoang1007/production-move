@@ -4,7 +4,8 @@ export interface Auth {
     isLoggedIn: boolean,
     user: {
         username: string,
-        role: string
+        role: string,
+        agencyId: number,
     },
     accessToken: string
 }
@@ -12,10 +13,11 @@ export interface Auth {
 export const initialState: Auth = {
     isLoggedIn: false,
     user: {
-        username: '',
-        role: ''
+        username: 'bi',
+        role: 'AGENCY',
+        agencyId: 1
     },
-    accessToken: ''
+    accessToken: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiaSIsImV4cCI6MTY3MjExMDYxNiwiaWF0IjoxNjcyMDI0MjE2fQ.G3qfFtr9-AmhUTNn-trhD1VoFjy8fLveVCOuCc9T8Hx4jTij3q9aOYAOKFOOllzxuvJvGxwObXeoPtUilMwYVw'
 }
 
 const reducer = (state = initialState, actions: Action) => {

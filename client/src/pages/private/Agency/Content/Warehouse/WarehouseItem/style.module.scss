@@ -1,0 +1,69 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    
+}
+
+.warehouse {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 4px black;
+    padding: 0.8rem;
+    margin: 0.6rem;
+    border-radius: 10px;
+    background-color: #fff;
+    transition: all 0.2s linear;
+    cursor: pointer;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+    .name {
+        text-transform: uppercase;
+        margin: 0.4rem 0;
+    }
+    
+    .address {
+    
+    }
+}
+
+
+.actions {
+    margin: 0.4rem 1rem;
+
+    .btn {
+        font-size: 1.6rem;
+        color: black;
+        background-color: #ccc;
+
+        &:hover {
+            background-color: rgb(186, 185, 185);
+        }
+    }
+
+    .go-inside {
+    }
+}
+
+.products {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.no-product-in-warehouse {
+    padding: 0.6rem;
+    text-align: center;
+    border-bottom: 2px solid #ccc;
+    color: rgb(255, 80, 80)
+}
