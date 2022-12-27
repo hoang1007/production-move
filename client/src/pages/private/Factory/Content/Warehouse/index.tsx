@@ -4,6 +4,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useParams } from "react-router-dom";
 import { PlusIcon } from "~/components/Icon";
 import ClassNames from "~/utils/classNames";
+import ReturnedProduct from "../ReturnedProduct";
 import style from "./style.module.scss";
 
 const cx = ClassNames(style);
@@ -25,17 +26,18 @@ function Warehouse() {
     ]
 
     return (
-        <Container id={cx('container')}>
-            <Button className={cx('button')} endIcon={<PlusIcon className={cx('icon')} />}>Thêm</Button>
-            <DataGrid
-                className={cx('table')}
-                rows={data}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-            />
-        </Container>
+        // <Container id={cx('container')}>
+        //     <Button className={cx('button')} endIcon={<PlusIcon className={cx('icon')} />}>Thêm</Button>
+        //     <DataGrid
+        //         className={cx('table')}
+        //         rows={data}
+        //         columns={columns}
+        //         pageSize={5}
+        //         rowsPerPageOptions={[5]}
+        //         checkboxSelection
+        //     />
+        // </Container>
+        <ReturnedProduct />
     )
 }
 
