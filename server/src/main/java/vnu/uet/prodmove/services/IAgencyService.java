@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Set;
 
 import vnu.uet.prodmove.entity.Agency;
+import vnu.uet.prodmove.entity.Customer;
+import vnu.uet.prodmove.entity.Order;
 import vnu.uet.prodmove.entity.Product;
 import vnu.uet.prodmove.entity.Warehouse;
 import vnu.uet.prodmove.exception.NotFoundException;
@@ -24,7 +26,11 @@ public interface IAgencyService {
      * @param productIds  list ID of the pending products
      * @throws NotFoundException
      */
+    @Deprecated
     void importPendingProductsFromFactory(Integer agencyId, Integer warehouseId, Collection<String> productIds) throws NotFoundException;
+
+
+    void importPendingProducts(Integer agencyId, Integer warehouseId, Collection<String> productIds) throws NotFoundException;
 
     /**
      * Get all warehouses of specific agency
@@ -40,6 +46,9 @@ public interface IAgencyService {
      * @param productIds Collection of product IDs.
      */
     void sellProducts(Integer customerId, Collection<Integer> productIds) throws NotFoundException;
+
+    public Collection<Customer> getAllOrders(Integer agencyId) throws NotFoundException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException;
 
     /**
      * Nhận các sản phẩm cần bảo hành từ khách hàng

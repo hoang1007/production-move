@@ -1,8 +1,12 @@
 package vnu.uet.prodmove.services.implement;
 
 import java.lang.reflect.InvocationTargetException;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import vnu.uet.prodmove.entity.Agency;
 import vnu.uet.prodmove.entity.Customer;
+import vnu.uet.prodmove.entity.Order;
 import vnu.uet.prodmove.entity.Product;
 import vnu.uet.prodmove.entity.ProductDetail;
 import vnu.uet.prodmove.entity.Warehouse;
@@ -23,8 +28,8 @@ import vnu.uet.prodmove.services.IAgencyService;
 import vnu.uet.prodmove.services.ICustomerService;
 import vnu.uet.prodmove.services.IProductService;
 import vnu.uet.prodmove.services.IProductdetailService;
+import vnu.uet.prodmove.utils.builder.ProductDetailBuilder;
 import vnu.uet.prodmove.utils.dataModel.WarehouseModel;
-import vnu.uet.prodmove.utils.querier.ObjectQuerier;
 import vnu.uet.prodmove.utils.querier.ProductDetailQuerier;
 
 @Service
@@ -74,14 +79,17 @@ public class AgencyService implements IAgencyService {
 
         for (Product product : products) {
             ProductDetail lastProductDetail = ProductDetailQuerier.of(product).getLast();
-            lastProductDetail.markCompleted();
             oldProductDetails.add(lastProductDetail);
-            ProductDetail newProductDetail = lastProductDetail.toBuilder().warehouse(warehouse)
-                    .stage(ProductStage.EXPORT_TO_AGENCY).build();
-            newProductDetail.markUncompleted();
+            ProductDetail newProductDetail = ProductDetailBuilder.of(product).exportToAgency(agency);
+            newProductDetail.setStartAt(lastProductDetail.getStartAt());
+            newProductDetail.markCompleted();
+            newProductDetail.setWarehouse(warehouse);
+            newProductDetail.setWarrantyCenter(lastProductDetail.getWarrantyCenter());
+            newProductDetail.setFactory(lastProductDetail.getFactory());
             newProductDetails.add(newProductDetail);
         }
-        productDetailService.saveAll(oldProductDetails);
+
+        // productDetailService.saveAll(oldProductDetails);
         productDetailService.saveAll(newProductDetails);
     }
 
@@ -98,15 +106,10 @@ public class AgencyService implements IAgencyService {
     public Collection<Warehouse> getAllWarehouses(Integer agencyId)
             throws NotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Agency agency = this.findById(agencyId);
-        Set<Warehouse> warehouses = agency.getWarehouses().stream()
-                .map(warehouse -> {
-                    try {
-                        return ObjectQuerier.of(warehouse).include("id", "address").get();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        return null;
-                    }
-                }).collect(Collectors.toSet());
+        Set<Warehouse> warehouses = agency.getWarehouses();
+        warehouses.stream().forEach(w -> {
+            w.setProductdetails(new HashSet<>(Arrays.asList(w.getProductdetails().iterator().next())));
+        });
         return warehouses;
     }
 
@@ -151,6 +154,31 @@ public class AgencyService implements IAgencyService {
     public void transferProductToWarrantyCenter(Iterable<Integer> productIds, Integer warrantyCenterId) {
         // TODO Auto-generated method stub
         
+    }
+
+    @Override
+    public Collection<Customer> getAllOrders(Integer agencyId) throws NotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Set<Warehouse> warehouses = (Set<Warehouse>) this.getAllWarehouses(agencyId);
+        Set<ProductDetail> productDetails = warehouses.stream().map(w -> {
+            return w.getProductdetails().iterator().next();
+        }).collect(Collectors.toSet());
+
+        Set<Customer> customers = productDetails.stream().map(pd -> {
+            return pd.getCustomer();
+        }).collect(Collectors.toSet());
+        return customers;
+    }
+
+    @Override
+    public void importPendingProducts(Integer agencyId, Integer warehouseId, Collection<String> productIds) throws NotFoundException {
+        Agency agency = this.findById(warehouseId);
+        Warehouse warehouse = agency.getWarehouses()
+                .stream()
+                .filter(item -> item.getId() == warehouseId)
+                .findFirst()
+                .orElseGet(() -> null);
+        if (warehouse == null)
+            throw new NotFoundException("Cannot find warehouse in agency.");
     }
     
 }

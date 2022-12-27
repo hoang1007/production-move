@@ -50,10 +50,12 @@ public class Product {
     private Productline productline;
     
     @OrderBy("startAt ASC")
-    @OneToMany(mappedBy ="product", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<ProductDetail> productDetails;
 
     @OneToOne(mappedBy = "product", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Order order;
 
     @ManyToOne
@@ -62,6 +64,7 @@ public class Product {
         joinColumns = {@JoinColumn(name="productID", referencedColumnName="ID")},
         inverseJoinColumns={@JoinColumn(name="customerID", referencedColumnName="ID")}
     )
+    @JsonIgnore
     private Customer customer;
 
     public void addProductDetail(ProductDetail productDetail) {

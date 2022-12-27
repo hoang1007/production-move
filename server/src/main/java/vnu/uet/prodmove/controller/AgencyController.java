@@ -1,9 +1,14 @@
 package vnu.uet.prodmove.controller;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.persistence.criteria.Order;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import vnu.uet.prodmove.config.ApiConfig;
+import vnu.uet.prodmove.entity.Customer;
+import vnu.uet.prodmove.entity.ProductDetail;
 import vnu.uet.prodmove.entity.Warehouse;
 import vnu.uet.prodmove.exception.NotFoundException;
 import vnu.uet.prodmove.services.IAgencyService;
@@ -75,7 +82,11 @@ public class AgencyController {
     @GetMapping(ApiConfig.AGENCY_ALL_WAREHOUSE)
     public ResponseEntity<?> getAllWarehouses(@RequestParam(name="agencyId") String agencyId) throws NumberFormatException, NotFoundException {
         try {
-            Set<Warehouse> warehouses = (Set<Warehouse>)agencyService.getAllWarehouses(Integer.parseInt(agencyId));
+            Set<Warehouse> warehouses = (Set<Warehouse>) agencyService.getAllWarehouses(Integer.parseInt(agencyId));
+            // get online lately product detail
+            warehouses.stream().forEach(warehouse -> {
+                warehouse.setProductdetails(new HashSet<ProductDetail>(Arrays.asList(warehouse.getProductdetails().iterator().next())));
+            });
             return ResponseEntity.ok().body(warehouses);
         } catch (Exception e) {
             e.printStackTrace();
@@ -96,6 +107,17 @@ public class AgencyController {
             agencyService.sellProducts(customerId, productIds);
             return ResponseEntity.ok().body(Map.of("message", "Sell successfully."));
             
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(Map.of("message", e.getMessage()));
+        }
+    }
+
+    @GetMapping(ApiConfig.AGENCY_ALL_ORDERS)
+    public ResponseEntity<Map<String, ?>> getAllOrders(@RequestParam(name = "agencyId") String agencyId) {
+        try {
+            Set<Customer> orders = (HashSet) agencyService.getAllOrders(Integer.parseInt(agencyId));
+            return ResponseEntity.ok().body(Map.of("Customer", orders));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.internalServerError().body(Map.of("message", e.getMessage()));

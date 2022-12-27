@@ -1,6 +1,10 @@
 package vnu.uet.prodmove.entity;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -12,7 +16,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -46,11 +54,10 @@ public class ProductDetail {
 
     @Column(name= "startAt", nullable = false)
     @Transient
-    private OffsetDateTime startAt;
+    private LocalDate startAt;
 
-    @Column(name = "endAt")
-    @Transient
-    private OffsetDateTime endAt;
+    @Column(name = "end_at")
+    private LocalDate end_at;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productID", referencedColumnName = "ID")
@@ -65,7 +72,7 @@ public class ProductDetail {
     @JoinColumn(name = "warehouseID")
     private Warehouse warehouse;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customerID")
     private Customer customer;
 
@@ -82,23 +89,23 @@ public class ProductDetail {
      * @return true nếu đã hoàn thành, false nếu chưa hoàn thành.
      */
     public boolean completed() {
-        return this.endAt != null;
+        return this.end_at != null;
     }
 
     /**
      * Đánh dấu trạng thái đã hoàn thành.
-     * Cập nhật trường {@value #endAt} thành thời gian hiện tại.
+     * Cập nhật trường {@value #end_at} thành thời gian hiện tại.
      */
     public void markCompleted() {
-        this.endAt = OffsetDateTime.now();
+        this.end_at = LocalDate.now();
     }
 
     /**
      * Đánh dấu trạng thái chưa hoàn thành.
-     * Cập nhật trường {@value #endAt} thành null.
+     * Cập nhật trường {@value #end_at} thành null.
      */
     public void markUncompleted() {
-        this.endAt = null;
+        this.end_at = null;
     }
 
 

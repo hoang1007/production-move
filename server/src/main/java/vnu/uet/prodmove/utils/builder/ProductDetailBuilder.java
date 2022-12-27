@@ -44,7 +44,7 @@ public class ProductDetailBuilder {
     }
 
     public ProductDetail sold(Customer customer) {
-        detail.setCustomer(customer);
+        // detail.setCustomer(customer);
         detail.setStage(ProductStage.SOLD);
         return detail;
     }

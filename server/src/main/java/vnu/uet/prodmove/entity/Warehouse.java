@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -33,7 +34,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Builder(toBuilder = true)
 public class Warehouse {
 
@@ -47,6 +48,7 @@ public class Warehouse {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "agencyID")
+    @JsonIgnore
     private Agency agency;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -55,7 +57,9 @@ public class Warehouse {
     private Factory factory;
 
     @OneToMany(mappedBy = "warehouse", fetch = FetchType.EAGER)
+    @OrderBy("startAt DESC")
     private Set<ProductDetail> productdetails;
+    
     public boolean isAgency() {
         return agency != null && factory == null;
     }
