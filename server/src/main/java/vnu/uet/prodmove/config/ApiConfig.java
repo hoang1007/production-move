@@ -38,4 +38,6 @@ public class ApiConfig {
     // factory
     public static final String FACTORY = "/factory";
     public static final String EXPORT_TO_AGENCY = "/export";
+    public static final String IMPORT_PRODUCTS = "/import";
+    public static final String RECEIVE_RETURNED_PRODUCTS = "/receive_returned_products";
 }

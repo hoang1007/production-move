@@ -10,21 +10,6 @@ public class ProdmoveApplication {
 
     public static void main(final String[] args) {
         SpringApplication.run(ProdmoveApplication.class, args);
-        // Me me = new Me("asd");
-        // Me.change(me);
-        // System.out.println(me.name);
     }
 
-}
-
-class Me {
-    public String name;
-
-    public Me(String name) {
-        this.name = name;
-    }
-
-    public static void  change(Me me) {
-        me.name = "change name";
-    }
 }

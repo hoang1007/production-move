@@ -63,6 +63,5 @@ public class Product {
 
     public void addProductDetail(ProductDetail productDetail) {
         productDetails.add(productDetail);
-        productDetail.setProduct(this);
     }
 }

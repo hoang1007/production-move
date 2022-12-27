@@ -16,7 +16,6 @@ import vnu.uet.prodmove.entity.Customer;
 import vnu.uet.prodmove.entity.Product;
 import vnu.uet.prodmove.entity.ProductDetail;
 import vnu.uet.prodmove.entity.Warehouse;
-import vnu.uet.prodmove.entity.WarrantyCenter;
 import vnu.uet.prodmove.enums.ProductStage;
 import vnu.uet.prodmove.exception.NotFoundException;
 import vnu.uet.prodmove.repos.AgencyRepository;
@@ -24,7 +23,6 @@ import vnu.uet.prodmove.services.IAgencyService;
 import vnu.uet.prodmove.services.ICustomerService;
 import vnu.uet.prodmove.services.IProductService;
 import vnu.uet.prodmove.services.IProductdetailService;
-import vnu.uet.prodmove.services.IWarrantyCenterService;
 import vnu.uet.prodmove.utils.builder.ProductDetailBuilder;
 import vnu.uet.prodmove.utils.dataModel.WarehouseModel;
 import vnu.uet.prodmove.utils.querier.ObjectQuerier;
@@ -48,9 +46,6 @@ public class AgencyService implements IAgencyService {
     @Autowired
     private ICustomerService customerService;
 
-    @Autowired
-    private IWarrantyCenterService warrantyCenterService;
-
     @Override
     public Agency findById(Integer id) throws NotFoundException {
         Optional<Agency> wrapperAgency = agencyRepository.findById(id);
@@ -62,7 +57,8 @@ public class AgencyService implements IAgencyService {
     }
 
     @Override
-    public void importPendingProductsFromFactory(Integer agencyId, Integer warehouseId, Collection<String> productIds) throws NotFoundException {
+    public void importPendingProductsFromFactory(Integer agencyId, Integer warehouseId, Collection<String> productIds)
+            throws NotFoundException {
         Agency agency = this.findById(warehouseId);
         Warehouse warehouse = agency.getWarehouses()
                 .stream()
@@ -74,7 +70,7 @@ public class AgencyService implements IAgencyService {
 
         List<ProductDetail> oldProductDetails = new ArrayList<>();
         List<ProductDetail> newProductDetails = new ArrayList<>();
-        
+
         List<Product> products = (List<Product>) productService
                 .findAllByIds(productIds.stream().map(id -> Integer.parseInt(id)).collect(Collectors.toList()));
 
@@ -122,14 +118,14 @@ public class AgencyService implements IAgencyService {
         Customer customer = customerService.findById(customerId);
         customerService.buyProducts(products, customer);
     }
-    
+
     @Override
     public void receiveNeedRepairProducts(Iterable<Integer> productIds, Integer warehouseId) throws NotFoundException {
         Warehouse warehouse = warehouseService.findById(warehouseId);
         List<Product> products = (List<Product>) productService.findAllByIds(productIds);
         List<ProductDetail> productDetails = new ArrayList<>();
         for (Product product : products) {
-            ProductDetail productDetail = ProductDetailBuilder.of(product).waitToRepair();
+            ProductDetail productDetail = ProductDetailBuilder.of(product).needRepair();
             productDetail.setWarehouse(warehouse);
             productDetails.add(productDetail);
         }
@@ -137,9 +133,11 @@ public class AgencyService implements IAgencyService {
     }
 
     @Override
-    public void transferProductToWarrantyCenter(Iterable<Integer> productIds, Integer warrantyCenterId) throws NotFoundException {
+    public void transferProductToWarrantyCenter(Iterable<Integer> productIds, Integer warrantyCenterId)
+            throws NotFoundException {
         List<Product> products = (List<Product>) productService.findAllByIds(productIds);
-        // WarrantyCenter warrantyCenter = warrantyCenterService.findById(warrantyCenterId);
+        // WarrantyCenter warrantyCenter =
+        // warrantyCenterService.findById(warrantyCenterId);
         List<ProductDetail> productDetails = new ArrayList<>();
         for (Product product : products) {
             ProductDetail productDetail = ProductDetailBuilder.of(product).repairing();
@@ -147,29 +145,29 @@ public class AgencyService implements IAgencyService {
         }
         productDetailService.saveAll(productDetails);
     }
-    
+
     @Override
     public void recallProducts(Integer productlineId) {
         // TODO Auto-generated method stub
 
     }
-    
+
     @Override
     public void receiveProductsFromWarrantyCenter(Iterable<Integer> productIds, Integer warrantyCenterId) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void returnProductsToFactory(Iterable<Integer> productIds, Integer factoryId) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void returnToCustomer(Integer productId, Integer customerId) {
         // TODO Auto-generated method stub
-        
+
     }
 
 }
