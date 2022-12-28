@@ -14,10 +14,10 @@ function RoleBaseRouting({ roles }: Prop) {
     return (
         <>
             {
-                // auth?.user?.role && roles.includes(auth.user.role) ?
+                auth?.user?.role && roles.includes(auth.user.role) ?
                     <Outlet />
-                    // :
-                    // <Navigate to={routes.public.login.path} replace />
+                    :
+                    <Navigate to={routes.public.login.path} replace />
             }
         </>
     );

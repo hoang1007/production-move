@@ -1,14 +1,13 @@
-
 import style from './style.module.scss';
 import ClassNames from '~/utils/classNames';
 const cx = ClassNames(style);
 
-function Stock() {
+function DetailOrderModal() {
     return ( 
-        <div className={cx('container')}>
-            Stock
+        <div id="modal" className={cx('container')}>
+            order detail
         </div>
      );
 }
 
-export default Stock;
+export default DetailOrderModal;

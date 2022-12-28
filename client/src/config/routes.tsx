@@ -4,6 +4,16 @@ import Login from '~/pages/public/Login';
 import { SidebarAgency, ContentAgency } from '~/pages/private/Agency'
 import { ContentFactory, SidebarFactory } from '~/pages/private/Factory';
 
+// cái này dùng trong Sidebar ở chỗ Button nhé
+export const agencyRoutes = {
+    root: '/agency',
+    dashboard: '/agency/dashboard',
+    import: '/agency/import',
+    warranty: '/agency/warranty',
+    order: '/agency/order',
+    warehouse: '/agency/warehouses',
+}
+
 const routes: { [key: string]: any } = {
     root: '/',
 
@@ -48,33 +58,33 @@ const routes: { [key: string]: any } = {
         agency: {
             title: 'AGENCY',
             path: '/agency',
-            roles: [],
-            Sidebar: <SidebarAgency />,
+            roles: ['AGENCY'],
+            Sidebar: <SidebarAgency/>,
             Content: [
                 {
                     title: 'Dashboard',
-                    path: '/agency/dashboard',
-                    element: <ContentAgency.Dashboard />
+                    path: agencyRoutes.dashboard,
+                    element: <ContentAgency.Dashboard/>
                 },
                 {
                     title: 'Import new mobile phone',
-                    path: '/agency/import',
-                    element: <ContentAgency.Import />
+                    path: agencyRoutes.import,
+                    element: <ContentAgency.Import/>
                 },
                 {
                     title: 'Defective & Repaired mobile phone',
-                    path: '/agency/warranty',
-                    element: <ContentAgency.Warranty />
+                    path: agencyRoutes.warranty,
+                    element: <ContentAgency.Warranty/>
                 },
                 {
                     title: 'Orders',
-                    path: '/agency/order',
-                    element: <ContentAgency.Order />
+                    path: agencyRoutes.order,
+                    element: <ContentAgency.Orders/>
                 },
-                {
-                    title: 'Your stock',
-                    path: '/agency/stock',
-                    element: <ContentAgency.Stock />
+                 {
+                    title: 'All warehouses',
+                    path: agencyRoutes.warehouse,
+                    element: <ContentAgency.Warehouse/>
                 },
             ]
         },
@@ -89,14 +99,7 @@ const routes: { [key: string]: any } = {
     }
 }
 
-// cái này dùng trong Sidebar ở chỗ Button nhé
-export const agencyRoutes = {
-    dashboard: '/agency/dashboard',
-    import: '/agency/import',
-    warranty: '/agency/warranty',
-    order: '/agency/order',
-    stock: '/agency/stock',
-}
+
 
 export const factoryRoutes = {
     warehouseList: '/factory/warehouse',

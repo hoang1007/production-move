@@ -4,7 +4,7 @@ import ClassNames from '~/utils/classNames';
 const cx = ClassNames(style);
 
 interface Props {
-    className: string
+    className?: string
 }
 
 function Loading({className}: Props) {

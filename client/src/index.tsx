@@ -4,15 +4,22 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyle from '~/components/GlobalStyle';
 
+import { ToastContainer } from "react-toastify";
+import { AuthProvider } from './context/AuthContext';
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <GlobalStyle>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+
+      <ToastContainer/>
     </GlobalStyle>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
