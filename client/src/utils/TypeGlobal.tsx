@@ -6,7 +6,7 @@ export interface Action {
 export interface WarehouseType {
     id: number,
     address: string,
-    productdetails: ProductDetailType[]
+    productDetails: ProductDetailType[]
 }
 
 export interface ProductDetailType {
@@ -14,13 +14,13 @@ export interface ProductDetailType {
     stage: string,
     startAt: Date,
     endAt?: Date,
-    end_at: Date,
+    end_at?: Date,
     product: ProductType
 }
 
 export interface ProductType {
     id: number,
-    status: string,
+    status?: string,
     productline: ProductLineType
 }
 
@@ -114,4 +114,19 @@ export interface ProductLineType {
     "testsAudioQuality"?: string,
     "testsBatteryLife"?: string,
     [key: string]: string | number | null | undefined
+}
+
+export interface CustomerType {
+    id: number,
+    fullname: string,
+    email: string,
+    phoneNumber?: string,
+    orders: OrderType[]
+}
+
+export interface OrderType {
+    id: number,
+    orderDate: Date,
+    soldAt: Date,
+    product: ProductType
 }

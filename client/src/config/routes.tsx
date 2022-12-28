@@ -62,7 +62,7 @@ const routes: { [key: string]: any } = {
                 {
                     title: 'Orders',
                     path: agencyRoutes.order,
-                    element: <ContentAgency.Order/>
+                    element: <ContentAgency.Orders/>
                 },
                  {
                     title: 'All warehouses',

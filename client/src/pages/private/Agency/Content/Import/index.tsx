@@ -45,7 +45,6 @@ const columns: GridColDef[] = [
         renderCell: (params) => {
             const onClick = (event: React.MouseEvent) => {
                 event.stopPropagation();
-                console.log('params', params)
             }
             return <Button className={cx('btn-see-detail')} onClick={(e) => onClick(e)}>See detail</Button>
         }
@@ -89,10 +88,11 @@ function Import() {
             }
         })
             .then(response => {
-                console.log('response.data', response.data)
                 if (response.status === 200) {
                     setListWarehouses([...response.data]);
-                    setLoading(false)
+                    setTimeout(() => {
+                        setLoading(false)
+                    }, 1200)
                 }
             })
             .catch(error => {
@@ -106,11 +106,11 @@ function Import() {
         const ws = [...warehouses].map((w) => pendingProductsSelector(w))
         const _dataRows: Rows[] = [];
         for (const w of ws) {
-            if (w.productdetails.length > 0) {
+            if (w.productDetails.length > 0) {
                 _dataRows.push({
-                    id: w.productdetails[0].product.id,
-                    brand: w.productdetails[0].product.productline.brand,
-                    phone: w.productdetails[0].product.productline.phone,
+                    id: w.productDetails[0].product.id,
+                    brand: w.productDetails[0].product.productline.brand,
+                    phone: w.productDetails[0].product.productline.phone,
                     storage: '100GB',
                     color: 'Black',
                     cost: '$2000'
@@ -155,7 +155,6 @@ function Import() {
     };
 
     const handleImport = () => {
-        console.log('import', selectedProduct, 'into', selectedWarehouse)
         if (selectedWarehouse < 0) {
             toast.error("You must choose Warehouse to store selected products!");
             return;

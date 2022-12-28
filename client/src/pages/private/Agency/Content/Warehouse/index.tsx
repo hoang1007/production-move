@@ -24,10 +24,11 @@ function Warehouse() {
             }
         })
             .then(response => {
-                console.log('warehouse',{...response.data})
                 if (response.status === 200) {
                     setListWarehouses(response.data);
-                    setLoading(false)
+                    setTimeout(() => {
+                        setLoading(false)
+                    }, 1200)
                 }
             })
             .catch(error => {

@@ -17,22 +17,17 @@ const ProductStage = {
 
 // agency
 export const importedProductsSelector = (warehouse: WarehouseType) => {
-    const productdetails = warehouse.productdetails.filter(pd => pd.stage?.toLowerCase() === ProductStage.EXPORT_TO_AGENCY.toLowerCase() && (pd.end_at !== null));
+    const productDetails = warehouse.productDetails.filter(pd => pd.stage?.toLowerCase() === ProductStage.EXPORT_TO_AGENCY.toLowerCase() && (pd.end_at !== null));
     return {
         ...warehouse,
-        productdetails
+        productDetails
     };
 }
 
 export const pendingProductsSelector = (warehouse: WarehouseType) => {
-    console.log(warehouse)
-    const productdetails = warehouse.productdetails.filter(pd => pd.stage?.toLowerCase() === ProductStage.EXPORT_TO_AGENCY.toLowerCase() && (pd.end_at === null));
-    console.log({
-        ...warehouse,
-        productdetails
-    })
+    const productDetails = warehouse.productDetails.filter(pd => pd.stage?.toLowerCase() === ProductStage.EXPORT_TO_AGENCY.toLowerCase() && (pd.end_at === null));
     return {
         ...warehouse,
-        productdetails
+        productDetails
     };
 }

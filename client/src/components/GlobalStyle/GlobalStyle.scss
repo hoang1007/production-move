@@ -65,4 +65,7 @@ div[role="tooltip"] * {
     height: 100vh;
     background-color: rgba(0,0,0,0.3);
     z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
