@@ -1,5 +1,6 @@
 package vnu.uet.prodmove.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -9,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -40,10 +40,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NonNull
-    @Column(name = "status", nullable = false, length = 128)
-    private String status;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productlineID", nullable = false)
     private Productline productline;
@@ -55,13 +51,17 @@ public class Product {
     @OneToOne(mappedBy = "product", fetch = FetchType.EAGER)
     private Order order;
 
-    @ManyToOne
-    @JoinTable(name = "orders", joinColumns = {
-            @JoinColumn(name = "productID", referencedColumnName = "ID") }, inverseJoinColumns = {
-                    @JoinColumn(name = "customerID", referencedColumnName = "ID") })
-    private Customer customer;
+    // @ManyToOne
+    // @JoinTable(name = "order", joinColumns = {
+    //         @JoinColumn(name = "productID", referencedColumnName = "ID") }, inverseJoinColumns = {
+    //                 @JoinColumn(name = "customerID", referencedColumnName = "ID") })
+    // private Customer customer;
 
     public void addProductDetail(ProductDetail productDetail) {
+        if (productDetails == null) {
+            productDetails = new HashSet<ProductDetail>();
+        }
+
         productDetails.add(productDetail);
     }
 }

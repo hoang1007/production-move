@@ -37,7 +37,7 @@ public class Warehouse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="address", length = 45)
+    @Column(name="address", length = 500)
     private String address;
 
     @ManyToOne(fetch = FetchType.EAGER)

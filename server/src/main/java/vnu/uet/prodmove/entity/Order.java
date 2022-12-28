@@ -1,6 +1,6 @@
 package vnu.uet.prodmove.entity;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,13 +30,13 @@ public class Order {
 
     @Column(name = "orderDate", nullable = false)
     @Transient
-    private OffsetDateTime orderDate;
+    private LocalDate orderDate;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productID", nullable = false)
     private Product product;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "customerID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customerID", nullable = false)
     private Customer customer;
 }

@@ -30,6 +30,7 @@ public class ProductDetailBuilder {
     public ProductDetail newProduction(Warehouse warehouse) {
         if (warehouse.isFactory()) {
             detail.setWarehouse(warehouse);
+            detail.setFactory(warehouse.getFactory());
             detail.setStage(ProductStage.NEW_PRODUCTION);
             detail.markCompleted();
             return detail;

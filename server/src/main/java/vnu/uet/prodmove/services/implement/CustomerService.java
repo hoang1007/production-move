@@ -47,7 +47,7 @@ public class CustomerService implements ICustomerService {
             ProductDetailQuerier.of(product).getLast().markCompleted();
             ProductDetail productDetail = ProductDetailBuilder.of(product).sold(customer);
             productDetails.add(productDetail);
-            product.setCustomer(customer);
+            // product.setCustomer(customer);
         }
         productService.saveAll(products);
         productDetailService.saveAll(productDetails);

@@ -1,5 +1,6 @@
 package vnu.uet.prodmove.controller;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,12 @@ public class ManufacturingBaseController {
     }
 
     @PostMapping(ApiConfig.EXPORT_TO_AGENCY)
-    public ResponseEntity<String> exportToAgency(Iterable<Integer> productIDs, Integer agencyId) {
+    public ResponseEntity<String> exportToAgency(@RequestBody Map<String, Object> info) {
         try {
-            factoryService.exportToAgency(productIDs, agencyId);
+            Iterable<Integer> productIds = (Iterable<Integer>) info.get("productIds");
+            Integer agencyId = (Integer) info.get("agencyId");
+
+            factoryService.exportToAgency(productIds, agencyId);
             return ResponseEntity.ok("OK");
         } catch (Exception e) {
             e.printStackTrace();

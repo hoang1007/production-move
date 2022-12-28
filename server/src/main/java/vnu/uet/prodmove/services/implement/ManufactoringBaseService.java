@@ -58,12 +58,12 @@ public class ManufactoringBaseService implements IManufactoringBaseService {
             ProductDetail newProd = ProductDetailBuilder.of(product).newProduction(warehouse);
             product.addProductDetail(newProd);
             
-            session.save(newProd);
             session.save(product);
+            session.save(newProd);
         }
 
         // productRepository.saveAll(products);
-        session.getTransaction().commit();
+        // session.getTransaction().commit();
         session.close();
     }
 
@@ -78,7 +78,7 @@ public class ManufactoringBaseService implements IManufactoringBaseService {
             productDetails.add(ProductDetailBuilder.of(product).exportToAgency(agency));
         }
 
-        productRepository.saveAll(products);
+        productDetailRepository.saveAll(productDetails);
     }
 
     @Override

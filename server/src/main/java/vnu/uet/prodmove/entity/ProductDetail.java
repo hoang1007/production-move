@@ -1,6 +1,6 @@
 package vnu.uet.prodmove.entity;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -21,7 +22,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import vnu.uet.prodmove.enums.ProductStage;
 import vnu.uet.prodmove.utils.converter.db.ProductStageConverter;
@@ -30,14 +30,13 @@ import vnu.uet.prodmove.utils.converter.db.ProductStageConverter;
 @Table(name = "productdetail")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@Builder(toBuilder=true)
+@Builder(toBuilder = true)
 public class ProductDetail {
 
     @Id
-    @Column(name="ID", nullable = false, updatable = false)
+    @Column(name = "ID", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -45,13 +44,13 @@ public class ProductDetail {
     @Convert(converter = ProductStageConverter.class)
     private ProductStage stage;
 
-    @Column(name= "startAt", nullable = false)
-    @Transient
-    private OffsetDateTime startAt;
+    @Column(name = "startAt", nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDateTime startAt;
 
     @Column(name = "endAt")
-    @Transient
-    private OffsetDateTime endAt;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDateTime endAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productID", referencedColumnName = "ID")
@@ -81,8 +80,13 @@ public class ProductDetail {
     @JoinColumn(name = "agencyID")
     private Agency agency;
 
+    public ProductDetail() {
+        this.startAt = LocalDateTime.now();
+    }
+
     /**
      * Kiểm tra xem trạng thái đã hoàn thành hay chưa.
+     * 
      * @return true nếu đã hoàn thành, false nếu chưa hoàn thành.
      */
     public boolean completed() {
@@ -94,7 +98,7 @@ public class ProductDetail {
      * Cập nhật trường {@value #endAt} thành thời gian hiện tại.
      */
     public void markCompleted() {
-        this.endAt = OffsetDateTime.now();
+        this.endAt = LocalDateTime.now();
     }
 
     /**
