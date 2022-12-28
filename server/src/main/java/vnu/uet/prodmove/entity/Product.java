@@ -1,5 +1,6 @@
 package vnu.uet.prodmove.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -26,7 +27,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
 @Table(name = "product")
 @Getter
@@ -36,19 +36,16 @@ import lombok.Setter;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Product {
 
-    @Id @NonNull
-    @Column(name="ID", nullable = false, updatable = false)
+    @Id
+    @NonNull
+    @Column(name = "ID", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @NonNull
-    @Column(name="status", nullable = false, length = 128)
-    private String status;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productlineID", nullable = false)
     private Productline productline;
-    
+
     @OrderBy("startAt ASC")
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     @JsonIgnore
@@ -68,7 +65,10 @@ public class Product {
     private Customer customer;
 
     public void addProductDetail(ProductDetail productDetail) {
+        if (productDetails == null) {
+            productDetails = new HashSet<ProductDetail>();
+        }
+
         productDetails.add(productDetail);
-        productDetail.setProduct(this);
     }
 }

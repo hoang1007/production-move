@@ -1,0 +1,95 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter {
+    background-color: #ccc;
+    padding: 0.4rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    .item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 0 1rem;
+        
+        .title {
+            padding: 0.2rem 0.8rem;
+            font-weight: bold;
+        }
+
+        .separate {
+            margin: 0 1rem;
+        }
+
+        .input {
+            input {
+                font-size: 1.6rem;
+                padding: 0 0.4rem;
+            }
+        }
+
+        .checkbox {
+        }
+    }
+
+    .apply-filter-btn {
+        font-size: 1.6rem;
+        margin-left: auto;
+    }
+}
+
+.table {
+
+    * {
+        font-size: 1.6rem;
+    }
+
+    .data {
+        font-size: 1.6rem;
+        margin-top: 2rem;
+        flex: 1;
+        height: 400px;
+    }
+
+    .btn-see-detail  {
+        font-size: 1.6rem;
+        text-decoration: underline;
+        width: 100%;
+        height: 100%;
+
+        &:hover {
+            background-color: #ccc;
+        }
+    }
+
+}
+
+.import-btn {
+
+    Button {
+        font-size: 1.6rem;
+        background-color: rgb(146, 142, 142);
+        color: white;
+        
+        &:hover {
+            background-color: #ccc;
+        }
+    }
+}
+
+.GridToolbarContainer > * {
+    margin-right: 1rem !important;
+    
+    &:hover {
+        background-color: #ccc !important;
+    }
+}
+
+.GridToolbarContainer  * {
+    font-size: 1.3rem !important;
+}

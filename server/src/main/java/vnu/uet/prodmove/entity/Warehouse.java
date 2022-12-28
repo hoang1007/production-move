@@ -1,8 +1,8 @@
 package vnu.uet.prodmove.entity;
 
+
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,10 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.AllArgsConstructor;
@@ -34,7 +32,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Builder(toBuilder = true)
 public class Warehouse {
 
@@ -43,7 +41,7 @@ public class Warehouse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="address", length = 45)
+    @Column(name="address", length = 500)
     private String address;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -51,13 +49,14 @@ public class Warehouse {
     @JsonIgnore
     private Agency agency;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "factoryID")
     @JsonIgnore
     private Factory factory;
 
     @OneToMany(mappedBy = "warehouse", fetch = FetchType.EAGER)
     @OrderBy("startAt DESC")
+    @JsonIgnore
     private Set<ProductDetail> productdetails;
     
     public boolean isAgency() {

@@ -52,7 +52,7 @@ public class CustomerService implements ICustomerService {
         List<Order> orders = new ArrayList<>();
         for (Product product : products) {
             Order o = product.getOrder();
-            o.setSoldAt(OffsetDateTime.now());
+            o.setSoldDate(OffsetDateTime.now());
             orders.add(o);
             
             ProductDetail productDetail = ProductDetailQuerier.of(product).getLast();
@@ -60,6 +60,7 @@ public class CustomerService implements ICustomerService {
             productDetail.markCompleted();
             productDetail.setCustomer(customer);
             productDetails.add(productDetail);
+            // product.setCustomer(customer);
         }
         productDetailService.saveAll(productDetails);
         orderService.saveAll(orders);

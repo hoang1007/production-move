@@ -7,14 +7,14 @@ import vnu.uet.prodmove.utils.dataModel.ProductModel;
 
 public interface IProductService {
 
-    void saveAll(Collection<Product> products);
+    void saveAll(Iterable<Product> products);
     
     /**
      * Find all products by list of IDs
      * @param ids
      * @return Collection of products
      */
-    Collection<Product> findAllByIds(Collection<Integer> ids);
+    Iterable<Product> findAllByIds(Iterable<Integer> ids);
 
     /**
      * Create new product
@@ -42,6 +42,6 @@ public interface IProductService {
      * @param typeSort ASC | DESC. Default value is unsorted
      * @return Collection of Products which satisfied all conditions
      */
-    Collection<Product> findProducts(String filter, int pageNumber, String sortBy, String typeSort);
+    Iterable<Product> findProducts(String filter, int pageNumber, String sortBy, String typeSort);
 
 }

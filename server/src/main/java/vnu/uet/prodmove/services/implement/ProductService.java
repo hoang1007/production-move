@@ -24,12 +24,12 @@ public class ProductService implements IProductService {
     private ProductRepository productRepository;
 
     @Override
-    public Collection<Product> findAllByIds(Collection<Integer> ids) {
+    public Iterable<Product> findAllByIds(Iterable<Integer> ids) {
         return productRepository.findAllById(ids);
     }
 
     @Override
-    public Collection<Product> findProducts(String filter, int pageNumber, String sortBy, String typeSort) {
+    public Iterable<Product> findProducts(String filter, int pageNumber, String sortBy, String typeSort) {
         Pageable paging = PageRequest.of(
             (pageNumber - 1) * NUMBER_OF_PRODUCTS_PER_PAGE, // page number
             NUMBER_OF_PRODUCTS_PER_PAGE, // number of products per page
@@ -65,7 +65,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void saveAll(Collection<Product> products) {
+    public void saveAll(Iterable<Product> products) {
         productRepository.saveAll(products);
     }
 }

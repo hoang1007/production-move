@@ -23,10 +23,17 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-security')
     implementation('org.springframework.security:spring-security-test')
     implementation("io.jsonwebtoken:jjwt:0.9.1")
+    implementation('org.glassfish.jaxb:jaxb-runtime')
+    implementation('jakarta.xml.bind:jakarta.xml.bind-api')
+
+    annotationProcessor('javax.annotation:javax.annotation-api')
+    annotationProcessor('jakarta.xml.bind:jakarta.xml.bind-api')
+    annotationProcessor('org.glassfish.jaxb:jaxb-runtime')
+
     runtimeOnly('mysql:mysql-connector-java')
     compileOnly('org.projectlombok:lombok')
     
-    annotationProcessor('org.hibernate:hibernate-jpamodelgen:6.1.5.Final')
+    annotationProcessor('org.hibernate:hibernate-jpamodelgen')
     annotationProcessor('org.projectlombok:lombok')
     testCompileOnly('org.projectlombok:lombok')
     testAnnotationProcessor('org.projectlombok:lombok')

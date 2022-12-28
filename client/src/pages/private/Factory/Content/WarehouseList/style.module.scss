@@ -1,0 +1,12 @@
+#container {
+    .warehouse-card {
+        border-radius: 2rem;
+        text-align: left;
+        padding: 1.5rem;
+        line-height: 3rem;
+    }
+
+    .warehouse-card:hover {
+        background-color: #f5f5f5;
+    }
+}

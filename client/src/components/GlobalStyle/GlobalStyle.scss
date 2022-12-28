@@ -1,0 +1,74 @@
+@import "normalize.css";
+@import 'react-toastify/dist/ReactToastify.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;400;500;700&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+:root {
+    --scrollbar-width: 4px;
+    --header-height: 5.6rem;
+    --header-padding: 2rem 0;
+    --header-margin: 1rem 0;
+    --filter-height: 4.6rem
+}
+
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-size: 1.6rem;
+}
+
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: var(--scrollbar-width);
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: rgb(115, 113, 113);
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: white;
+}
+
+.App {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+img {
+    display: inline-block;
+}
+
+.active-route {
+    background-color: rgb(0, 133, 255, 20%) !important;
+}
+
+div[role="tooltip"] * {
+    font-size: 1.6rem;
+}
+
+#modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.3);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

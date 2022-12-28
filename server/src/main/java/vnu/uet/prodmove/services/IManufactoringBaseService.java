@@ -15,4 +15,10 @@ public interface IManufactoringBaseService {
      * @param agencyId Mã đại lý phân phối
      */
     public void exportToAgency(Iterable<Integer> productIds, Integer agencyId);
+
+    /**
+     * Nhận lại sản phẩm từ trung tâm bảo hành
+     * @param productIds Danh sách mã sản phẩm
+     */
+    public void receiveReturnedProducts(Iterable<Integer> productIds);
 }
