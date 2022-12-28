@@ -7,6 +7,8 @@ class Tables {
 }
 
 public class RawQueries {
-    public final static String importPendingProductsToAgency = "";
+    public final static String getOrders = 
+            ""
+    ;
 
 }

@@ -61,7 +61,7 @@ public class AgencyService implements IAgencyService {
     }
 
     @Override
-    public void importPendingProductsFromFactory(Integer agencyId, Integer warehouseId, Collection<String> productIds) throws NotFoundException {
+    public void importPendingProductsFromFactory(Integer agencyId, Integer warehouseId, Collection<String> productIds) throws NotFoundException, CloneNotSupportedException {
         Agency agency = this.findById(warehouseId);
         Warehouse warehouse = agency.getWarehouses()
                 .stream()
@@ -83,9 +83,8 @@ public class AgencyService implements IAgencyService {
             ProductDetail newProductDetail = ProductDetailBuilder.of(product).exportToAgency(agency);
             newProductDetail.setStartAt(lastProductDetail.getStartAt());
             newProductDetail.markCompleted();
-            newProductDetail.setWarehouse(warehouse);
-            newProductDetail.setWarrantyCenter(lastProductDetail.getWarrantyCenter());
-            newProductDetail.setFactory(lastProductDetail.getFactory());
+            newProductDetail.copyForeignKey(lastProductDetail);
+
             newProductDetails.add(newProductDetail);
         }
 
@@ -107,14 +106,18 @@ public class AgencyService implements IAgencyService {
             throws NotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Agency agency = this.findById(agencyId);
         Set<Warehouse> warehouses = agency.getWarehouses();
-        warehouses.stream().forEach(w -> {
-            w.setProductdetails(new HashSet<>(Arrays.asList(w.getProductdetails().iterator().next())));
-        });
+        if (warehouses.size() > 0) {
+            warehouses.stream().forEach(w -> {
+                if (w.getProductdetails().size() > 0) {
+                    w.setProductdetails(new HashSet<>(Arrays.asList(w.getProductdetails().iterator().next())));
+                }
+            });
+        }
         return warehouses;
     }
 
     @Override
-    public void sellProducts(Integer customerId, Collection<Integer> productIds) throws NotFoundException {
+    public void sellProducts(Integer customerId, Collection<Integer> productIds) throws NotFoundException, CloneNotSupportedException {
         List<Product> products = (List<Product>) productService.findAllByIds(productIds);
         Customer customer = customerService.findById(customerId);
         customerService.buyProducts(products, customer);
@@ -159,12 +162,21 @@ public class AgencyService implements IAgencyService {
     @Override
     public Collection<Customer> getAllOrders(Integer agencyId) throws NotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Set<Warehouse> warehouses = (Set<Warehouse>) this.getAllWarehouses(agencyId);
-        Set<ProductDetail> productDetails = warehouses.stream().map(w -> {
-            return w.getProductdetails().iterator().next();
+        Set<Product> products = warehouses.stream().map(w -> {
+            if (w.getProductdetails().size() > 0) {
+                ProductDetail last = w.getProductdetails().iterator().next();
+                if (last.getProduct().getOrder() != null) {
+                    return w.getProductdetails().iterator().next().getProduct();
+                }
+            }
+            return null;
         }).collect(Collectors.toSet());
 
-        Set<Customer> customers = productDetails.stream().map(pd -> {
-            return pd.getCustomer();
+        Set<Customer> customers = products.stream().map(p -> {
+            if(p != null) {
+                return p.getCustomer();
+            }
+            return null;
         }).collect(Collectors.toSet());
         return customers;
     }

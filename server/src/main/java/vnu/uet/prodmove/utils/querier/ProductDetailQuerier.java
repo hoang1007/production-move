@@ -1,6 +1,9 @@
 package vnu.uet.prodmove.utils.querier;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
 import vnu.uet.prodmove.entity.Agency;
 import vnu.uet.prodmove.entity.Factory;
@@ -11,10 +14,14 @@ import vnu.uet.prodmove.enums.ProductStage;
 import vnu.uet.prodmove.enums.UserRole;
 
 public class ProductDetailQuerier {
-    private ArrayList<ProductDetail> productDetails;
+    private ArrayList<ProductDetail> productDetails ;
 
     public ProductDetailQuerier(Product product) {
-        this.productDetails = new ArrayList<>(product.getProductDetails());
+        this.productDetails = new ArrayList<ProductDetail>();
+        for (ProductDetail detail : product.getProductDetails()) {
+                ProductDetail clone = detail.clone();
+                this.productDetails.add(clone);
+        }
     }
 
     public ProductDetailQuerier filter(ProductStage... stages) {
@@ -107,6 +114,8 @@ public class ProductDetailQuerier {
     }
 
     public ProductDetail getLast() {
+        if (productDetails.size() == 0)
+            return null;
         return productDetails.get(productDetails.size() - 1);
     }
 

@@ -30,9 +30,6 @@ public class ProductdetailService implements IProductdetailService{
 
     @Override
     public Collection<ProductDetail> saveAll(Collection<ProductDetail> productdetails) {
-        for (ProductDetail productDetail : productdetails) {
-            System.out.println(productDetail.getId()+ " - " + productDetail.completed());
-        }
         return productdetailRepository.saveAll(productdetails);
     }
 }

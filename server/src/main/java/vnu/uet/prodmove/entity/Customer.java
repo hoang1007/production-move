@@ -16,6 +16,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Getter;
@@ -47,6 +48,7 @@ public class Customer {
     private Set<Order> orders;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<Product> products;
 
 

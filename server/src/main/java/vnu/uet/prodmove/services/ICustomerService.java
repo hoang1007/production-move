@@ -9,5 +9,5 @@ import vnu.uet.prodmove.exception.NotFoundException;
 public interface ICustomerService {
     Customer findById(Integer id) throws NotFoundException;
 
-    void buyProducts(Collection<Product> products, Customer customer);
+    void buyProducts(Collection<Product> products, Customer customer) throws CloneNotSupportedException;
 }

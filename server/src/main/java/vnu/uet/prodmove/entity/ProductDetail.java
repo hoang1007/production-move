@@ -23,6 +23,7 @@ import javax.persistence.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.AllArgsConstructor;
@@ -66,22 +67,27 @@ public class ProductDetail {
     @ManyToOne
     @Transient
     @JoinColumn(name = "warrantyCenterID")
+    @JsonIgnore
     private WarrantyCenter warrantyCenter;
-
+    
     @ManyToOne
     @JoinColumn(name = "warehouseID")
+    @JsonIgnore
     private Warehouse warehouse;
-
+    
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customerID")
+    @JsonIgnore
     private Customer customer;
-
+    
     @ManyToOne
     @JoinColumn(name = "factoryID")
+    @JsonIgnore
     private Factory factory;
-
+    
     @ManyToOne
     @JoinColumn(name = "agencyID")
+    @JsonIgnore
     private Agency agency;
 
     /**
@@ -108,5 +114,18 @@ public class ProductDetail {
         this.end_at = null;
     }
 
+    public void copyForeignKey(ProductDetail another) {
+        this.setProduct(another.getProduct());
+        this.setWarehouse(another.getWarehouse());
+        this.setWarrantyCenter(another.getWarrantyCenter());
+        this.setFactory(another.getFactory());
+        this.setAgency(another.getAgency());
+    }
 
+    public ProductDetail clone() {
+        ProductDetail clone = new ProductDetail();
+        clone.setStage(this.getStage());
+        clone.copyForeignKey(this);
+        return clone;
+    }
 }

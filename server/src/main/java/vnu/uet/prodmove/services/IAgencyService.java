@@ -25,9 +25,9 @@ public interface IAgencyService {
      * @param warehouseId ID of the warehouse
      * @param productIds  list ID of the pending products
      * @throws NotFoundException
+     * @throws CloneNotSupportedException
      */
-    @Deprecated
-    void importPendingProductsFromFactory(Integer agencyId, Integer warehouseId, Collection<String> productIds) throws NotFoundException;
+    void importPendingProductsFromFactory(Integer agencyId, Integer warehouseId, Collection<String> productIds) throws NotFoundException, CloneNotSupportedException;
 
 
     void importPendingProducts(Integer agencyId, Integer warehouseId, Collection<String> productIds) throws NotFoundException;
@@ -44,8 +44,9 @@ public interface IAgencyService {
      * Sell products to customer.
      * @param customerId ID of the customer
      * @param productIds Collection of product IDs.
+     * @throws CloneNotSupportedException
      */
-    void sellProducts(Integer customerId, Collection<Integer> productIds) throws NotFoundException;
+    void sellProducts(Integer customerId, Collection<Integer> productIds) throws NotFoundException, CloneNotSupportedException;
 
     public Collection<Customer> getAllOrders(Integer agencyId) throws NotFoundException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException;

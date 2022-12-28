@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Getter;
@@ -32,15 +33,20 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "orderDate", nullable = false)
+    @Column(name = "orderDate")
     @Transient
     private OffsetDateTime orderDate;
+
+
+    @Column(name = "sold_date")
+    private OffsetDateTime soldAt;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productID", nullable = false)
     private Product product;
-
+    
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customerID")
+    @JsonIgnore
     private Customer customer;
 }
