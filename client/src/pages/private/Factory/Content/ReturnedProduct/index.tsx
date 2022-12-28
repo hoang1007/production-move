@@ -1,5 +1,7 @@
 import { Container, Table, TableCell, TableRow, TableRowProps } from "@mui/material";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import usePrivateAxios from "~/hooks/useAxios";
 import ClassNames from "~/utils/classNames";
 import style from "./style.module.scss";
 
@@ -16,6 +18,13 @@ function VerticalTableRow({ title, children }: { title: string, children: React.
 
 function ReturnedProduct() {
     const { id } = useParams<{ id: string }>();
+    const axios = usePrivateAxios();
+
+    useEffect(() => {
+        axios.get(`api/productline_info?id=${id}`).then(res => {
+            console.log(res.data);
+        });
+    })
 
     const renderScreenTable = () => (
         <Container id={cx("container")}>

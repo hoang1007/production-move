@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-
 @Configuration
 @EntityScan("vnu.uet.prodmove.domain")
 @EnableJpaRepositories("vnu.uet.prodmove.repos")
@@ -14,6 +13,8 @@ public class ApiConfig {
     public static final String LOG_IN = "/login";
     public static final String SIGN_UP = "/signup";
 
+    public static final String GET_PRODUCTLINE_INFO = "/productline_info";
+
     // moderator
     public static final String MODERATOR = "/moderator";
     public static final String MODERATOR_CREATE_ACCOUNT = "/create_account";
@@ -21,7 +22,7 @@ public class ApiConfig {
     public static final String MODERATOR_UPDATE_ACCOUNT = "/update_account";
     public static final String MODERATOR_STATISTICAL_ANALYSIS = "/statistical_analysis";
 
-    //agency
+    // agency
     public static final String AGENCY = "/agency";
     public static final String AGENCY_IMPORT_PRODUCTS = "/import_products";
     public static final String AGENCY_CREATE_WAREHOUSE = "/create_warehouse";
@@ -29,11 +30,10 @@ public class ApiConfig {
     public static final String AGENCY_SELL_PRODUCT = "/sell_product";
     public static final String AGENCY_TRANSFER_TO_WARRANTY = "/transfer_to_warranty";
 
-    //warehouse
+    // warehouse
     public static final String WAREHOUSE = "/warehouse";
     public static final String WAREHOUSE_CREATE = "/create";
     public static final String WAREHOUSE_UPDATE = "/update";
-
 
     // factory
     public static final String FACTORY = "/factory";
