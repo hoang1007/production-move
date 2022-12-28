@@ -41,6 +41,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
+        http.cors();
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, ApiConfig.LOG_IN).permitAll()
                 .antMatchers(HttpMethod.POST, ApiConfig.SIGN_UP).hasAuthority(UserRole.MODERATOR.toString())
