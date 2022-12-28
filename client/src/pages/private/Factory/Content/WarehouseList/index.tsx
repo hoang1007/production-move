@@ -2,7 +2,7 @@ import { Grid, Paper } from "@mui/material";
 import style from './style.module.scss';
 import ClassNames from '~/utils/classNames';
 import { useNavigate, useParams } from "react-router-dom";
-import { factoryRoutes } from "~/config/routes";
+import api from "~/config/api";
 const cx = ClassNames(style);
 
 
@@ -20,7 +20,7 @@ function WarehouseList() {
         <Grid container spacing={3} id={cx("container")}>
             {warehouses.map((warehouse, index) => (
                 <Grid item key={index} md="auto">
-                    <Paper onClick={() => navigate(`${factoryRoutes.warehouseList}/${warehouse.id}`)} elevation={3} className={cx("warehouse-card")}>
+                    <Paper onClick={() => navigate(`${api.factory.warehouseList}/${warehouse.id}`)} elevation={3} className={cx("warehouse-card")}>
                         <h3>{warehouse.name}</h3>
                         <p>{warehouse.address}</p>
                     </Paper>

@@ -5,6 +5,11 @@ const api = {
         importProducts: '/api/agency/import_products',
         getOrders: '/api/agency/orders',
         sellProduct: '/api/agency/sell_product',
+    },
+    factory: {
+        warehouseList: '/factory/warehouse',
+        warranty: '/factory/warranty',
+        error: '/factory/error',
     }
 }
 

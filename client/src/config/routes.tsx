@@ -1,8 +1,9 @@
 import React from 'react';
-import Login from '~/pages/public/Login';
+// import Login from '~/pages/public/Login';
 
 import { SidebarAgency, ContentAgency } from '~/pages/private/Agency'
 import { ContentFactory, SidebarFactory } from '~/pages/private/Factory';
+import Login from '~/utils/FakeLogin';
 
 // cái này dùng trong Sidebar ở chỗ Button nhé
 export const agencyRoutes = {
@@ -97,14 +98,6 @@ const routes: { [key: string]: any } = {
         }
 
     }
-}
-
-
-
-export const factoryRoutes = {
-    warehouseList: '/factory/warehouse',
-    warranty: '/factory/warranty',
-    error: '/factory/error',
 }
 
 export default routes;
