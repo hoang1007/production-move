@@ -221,7 +221,8 @@ public class AgencyService implements IAgencyService {
 
     @Override
     public Collection<Product> getDistributedProducts(Integer agencyId) {
-        return productDetailService.findAll().stream().filter(pd -> pd.getStage() == ProductStage.EXPORT_TO_AGENCY)
+        return productDetailService.findAll().stream()
+                .filter(pd -> pd.getStage() == ProductStage.EXPORT_TO_AGENCY && pd.completed())
                 .filter(pd -> pd.getAgency().getId() == agencyId).map(pd -> pd.getProduct())
                 .collect(Collectors.toList());
     }
