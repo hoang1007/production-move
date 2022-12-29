@@ -13,9 +13,9 @@ export interface Auth {
 export const initialState: Auth = {
     isLoggedIn: false,
     user: {
-        username: '',
-        role: '',
-        id: -1
+        username: localStorage.getItem("username") || '',
+        role: localStorage.getItem("role") || '',
+        id: Number(localStorage.getItem("id")) || -1,
     },
     accessToken: ''
 }

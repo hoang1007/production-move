@@ -25,7 +25,6 @@ function Orders() {
             params: {agencyId: auth?.user.id}
         })
             .then(response => {
-                console.log(response)
                 if (response.status === 200) {
                     setCustomers(response.data)
                     setTimeout(() => {

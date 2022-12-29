@@ -56,6 +56,9 @@ function Login() {
             if (res.status === 200) {
                 if (authDispatch) {
                     authDispatch(authActions.login(res.data));
+                    localStorage.setItem('username', res.data.username)
+                    localStorage.setItem('role', res.data.role)
+                    localStorage.setItem('id', res.data.id)
                 }
 
                 setTimeout(() => {
