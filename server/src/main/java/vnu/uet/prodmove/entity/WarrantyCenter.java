@@ -18,7 +18,7 @@ import lombok.Setter;
 
 
 @Entity
-@Table
+@Table(name = "warrantycenter")
 @Getter
 @Setter
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")

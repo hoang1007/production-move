@@ -1,6 +1,6 @@
 import { Autocomplete, Button, CircularProgress, Container, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import InputSlider from "~/components/InputSlider";
 import api from "~/config/api";
 import usePrivateAxios from "~/hooks/useAxios";
@@ -16,9 +16,7 @@ export interface ExportProductsModal {
 
 const ExportProductsModal: React.FC<ExportProductsModal> = ({ open, setOpen, onClose, batches, onConfirm }) => {
     console.log(batches, 'batches');
-    const [quantities, setQuantities] = React.useState<number[]>(
-        batches.map(batch => { return 1; })
-    );
+    const [quantities, setQuantities] = React.useState<number[]>([]);
     const [agencies, setAgencies] = React.useState<AgencyType[]>([]);
     const [selectedAgency, setSelectedAgency] = React.useState<AgencyType | null>(null);
     const [loading, setLoading] = React.useState(true);
@@ -33,8 +31,12 @@ const ExportProductsModal: React.FC<ExportProductsModal> = ({ open, setOpen, onC
         })
     }, []);
 
+    useMemo(() => {
+        setQuantities(batches.map(batch => { return 1; }));
+    }, [batches]);
+
     const setQuantity = (index: number, value: number) => {
-        console.log('set quat', index, value);
+        console.log(quantities, "q");
         setQuantities(quantities.map((quantity, i) => {
             if (i === index) {
                 return value;

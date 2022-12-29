@@ -1,5 +1,7 @@
 package vnu.uet.prodmove.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum ProductStage {
     /** Mới sản xuất */
     NEW_PRODUCTION("New production"),
@@ -33,6 +35,7 @@ public enum ProductStage {
     }
 
     @Override
+    @JsonValue
     public String toString() {
         return this.type;
     }

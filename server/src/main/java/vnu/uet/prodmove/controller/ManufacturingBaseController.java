@@ -21,6 +21,16 @@ public class ManufacturingBaseController {
     @Autowired
     private IManufactoringBaseService factoryService;
 
+    @GetMapping(ApiConfig.FACTORY_ALL_CREATED_PRODUCTS)
+    public ResponseEntity<?> getAllCreatedProducts(@RequestParam Integer id) {
+        try {
+            return ResponseEntity.ok(factoryService.getAllCreatedProducts(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Internal Server Error");
+        }
+    }
+
     @PostMapping(ApiConfig.IMPORT_PRODUCTS)
     public ResponseEntity<String> importProducts(@RequestBody Map<String, Object> info) {
         try {

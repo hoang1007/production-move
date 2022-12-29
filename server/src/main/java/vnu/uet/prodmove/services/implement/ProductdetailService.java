@@ -58,4 +58,9 @@ public class ProductdetailService implements IProductdetailService {
                 }
         return pendingProductDetails.stream().filter(p -> !p.completed()).collect(Collectors.toList());
     }
+
+    @Override
+    public List<ProductDetail> findAll() {
+        return productdetailRepository.findAll();
+    }
 }

@@ -48,21 +48,20 @@ public class Product {
 
     @OrderBy("startAt ASC")
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
-    @JsonIgnore
     private Set<ProductDetail> productDetails;
 
     @OneToOne(mappedBy = "product", fetch = FetchType.EAGER)
     @JsonIgnore
     private Order order;
 
-    @ManyToOne
-    @JoinTable(
-        name="orders",
-        joinColumns = {@JoinColumn(name="productID", referencedColumnName="ID")},
-        inverseJoinColumns={@JoinColumn(name="customerID", referencedColumnName="ID")}
-    )
-    @JsonIgnore
-    private Customer customer;
+    // @ManyToOne
+    // @JoinTable(
+    //     name="orders",
+    //     joinColumns = {@JoinColumn(name="productID", referencedColumnName="ID")},
+    //     inverseJoinColumns={@JoinColumn(name="customerID", referencedColumnName="ID")}
+    // )
+    // @JsonIgnore
+    // private Customer customer;
 
     public void addProductDetail(ProductDetail productDetail) {
         if (productDetails == null) {

@@ -13,12 +13,14 @@ const api = {
         getOrders: '/api/agency/orders',
         sellProduct: '/api/agency/sell_product',
         allAgencies: '/api/agency/all',
+        distributedProducts: '/api/agency/distributed_products',
     },
     factory: {
         root: '/api/factory',
         allWarehouses: '/api/factory/warehouses',
         importProducts: '/api/factory/import',
         exportProducts: '/api/factory/export',
+        allCreatedProducts: '/api/factory/all_created',
     },
     warehouse: {
         root: '/api/warehouse',

@@ -64,14 +64,15 @@ function Warehouse() {
     ]
 
     useEffect(() => {
-        setLoading(true);
-        console.log("Fetching...");
-        get(api.warehouse.newProducts, { params: { id: id } }).then(res => {
-            setProducts(res.data);
-            setLoading(false);
-            console.log(res.data);
-        })
-    }, [addModalOpen, exportModalOpen]);
+        if (loading) {
+            console.log("Fetching...");
+            get(api.warehouse.newProducts, { params: { id: id } }).then(res => {
+                setProducts(res.data);
+                setLoading(false);
+                console.log(res.data);
+            })
+        }
+    }, [loading]);
 
     const collateProducts = () => {
         const batches: BatchProductType[] = [];
@@ -112,6 +113,7 @@ function Warehouse() {
             quantity: batch.quantity,
             warehouseId: parseInt(id!)
         }).then(res => {
+            setLoading(true);
             setNotifyMessage('Thêm sản phẩm thành công!');
             setNotifySnackbarOpen(true);
         }).catch(err => {
@@ -122,7 +124,7 @@ function Warehouse() {
         })
     };
 
-    const exportToAgency = (batches: BatchProductType[], agency: AgencyType) => {
+    const handleConfirmExportModal = (batches: BatchProductType[], agency: AgencyType) => {
         const exportProductIds: number[] = [];
 
         batches.forEach(batch => {
@@ -143,6 +145,7 @@ function Warehouse() {
             productIds: exportProductIds,
             agencyId: agency.id,
         }).then(res => {
+            setLoading(true);
             setNotifyMessage('Xuất sản phẩm thành công!');
             setNotifySnackbarOpen(true);
         }).catch(err => {
@@ -183,7 +186,8 @@ function Warehouse() {
                 onSelectionModelChange={(selectionModel, details) => {
                     const selectedRowIds = selectionModel.map((id: GridRowId) => Number(id));
 
-                    const batches = collateProducts().filter((batch, index) => selectedRowIds.includes(index));
+                    const batches = collateProducts().filter((batch, index) => selectedRowIds.includes(batch.id));
+                    console.log(batches, "batch");
                     setSelectedBatches(batches);
                 }}
             />
@@ -197,7 +201,7 @@ function Warehouse() {
                 open={exportModalOpen}
                 setOpen={setExportModalOpen}
                 batches={selectedBatches}
-                onConfirm={exportToAgency}
+                onConfirm={handleConfirmExportModal}
                 onClose={handleCloseExportModal}
             />
             <Snackbar

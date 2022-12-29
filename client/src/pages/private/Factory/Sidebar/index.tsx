@@ -15,7 +15,7 @@ function Sidebar() {
 
 	return (
 		<Stack id={cx('container')} direction="column" spacing={2}>
-			<Button variant="text" className={cx('navigation-btn')} startIcon={<GridIcon className={cx('icon')} />} onClick={() => navigate(factoryRoutes.error)}>
+			<Button variant="text" className={cx('navigation-btn')} startIcon={<GridIcon className={cx('icon')} />} onClick={() => navigate(factoryRoutes.dashboard)}>
 				Thống kê
 			</Button>
 			<Button variant="text" className={cx('navigation-btn')} startIcon={<PlusIcon className={cx('icon')} />} onClick={() => navigate(factoryRoutes.warehouseList)}>

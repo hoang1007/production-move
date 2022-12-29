@@ -31,6 +31,7 @@ public class ApiConfig {
     public static final String AGENCY_ALL_ORDERS = "/orders";
     public static final String AGENCY_TRANSFER_TO_WARRANTY = "/transfer_to_warranty";
     public static final String AGENCY_ALL = "/all";
+    public static final String AGENCY_DISTRIBUTED_PRODUCTS = "/distributed_products";
 
     // warehouse
     public static final String WAREHOUSE = "/warehouse";
@@ -44,6 +45,7 @@ public class ApiConfig {
     public static final String IMPORT_PRODUCTS = "/import";
     public static final String RECEIVE_RETURNED_PRODUCTS = "/receive_returned_products";
     public static final String FACTORY_ALL_WAREHOUSES = "/warehouses";
+    public static final String FACTORY_ALL_CREATED_PRODUCTS = "/all_created";
 
     // productline
     public static final String PRODUCTLINE = "/productline";

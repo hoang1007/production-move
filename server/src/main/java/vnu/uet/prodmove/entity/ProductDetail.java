@@ -40,7 +40,7 @@ public class ProductDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="stage", nullable = false)
+    @Column(name = "stage", nullable = false)
     @Convert(converter = ProductStageConverter.class)
     private ProductStage stage;
 

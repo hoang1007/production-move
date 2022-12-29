@@ -14,13 +14,13 @@ import vnu.uet.prodmove.enums.ProductStage;
 import vnu.uet.prodmove.enums.UserRole;
 
 public class ProductDetailQuerier {
-    private ArrayList<ProductDetail> productDetails ;
+    private ArrayList<ProductDetail> productDetails;
 
     public ProductDetailQuerier(Product product) {
         this.productDetails = new ArrayList<ProductDetail>();
         for (ProductDetail detail : product.getProductDetails()) {
-                ProductDetail clone = detail.clone();
-                this.productDetails.add(clone);
+            ProductDetail clone = detail;
+            this.productDetails.add(clone);
         }
     }
 
@@ -66,7 +66,7 @@ public class ProductDetailQuerier {
                     } else {
                         return false;
                     }
-                case REPAIRER:
+                case WARRANTY:
                     if (productDetail.getWarrantyCenter() != null) {
                         return productDetail.getWarrantyCenter().getId() != id;
                     } else {

@@ -24,6 +24,7 @@ export const agencyRoutes = {
 
 export const factoryRoutes = {
     root: '/factory',
+    dashboard: '/factory/dashboard',
     warehouseList: '/factory/warehouse',
     warehouse: '/factory/warehouse/:id',
     warranty: '/factory/warranty',
@@ -80,6 +81,11 @@ const routes: { [key: string]: any } = {
             Sidebar: <SidebarFactory />,
             Content: [
                 {
+                    title: 'Thống kê',
+                    path: factoryRoutes.dashboard,
+                    element: <ContentFactory.Dashboard />
+                },
+                {
                     title: 'Kho',
                     path: factoryRoutes.warehouseList,
                     element: <ContentFactory.WarehouseList />
@@ -95,7 +101,7 @@ const routes: { [key: string]: any } = {
                     element: <ContentFactory.Warranty />
                 },
                 {
-                    title: '',
+                    title: 'Chi tiết sản phẩm',
                     path: generalRoutes.product,
                     element: <ContentFactory.Product />
                 }

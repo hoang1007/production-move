@@ -55,7 +55,6 @@ public class Warehouse {
     private Factory factory;
 
     @OneToMany(mappedBy = "warehouse", fetch = FetchType.EAGER)
-    @OrderBy("startAt DESC")
     @JsonIgnore
     private Set<ProductDetail> productdetails;
     

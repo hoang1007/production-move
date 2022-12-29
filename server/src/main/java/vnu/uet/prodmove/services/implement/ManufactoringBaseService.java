@@ -3,6 +3,8 @@ package vnu.uet.prodmove.services.implement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -112,5 +114,14 @@ public class ManufactoringBaseService implements IManufactoringBaseService {
         var warehouses = factory.getWarehouses();
 
         return warehouses;
+    }
+
+    @Override
+    public Collection<Product> getAllCreatedProducts(Integer factoryId) {
+        var products = productDetailRepository.findAll().stream().filter(
+            pd -> pd.getStage().equals(ProductStage.NEW_PRODUCTION) && pd.getFactory().getId().equals(factoryId)
+        ).map(pd -> pd.getProduct()).collect(Collectors.toList());
+
+        return products;
     }
 }

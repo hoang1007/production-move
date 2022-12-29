@@ -15,17 +15,16 @@ import lombok.Data;
 import vnu.uet.prodmove.enums.UserRole;
 import vnu.uet.prodmove.utils.converter.db.UserRoleConverter;
 
-
 @Entity
 @Table(name = "account")
 @Data
 public class Account {
 
     @Id
-    @Column(name="username", nullable = false, updatable = false, length = 128)
+    @Column(name = "username", nullable = false, updatable = false, length = 128)
     private String username;
 
-    @Column(name="password", nullable = false, length = 128)
+    @Column(name = "password", nullable = false, length = 128)
     @JsonIgnore
     private String password;
 
@@ -54,7 +53,7 @@ public class Account {
     }
 
     public boolean isWarranty() {
-        return role.toString().equalsIgnoreCase(UserRole.REPAIRER.toString());
+        return role.toString().equalsIgnoreCase(UserRole.WARRANTY.toString());
     }
 
     public Integer getIdUser() {

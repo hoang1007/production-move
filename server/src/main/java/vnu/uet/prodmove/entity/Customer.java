@@ -44,9 +44,9 @@ public class Customer {
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private Set<Order> orders;
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
-    @JsonIgnore
-    private Set<Product> products;
+    // @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+    // @JsonIgnore
+    // private Set<Product> products;
 
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

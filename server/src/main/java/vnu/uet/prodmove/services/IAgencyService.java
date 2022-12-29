@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.List;
 
 import vnu.uet.prodmove.entity.Agency;
+import vnu.uet.prodmove.entity.Order;
+import vnu.uet.prodmove.entity.Product;
 import vnu.uet.prodmove.entity.Warehouse;
 import vnu.uet.prodmove.exception.NotFoundException;
 import vnu.uet.prodmove.utils.dataModel.WarehouseModel;
@@ -95,4 +97,11 @@ public interface IAgencyService {
     public void returnProductsToFactory(Iterable<Integer> productIds, Integer factoryId);
 
     public Collection<Product> getPendingProducts(Integer agencyId) throws NotFoundException;
+
+    /**
+     * Tìm tất cả các sản phẩm đã chuyển đến đại lý
+     * @param agencyId
+     * @return
+     */
+    public Collection<Product> getDistributedProducts(Integer agencyId);
 }
