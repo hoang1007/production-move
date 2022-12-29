@@ -2,8 +2,16 @@ import Login from '~/pages/public/Login';
 
 import { SidebarAgency, ContentAgency } from '~/pages/private/Agency'
 import { ContentFactory, SidebarFactory } from '~/pages/private/Factory';
+import { ContentAdmin, SidebarAdmin } from '~/pages/private/Admin';
+import NotFound from '~/pages/public/NotFound';
 
 // cái này dùng trong Sidebar ở chỗ Button nhé
+export const adminRoutes = {
+    root: '/admin',
+    dashboard: '/admin/dashboard',
+
+}
+
 export const agencyRoutes = {
     root: '/agency',
     dashboard: '/agency/dashboard',
@@ -24,20 +32,31 @@ const routes: { [key: string]: any } = {
             path: '/login',
             element: <Login />
         },
+
+        notFound: {
+            path: '/not-found',
+            element: <NotFound />
+        },
     },
 
     private: {
 
         admin: {
-            path: '/admin',
-            roles: [],
-            Sidebar: <></>,
-            Content: []
+            path: adminRoutes.root,
+            roles: ['MODERATOR', 'ADMIN'],
+            Sidebar: <SidebarAdmin/>,
+            Content: [
+                {
+                    title: 'Dashboard',
+                    path: adminRoutes.dashboard,
+                    element: <ContentAdmin.Dashboard />
+                },
+            ]
         },
 
         manufacturingBase: {
             path: '/factory',
-            roles: [],
+            roles: ['FACTORY'],
             Sidebar: <SidebarFactory />,
             Content: [
                 {
@@ -60,7 +79,7 @@ const routes: { [key: string]: any } = {
 
         agency: {
             title: 'AGENCY',
-            path: '/agency',
+            path: agencyRoutes.root,
             roles: ['AGENCY'],
             Sidebar: <SidebarAgency/>,
             Content: [

@@ -53,6 +53,7 @@ function Login() {
             username: username,
             password: password,
         }).then(res => {
+            console.log(res)
             if (res.status === 200) {
                 if (authDispatch) {
                     authDispatch(authActions.login(res.data));
