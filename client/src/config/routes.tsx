@@ -3,6 +3,7 @@ import React from 'react';
 
 import { SidebarAgency, ContentAgency } from '~/pages/private/Agency'
 import { ContentFactory, SidebarFactory } from '~/pages/private/Factory';
+import { ContentWarrantyCenter, SidebarWarrantyCenter } from '~/pages/private/WarrantyCenter';
 import Login from '~/utils/FakeLogin';
 
 // cái này dùng trong Sidebar ở chỗ Button nhé
@@ -21,6 +22,13 @@ export const factoryRoutes = {
     warehouse: '/factory/warehouse/:id',
     warranty: '/factory/warranty',
     error: '/factory/error',
+}
+
+export const warrantyRoutes = {
+    root: '/warranty',
+    dashboard: '/warranty/dashboard',
+    receiveProduct: '/warranty/receive',
+    repairing: '/warranty/repairing',
 }
 
 export const generalRoutes = {
@@ -77,41 +85,57 @@ const routes: { [key: string]: any } = {
             title: 'AGENCY',
             path: agencyRoutes.root,
             roles: ['AGENCY'],
-            Sidebar: <SidebarAgency/>,
+            Sidebar: <SidebarAgency />,
             Content: [
                 {
                     title: 'Dashboard',
                     path: agencyRoutes.dashboard,
-                    element: <ContentAgency.Dashboard/>
+                    element: <ContentAgency.Dashboard />
                 },
                 {
                     title: 'Import new mobile phone',
                     path: agencyRoutes.import,
-                    element: <ContentAgency.Import/>
+                    element: <ContentAgency.Import />
                 },
                 {
                     title: 'Defective & Repaired mobile phone',
                     path: agencyRoutes.warranty,
-                    element: <ContentAgency.Warranty/>
+                    element: <ContentAgency.Warranty />
                 },
                 {
                     title: 'Orders',
                     path: agencyRoutes.order,
-                    element: <ContentAgency.Orders/>
+                    element: <ContentAgency.Orders />
                 },
-                 {
+                {
                     title: 'All warehouses',
                     path: agencyRoutes.warehouse,
-                    element: <ContentAgency.Warehouse/>
+                    element: <ContentAgency.Warehouse />
                 },
             ]
         },
 
         warranty: {
-            path: '/warranty',
-            roles: [],
-            Sidebar: <></>,
-            Content: []
+            path: warrantyRoutes.root,
+            roles: ['WARRANTY'],
+            Sidebar: <SidebarWarrantyCenter />,
+            Content: [
+                {
+                    title: 'Thống kê',
+                    path: warrantyRoutes.dashboard,
+                    element: <ContentWarrantyCenter.Dashboard/>
+                },
+                {
+                    title: 'Nhận sản phẩm',
+                    path: warrantyRoutes.receiveProduct,
+                    element: <ContentWarrantyCenter.ReceiveProducts/>
+                },
+                {
+                    title: 'Sửa sản phẩm',
+                    path: warrantyRoutes.repairing,
+                    element: <ContentWarrantyCenter.RepairProducts/>
+                }
+            ]
         }
 
     }

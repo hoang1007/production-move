@@ -1,0 +1,25 @@
+#container {
+    .navigation-btn {
+        color: #585757;
+        padding: 0.4rem;
+        font-size: 1.6rem;
+        border-radius: 1rem;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        text-transform: none;
+    
+        &:hover {
+            background-color: #0085ff10;
+        }
+
+        &:focus {
+            background-color: #0085ff20;
+        }
+    
+        .icon {
+            margin: 0 1rem;
+        }
+    
+    }
+}

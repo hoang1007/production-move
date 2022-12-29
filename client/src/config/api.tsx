@@ -20,6 +20,9 @@ const api = {
     warehouse: {
         root: '/api/warehouse',
         newProducts: '/api/warehouse/new_products',
+    },
+    warrantyCenter: {
+        root: '/api/warranty_center',
     }
 }
 

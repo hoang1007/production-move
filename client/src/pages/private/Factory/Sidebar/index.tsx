@@ -11,21 +11,21 @@ import { factoryRoutes } from '~/config/routes';
 const cx = ClassNames(style);
 
 function Sidebar() {
-        const navigate = useNavigate()
+	const navigate = useNavigate()
 
-        return (
-                <Stack id={cx('container')} direction="column" spacing={2}>
-                        <Button variant="text" className={cx('navigation-btn')} startIcon={<GridIcon className={cx('icon')} />} onClick={() => navigate(factoryRoutes.error)}>
-                                Thống kê
-                        </Button>
-                        <Button variant="text" className={cx('navigation-btn')} startIcon={<PlusIcon className={cx('icon')} />} onClick={() => navigate(factoryRoutes.warehouseList)}>
-                                Kho
-                        </Button>
-                        <Button variant="text" className={cx('navigation-btn')} startIcon={<PlusIcon className={cx('icon')} />} onClick={() => navigate(factoryRoutes.warranty)}>
-                                Sản phẩm lỗi
-                        </Button>
-                </Stack>
-        );
+	return (
+		<Stack id={cx('container')} direction="column" spacing={2}>
+			<Button variant="text" className={cx('navigation-btn')} startIcon={<GridIcon className={cx('icon')} />} onClick={() => navigate(factoryRoutes.error)}>
+				Thống kê
+			</Button>
+			<Button variant="text" className={cx('navigation-btn')} startIcon={<PlusIcon className={cx('icon')} />} onClick={() => navigate(factoryRoutes.warehouseList)}>
+				Kho
+			</Button>
+			<Button variant="text" className={cx('navigation-btn')} startIcon={<PlusIcon className={cx('icon')} />} onClick={() => navigate(factoryRoutes.warranty)}>
+				Sản phẩm lỗi
+			</Button>
+		</Stack>
+	);
 }
 
 export default Sidebar;
