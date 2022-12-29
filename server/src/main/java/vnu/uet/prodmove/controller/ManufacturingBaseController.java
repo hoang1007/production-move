@@ -4,9 +4,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import vnu.uet.prodmove.config.ApiConfig;
@@ -53,6 +55,16 @@ public class ManufacturingBaseController {
         try {
             factoryService.receiveReturnedProducts(productIDs);
             return ResponseEntity.ok("OK");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Internal Server Error");
+        }
+    }
+
+    @GetMapping(ApiConfig.FACTORY_ALL_WAREHOUSES)
+    public ResponseEntity<?> getAllWarehouses(@RequestParam Integer id) {
+        try {
+            return ResponseEntity.ok(factoryService.getAllWarehouses(id));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.internalServerError().body("Internal Server Error");

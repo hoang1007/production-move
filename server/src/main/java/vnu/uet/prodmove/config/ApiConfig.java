@@ -13,8 +13,6 @@ public class ApiConfig {
     public static final String LOG_IN = "/login";
     public static final String SIGN_UP = "/signup";
 
-    public static final String GET_PRODUCTLINE_INFO = "/productline_info";
-
     // moderator
     public static final String MODERATOR = "/moderator";
     public static final String MODERATOR_CREATE_ACCOUNT = "/create_account";
@@ -29,15 +27,23 @@ public class ApiConfig {
     public static final String AGENCY_ALL_WAREHOUSE = "/warehouses";
     public static final String AGENCY_SELL_PRODUCT = "/sell_product";
     public static final String AGENCY_TRANSFER_TO_WARRANTY = "/transfer_to_warranty";
+    public static final String AGENCY_ALL = "/all";
 
     // warehouse
     public static final String WAREHOUSE = "/warehouse";
     public static final String WAREHOUSE_CREATE = "/create";
     public static final String WAREHOUSE_UPDATE = "/update";
+    public static final String NEW_PRODUCTS = "/new_products";
 
     // factory
     public static final String FACTORY = "/factory";
     public static final String EXPORT_TO_AGENCY = "/export";
     public static final String IMPORT_PRODUCTS = "/import";
     public static final String RECEIVE_RETURNED_PRODUCTS = "/receive_returned_products";
+    public static final String FACTORY_ALL_WAREHOUSES = "/warehouses";
+
+    // productline
+    public static final String PRODUCTLINE = "/productline";
+    public static final String GET_PRODUCTLINE = "/";
+    public static final String ALL_PRODUCTLINES = "/all";
 }

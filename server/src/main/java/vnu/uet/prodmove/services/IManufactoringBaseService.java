@@ -1,5 +1,9 @@
 package vnu.uet.prodmove.services;
 
+import java.util.Collection;
+
+import vnu.uet.prodmove.entity.Warehouse;
+
 public interface IManufactoringBaseService {
     /**
      * Chuyển sản phẩm mới sản xuất tới kho của cơ sở sản xuất
@@ -21,4 +25,10 @@ public interface IManufactoringBaseService {
      * @param productIds Danh sách mã sản phẩm
      */
     public void receiveReturnedProducts(Iterable<Integer> productIds);
+
+    /**
+     * Lấy tất cả các kho của cơ sở sản xuất
+     * @return
+     */
+    public Collection<Warehouse> getAllWarehouses(Integer factoryId);
 }

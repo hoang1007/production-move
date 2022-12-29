@@ -15,6 +15,18 @@ export const agencyRoutes = {
     warehouse: '/agency/warehouses',
 }
 
+export const factoryRoutes = {
+    root: '/factory',
+    warehouseList: '/factory/warehouse',
+    warehouse: '/factory/warehouse/:id',
+    warranty: '/factory/warranty',
+    error: '/factory/error',
+}
+
+export const generalRoutes = {
+    product: '/product/:id',
+}
+
 const routes: { [key: string]: any } = {
     root: '/',
 
@@ -34,31 +46,36 @@ const routes: { [key: string]: any } = {
         },
 
         manufacturingBase: {
-            path: '/factory',
-            roles: [],
+            path: factoryRoutes.root,
+            roles: ['FACTORY'],
             Sidebar: <SidebarFactory />,
             Content: [
                 {
                     title: 'Kho',
-                    path: '/factory/warehouse',
+                    path: factoryRoutes.warehouseList,
                     element: <ContentFactory.WarehouseList />
                 },
                 {
-                    title: 'Kho',
-                    path: '/factory/warehouse/:id',
+                    title: '',
+                    path: factoryRoutes.warehouse,
                     element: <ContentFactory.Warehouse />
                 },
                 {
                     title: 'Sản phẩm lỗi',
-                    path: '/factory/warranty',
+                    path: factoryRoutes.warranty,
                     element: <ContentFactory.Warranty />
+                },
+                {
+                    title: '',
+                    path: generalRoutes.product,
+                    element: <ContentFactory.Product />
                 }
             ]
         },
 
         agency: {
             title: 'AGENCY',
-            path: '/agency',
+            path: agencyRoutes.root,
             roles: ['AGENCY'],
             Sidebar: <SidebarAgency/>,
             Content: [

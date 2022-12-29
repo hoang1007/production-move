@@ -28,6 +28,17 @@ public class AgencyController {
     @Autowired
     private IAgencyService agencyService;
 
+    @GetMapping(ApiConfig.AGENCY_ALL)
+    public ResponseEntity<?> getAllAgencies() {
+        try {
+            var agencies = agencyService.findAll();
+            return ResponseEntity.ok().body(agencies);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(Map.of("message", "Something went wrong."));
+        }
+    }
+
     /**
      * import all pending products into warehouse of agency.
      * 

@@ -7,6 +7,7 @@ import api from '~/config/api';
 
 import style from './style.module.scss';
 import ClassNames from '~/utils/classNames';
+import { factoryRoutes } from '~/config/routes';
 const cx = ClassNames(style);
 
 function Sidebar() {
@@ -14,13 +15,13 @@ function Sidebar() {
 
         return (
                 <Stack id={cx('container')} direction="column" spacing={2}>
-                        <Button variant="text" className={cx('navigation-btn')} startIcon={<GridIcon className={cx('icon')} />} onClick={() => navigate(api.factory.error)}>
+                        <Button variant="text" className={cx('navigation-btn')} startIcon={<GridIcon className={cx('icon')} />} onClick={() => navigate(factoryRoutes.error)}>
                                 Thống kê
                         </Button>
-                        <Button variant="text" className={cx('navigation-btn')} startIcon={<PlusIcon className={cx('icon')} />} onClick={() => navigate(api.factory.warehouseList)}>
+                        <Button variant="text" className={cx('navigation-btn')} startIcon={<PlusIcon className={cx('icon')} />} onClick={() => navigate(factoryRoutes.warehouseList)}>
                                 Kho
                         </Button>
-                        <Button variant="text" className={cx('navigation-btn')} startIcon={<PlusIcon className={cx('icon')} />} onClick={() => navigate(api.factory.warranty)}>
+                        <Button variant="text" className={cx('navigation-btn')} startIcon={<PlusIcon className={cx('icon')} />} onClick={() => navigate(factoryRoutes.warranty)}>
                                 Sản phẩm lỗi
                         </Button>
                 </Stack>

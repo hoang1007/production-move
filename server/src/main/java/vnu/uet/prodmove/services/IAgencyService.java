@@ -2,10 +2,9 @@ package vnu.uet.prodmove.services;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 
 import vnu.uet.prodmove.entity.Agency;
-import vnu.uet.prodmove.entity.Product;
 import vnu.uet.prodmove.entity.Warehouse;
 import vnu.uet.prodmove.exception.NotFoundException;
 import vnu.uet.prodmove.utils.dataModel.WarehouseModel;
@@ -15,6 +14,12 @@ public interface IAgencyService {
     Agency findById(Integer id) throws NotFoundException;
 
     Warehouse createWarehouse(Integer agencyId, WarehouseModel warehouseModel) throws Exception;
+
+    /**
+     * Get all agencies
+     * @return
+     */
+    List<Agency> findAll();
 
     /**
      * Import pending products into a warehouse of agency.

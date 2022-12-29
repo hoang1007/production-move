@@ -170,4 +170,9 @@ public class AgencyService implements IAgencyService {
 
     }
 
+    @Override
+    public List<Agency> findAll() {
+        return agencyRepository.findAll();
+    }
+
 }

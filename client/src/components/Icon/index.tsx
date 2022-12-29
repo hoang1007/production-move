@@ -11,7 +11,8 @@ import {
     faCartShopping,
     faScrewdriverWrench,
     faPlus,
-    faWarehouse
+    faWarehouse,
+    faTruck
 } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faGooglePlus } from '@fortawesome/free-brands-svg-icons';
 import Tippy from '@tippyjs/react';
@@ -71,4 +72,4 @@ export const GroceryIcon = CreateIcon(faCartShopping)
 export const RepairedIcon = CreateIcon(faScrewdriverWrench);
 export const PlusIcon = CreateIcon(faPlus);
 export const WarehouseIcon = CreateIcon(faWarehouse);
-
+export const DeliveryIcon = CreateIcon(faTruck);
