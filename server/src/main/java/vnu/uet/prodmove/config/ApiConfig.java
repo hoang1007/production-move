@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class ApiConfig {
     public static final String LOG_IN = "/login";
     public static final String SIGN_UP = "/signup";
+    public static final String LOG_OUT = "/log-out";
 
     public static final String GET_PRODUCTLINE_INFO = "/productline_info";
 

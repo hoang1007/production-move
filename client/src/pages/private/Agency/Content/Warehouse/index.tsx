@@ -20,7 +20,7 @@ function Warehouse() {
     React.useEffect(() => {
         axios.get(api.agency.allWarehouses, {
             params: {
-                agencyId: auth?.user.agencyId
+                agencyId: auth?.user.id
             }
         })
             .then(response => {

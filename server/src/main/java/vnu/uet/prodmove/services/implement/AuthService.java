@@ -1,5 +1,8 @@
 package vnu.uet.prodmove.services.implement;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Service;
 import vnu.uet.prodmove.custom.CustomUserDetails;
 import vnu.uet.prodmove.entity.Account;
 import vnu.uet.prodmove.exception.ConflictException;
+import vnu.uet.prodmove.exception.NotFoundException;
 import vnu.uet.prodmove.services.IAccountService;
 import vnu.uet.prodmove.services.IAuthService;
 import vnu.uet.prodmove.utils.dataModel.AccountModel;
@@ -31,15 +35,23 @@ public class AuthService implements IAuthService {
         return accountService.create(accountModel);
     }
 
-    public String login(AccountModel accountModel) {
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                accountModel.getUsername(), accountModel.getPassword());
+    public Map<String, Object> login(AccountModel accountModel) throws NotFoundException {
+        String username = accountModel.getUsername();
+        String password = accountModel.getPassword();
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, password);
         Authentication authObject = null;
         authObject = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authObject);
         String accessToken = jwtTokenUtil.generateToken(
                 (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()
-            );
-        return accessToken;
+        );
+        Account user = accountService.findByUsername(username);
+
+        Map<String, Object> res = new HashMap<String, Object>();
+        res.put("username", user.getUsername());
+        res.put("role", user.getRole().toString());
+        res.put("id", user.getIdUser());
+        res.put("accessToken", accessToken);
+        return res;
     }
 }

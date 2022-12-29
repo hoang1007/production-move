@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import routes from '~/config/routes';
 
 import RoleBaseRouting from './RoleBaseRouting';
@@ -41,6 +41,8 @@ const RoutesApp: React.FC = () => {
                         })
                     }
                 </Route>
+
+                <Route path="/*" element={<Navigate to={routes.public.login.path} />} />
 
             </Routes>
         </BrowserRouter>

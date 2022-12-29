@@ -1,9 +1,7 @@
-import React from 'react';
-// import Login from '~/pages/public/Login';
+import Login from '~/pages/public/Login';
 
 import { SidebarAgency, ContentAgency } from '~/pages/private/Agency'
 import { ContentFactory, SidebarFactory } from '~/pages/private/Factory';
-import Login from '~/utils/FakeLogin';
 
 // cái này dùng trong Sidebar ở chỗ Button nhé
 export const agencyRoutes = {
@@ -17,15 +15,19 @@ export const agencyRoutes = {
 
 const routes: { [key: string]: any } = {
     root: '/',
+    toDashboardWithRole: (role: string) => {
+        return `/${role.toLowerCase()}/dashboard`;
+    },
 
     public: {
         login: {
             path: '/login',
             element: <Login />
-        }
+        },
     },
 
     private: {
+
         admin: {
             path: '/admin',
             roles: [],

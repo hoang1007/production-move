@@ -1,4 +1,7 @@
 const api = {
+    login: '/api/login',
+    logout: '/api/log-out',
+
     agency: {
         root: '/api/agency',
         allWarehouses: '/api/agency/warehouses',

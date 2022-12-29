@@ -22,7 +22,7 @@ function Orders() {
 
     React.useEffect(() => {
         axios.get(`${api.agency.getOrders}`, {
-            params: {agencyId: auth?.user.agencyId}
+            params: {agencyId: auth?.user.id}
         })
             .then(response => {
                 console.log(response)

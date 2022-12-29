@@ -33,8 +33,11 @@
     }
 
     .user {
-    
+        width: 13.4rem;
+        height: 100%;
     }
+
+    
 }
 
 .noti{
@@ -79,6 +82,7 @@
     transition: all 0.2s linear;
     margin: 0 1rem;
     border-radius: 10px;
+    position: relative;
     
     &:hover {
         opacity: 0.8;
@@ -96,4 +100,27 @@
         margin: 0 1rem;
 
     }
+
+    .more {
+        position: absolute;
+        right: 0;
+        top: 100%;
+        background-color: #fff;
+        box-shadow: 0 0 4px black;
+        margin-top: 0.4rem;
+        padding: 0.4rem;
+        border-radius: 10px;
+        z-index: 100;
+
+        .btn-logout {
+
+            &:hover {
+                background-color: #ccc;
+            }
+        }
+    }
+}
+
+.active {
+    background-color: #ccc !important;
 }

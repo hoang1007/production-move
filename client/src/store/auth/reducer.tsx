@@ -5,7 +5,7 @@ export interface Auth {
     user: {
         username: string,
         role: string,
-        agencyId: number,
+        id: number,
     },
     accessToken: string
 }
@@ -13,20 +13,33 @@ export interface Auth {
 export const initialState: Auth = {
     isLoggedIn: false,
     user: {
-        username: 'bi',
-        role: 'AGENCY',
-        agencyId: 1
+        username: '',
+        role: '',
+        id: -1
     },
-    accessToken: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiaSIsImV4cCI6MTY3MjExMDYxNiwiaWF0IjoxNjcyMDI0MjE2fQ.G3qfFtr9-AmhUTNn-trhD1VoFjy8fLveVCOuCc9T8Hx4jTij3q9aOYAOKFOOllzxuvJvGxwObXeoPtUilMwYVw'
+    accessToken: ''
 }
 
 const reducer = (state = initialState, actions: Action) => {
     const { type, payload } = actions;
 
     switch (type) {
-        case '':
-            
-            break;
+        case 'LOGIN':
+            return {
+                ...state,
+                isLoggedIn: true,
+                user: {
+                    username: payload.username,
+                    role: payload.role,
+                    id: payload.id,
+                },
+                accessToken: payload.accessToken
+            }
+        
+        case 'LOGOUT':
+            return {
+                ...initialState
+            }
     
         default:
             return state;

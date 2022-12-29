@@ -65,6 +65,7 @@ public class AgencyController {
     @GetMapping(ApiConfig.AGENCY_PENDING_PRODUCTS)
     public ResponseEntity<?> getPendingProducts(@RequestParam(name = "agencyId") String agencyId) {
         try {
+            System.out.println(" ======>>> in controller");
             ArrayList<Product> _pendingProducts = (ArrayList<Product>) agencyService
                     .getPendingProducts(Integer.parseInt(agencyId));
             Set<Warehouse> _warehouses = (Set<Warehouse>) agencyService.getAllWarehouses(Integer.parseInt(agencyId));

@@ -85,7 +85,7 @@ function Import() {
     React.useEffect(() => {
         axios.get(api.agency.pendingProducts, {
             params: {
-                agencyId: auth?.user.agencyId
+                agencyId: auth?.user.id
             }
         })
             .then(response => {
@@ -121,7 +121,7 @@ function Import() {
     }, [warehouses])
 
     const postSelectedProducts = () => {
-        axios.post(`${api.agency.importProducts}?agencyId=${auth?.user.agencyId}&warehouseId=${selectedWarehouse}`, {
+        axios.post(`${api.agency.importProducts}?agencyId=${auth?.user.id}&warehouseId=${selectedWarehouse}`, {
             productIds: selectedProduct
         }).then(response => {
             if (response.status === 200) {
