@@ -28,18 +28,30 @@ export default function Dashboard() {
         }
 
         if (alignment === "month") {
-            return `Tháng ${date.getMonth()}`;
+            return date.getMonth() + 1;
         } else if (alignment === "quarter") {
-            return `Quý ${Math.floor(date.getMonth() / 3)}`;
+            return Math.ceil((date.getMonth() + 1) / 3);
         } else if (alignment === "year") {
-            return `Năm ${date.getFullYear()}`;
+            return date.getFullYear();
+        } else {
+            throw new Error("Invalid alignment");
+        }
+    }
+
+    const getIntervalLabel = (id: number | string) => {
+        if (alignment === "month") {
+            return `Tháng ${id}`;
+        } else if (alignment === "quarter") {
+            return `Quý ${id}`;
+        } else if (alignment === "year") {
+            return `Năm ${id}`;
         } else {
             throw new Error("Invalid alignment");
         }
     }
 
     const groupByInterval = (products: ProductType[]) => {
-        var group: Record<string, ProductType[]> = {};
+        var group: Record<number, ProductType[]> = {};
 
         products.forEach(product => {
             let intervalId = getIntervalId(product.productDetails[product.productDetails.length - 1].startAt);
@@ -53,16 +65,14 @@ export default function Dashboard() {
 
         var ret = Object.entries(group).map(([key, value]) => {
             return {
-                name: key,
+                name: getIntervalLabel(key),
                 value: value
             }
         });
 
-        ret.sort((a, b) => a.name.localeCompare(b.name));
-
         return ret;
     }
-
+    
     const groupByStage = (products: ProductType[]) => {
         var group: Record<string, ProductType[]> = {};
 
