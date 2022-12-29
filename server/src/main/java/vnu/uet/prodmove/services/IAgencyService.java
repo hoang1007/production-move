@@ -28,8 +28,11 @@ public interface IAgencyService {
      * @param warehouseId ID of the warehouse
      * @param productIds  list ID of the pending products
      * @throws NotFoundException
+     * @throws CloneNotSupportedException
      */
-    void importPendingProductsFromFactory(Integer agencyId, Integer warehouseId, Collection<String> productIds) throws NotFoundException;
+    void importPendingProductsFromFactory(Integer agencyId, Integer warehouseId, Collection<String> productIds)
+                    throws NotFoundException, CloneNotSupportedException;
+    
 
     /**
      * Get all warehouses of specific agency
@@ -43,8 +46,12 @@ public interface IAgencyService {
      * Sell products to customer.
      * @param customerId ID of the customer
      * @param productIds Collection of product IDs.
+     * @throws CloneNotSupportedException
      */
-    void sellProducts(Integer customerId, Collection<Integer> productIds) throws NotFoundException;
+    void sellProducts(Integer customerId, Collection<Integer> productIds) throws NotFoundException, CloneNotSupportedException;
+
+    public Collection<Order> getAllOrders(Integer agencyId) throws NotFoundException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException;
 
     /**
      * Nhận các sản phẩm cần bảo hành từ khách hàng và lưu vào kho để chờ gửi xuống trung tâm bảo hành.
@@ -86,4 +93,6 @@ public interface IAgencyService {
      * @param factoryId Mã cơ sở sản xuất
      */
     public void returnProductsToFactory(Iterable<Integer> productIds, Integer factoryId);
+
+    public Collection<Product> getPendingProducts(Integer agencyId) throws NotFoundException;
 }

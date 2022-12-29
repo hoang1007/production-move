@@ -13,4 +13,7 @@ public interface IProductdetailService {
     ProductDetail createProductDetail(ProductDetail productDetail);
 
     Collection<ProductDetail> saveAll(Collection<ProductDetail> productdetails);
+
+    Collection<ProductDetail> findPendingProductDetails(Integer agencyId);
+
 }

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class ApiConfig {
     public static final String LOG_IN = "/login";
     public static final String SIGN_UP = "/signup";
+    public static final String LOG_OUT = "/log-out";
 
     // moderator
     public static final String MODERATOR = "/moderator";
@@ -23,9 +24,11 @@ public class ApiConfig {
     // agency
     public static final String AGENCY = "/agency";
     public static final String AGENCY_IMPORT_PRODUCTS = "/import_products";
+    public static final String AGENCY_PENDING_PRODUCTS = "/pending_products";
     public static final String AGENCY_CREATE_WAREHOUSE = "/create_warehouse";
     public static final String AGENCY_ALL_WAREHOUSE = "/warehouses";
     public static final String AGENCY_SELL_PRODUCT = "/sell_product";
+    public static final String AGENCY_ALL_ORDERS = "/orders";
     public static final String AGENCY_TRANSFER_TO_WARRANTY = "/transfer_to_warranty";
     public static final String AGENCY_ALL = "/all";
 

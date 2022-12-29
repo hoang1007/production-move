@@ -1,31 +1,24 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate , useNavigate} from "react-router-dom";
+import { toast } from 'react-toastify';
 
-import { useAuth } from '~/hooks';
+import { useAuth, useAxios } from '~/hooks';
+import routes from '~/config/routes';
+import api from '~/config/api';
+import { actions as authActions } from '~/store/auth';
+import Cookies from "js-cookie";
 
+// Just do simple things here :")
+// No checking access token in cookies :")
 function ProtectedRoutes() {
     console.log('check auth')
-    const [auth] = useAuth();
-    const [loading, setLoading] = React.useState(true)
 
-    // React.useEffect(() => {
-    //     if (auth?.isLoggedIn) {
-    //         setLoading(false);
-    //         return;
-    //     }
+    const accessToken = Cookies.get('accessToken');
+    if (!accessToken) {
+        return <Navigate to={routes.public.login.path} />
+    }
 
-        /**
-         * NEXT: 
-         * Call api to get basic info if it already has access_token in cookies
-         * If access_token is invalid or expired, navigate to login page.
-         * 
-         * if everything is OK, go ahead
-         */
-
-
-    // }, [])
-
-    return <Outlet/>
+    return <Outlet />
 }
 
 export default ProtectedRoutes;

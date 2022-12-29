@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -17,6 +18,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Getter;
@@ -46,16 +48,21 @@ public class Product {
 
     @OrderBy("startAt ASC")
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<ProductDetail> productDetails;
 
     @OneToOne(mappedBy = "product", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Order order;
 
-    // @ManyToOne
-    // @JoinTable(name = "order", joinColumns = {
-    //         @JoinColumn(name = "productID", referencedColumnName = "ID") }, inverseJoinColumns = {
-    //                 @JoinColumn(name = "customerID", referencedColumnName = "ID") })
-    // private Customer customer;
+    @ManyToOne
+    @JoinTable(
+        name="orders",
+        joinColumns = {@JoinColumn(name="productID", referencedColumnName="ID")},
+        inverseJoinColumns={@JoinColumn(name="customerID", referencedColumnName="ID")}
+    )
+    @JsonIgnore
+    private Customer customer;
 
     public void addProductDetail(ProductDetail productDetail) {
         if (productDetails == null) {

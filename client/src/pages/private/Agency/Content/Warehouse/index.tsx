@@ -7,7 +7,7 @@ import style from './style.module.scss';
 import ClassNames from '~/utils/classNames';
 import Loading from '~/components/Loading';
 import { WarehouseType } from '~/utils/TypeGlobal';
-import { importedProductsSelector } from '~/utils/selector';
+// import { importedProductsSelector } from '~/utils/selector';
 
 const cx = ClassNames(style);
 
@@ -20,7 +20,7 @@ function Warehouse() {
     React.useEffect(() => {
         axios.get(api.agency.allWarehouses, {
             params: {
-                agencyId: auth?.user.agencyId
+                agencyId: auth?.user.id
             }
         })
             .then(response => {
@@ -44,7 +44,7 @@ function Warehouse() {
                 !loading ?
                     listWarehouse.map((warehouse: WarehouseType, index: number) => {
                         return (
-                            <WarehouseItem key={`warehouse-${warehouse.id}-index-${index}`} data={importedProductsSelector(warehouse)} />
+                            <WarehouseItem key={`warehouse-${warehouse.id}-index-${index}`} data={(warehouse)} />
                         )
                     })
                     :

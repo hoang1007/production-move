@@ -25,7 +25,7 @@ function WarehouseItem({ data }: Props) {
                 <div className={cx('info')}>
                     <h2 className={cx('name')}>warehouse</h2>
                     <span className={cx('address')}>Address: {data.address}</span>
-                    <span>The number of Products: {data.productDetails.length}</span>
+                    <span>The number of Products: {data.products.length}</span>
                 </div>
 
                 <div className={cx('actions')}>
@@ -41,9 +41,9 @@ function WarehouseItem({ data }: Props) {
                 <div className={cx('products')}>
                     {
                         showMore && (
-                            data.productDetails.length > 0 ? (
-                                data.productDetails.map((pd: ProductDetailType, index: number) => {
-                                    return <Product key={`productdetail-${pd.id}-index-${index}`} data={pd.product} />
+                            data.products.length > 0 ? (
+                                data.products.map((product, index: number) => {
+                                    return <Product key={`productdetail-${product.id}-index-${index}`} data={product} />
                                 })
                             )
                                 :

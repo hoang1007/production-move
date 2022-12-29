@@ -26,9 +26,9 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import { useAxios, useAuth } from '~/hooks';
-import { WarehouseType } from '~/utils/TypeGlobal';
+import { ProductType, WarehouseType } from '~/utils/TypeGlobal';
 import api from '~/config/api';
-import { pendingProductsSelector } from '~/utils/selector';
+// import { pendingProductsSelector } from '~/utils/selector';
 
 const cx = ClassNames(style);
 
@@ -77,19 +77,22 @@ function Import() {
     const [loading, setLoading] = React.useState(false);
     const [dataRows, setDataRows] = React.useState<Readonly<Rows[]>>([]);
     const [warehouses, setListWarehouses] = React.useState<WarehouseType[]>([])
+    const [pendingProducts, setPendingProducts] = React.useState<ProductType[]>([]);
     const [selectedProduct, setSelectedProduct] = React.useState<GridRowId[]>([]);
     const [selectedWarehouse, setSelectedWarehouse] = React.useState<number>(-1);
     const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {
-        axios.get(api.agency.allWarehouses, {
+        axios.get(api.agency.pendingProducts, {
             params: {
-                agencyId: auth?.user.agencyId
+                agencyId: auth?.user.id
             }
         })
             .then(response => {
+                console.log(response)
                 if (response.status === 200) {
-                    setListWarehouses([...response.data]);
+                    setListWarehouses(response.data.warehouses);
+                    setPendingProducts(response.data.pendingProducts);
                     setTimeout(() => {
                         setLoading(false)
                     }, 1200)
@@ -103,28 +106,29 @@ function Import() {
     }, [])
 
     React.useEffect(() => {
-        const ws = [...warehouses].map((w) => pendingProductsSelector(w))
         const _dataRows: Rows[] = [];
-        for (const w of ws) {
-            if (w.productDetails.length > 0) {
+        for (const product of pendingProducts) {
                 _dataRows.push({
-                    id: w.productDetails[0].product.id,
-                    brand: w.productDetails[0].product.productline.brand,
-                    phone: w.productDetails[0].product.productline.phone,
+                    id: product.id,
+                    brand: product.productline.brand,
+                    phone: product.productline.phone,
                     storage: '100GB',
                     color: 'Black',
                     cost: '$2000'
                 })
-            }
         }
         setDataRows(_dataRows)
     }, [warehouses])
 
     const postSelectedProducts = () => {
-        axios.post(`${api.agency.importProducts}?agencyId=${auth?.user.agencyId}&warehouseId=${selectedWarehouse}`, {
+        axios.post(`${api.agency.importProducts}?agencyId=${auth?.user.id}&warehouseId=${selectedWarehouse}`, {
             productIds: selectedProduct
         }).then(response => {
-            toast.success(response.data.message);
+            if (response.status === 200) {
+                toast.success(response.data.message);
+                setOpen(false)
+                setDataRows(prev => prev.filter(p => !selectedProduct.includes(p.id)))
+            }
         }).catch(error => {
             console.log(error)
             // setLoading(false)
@@ -159,8 +163,7 @@ function Import() {
             toast.error("You must choose Warehouse to store selected products!");
             return;
         }
-        setOpen(false)
-        setDataRows(prev => prev.filter(p => !selectedProduct.includes(p.id)))
+        
         postSelectedProducts()
     }
 

@@ -2,6 +2,8 @@ package vnu.uet.prodmove.entity;
 
 import java.util.Set;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -52,8 +55,10 @@ public class Warehouse {
     private Factory factory;
 
     @OneToMany(mappedBy = "warehouse", fetch = FetchType.EAGER)
+    @OrderBy("startAt DESC")
+    @JsonIgnore
     private Set<ProductDetail> productdetails;
-
+    
     public boolean isAgency() {
         return agency != null && factory == null;
     }

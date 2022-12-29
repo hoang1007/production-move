@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios, { AxiosRequestConfig } from 'axios';
 import { useAuth } from '~/hooks';
 import routes from '~/config/routes';
+import Cookies from 'js-cookie';
 
 const instance = axios.create({
     baseURL: process.env.REACT_APP_BACKEND_BASE_URL,
@@ -19,16 +20,16 @@ const usePrivateAxios = () => {
     const username = auth?.user.username;
 
     useEffect(() => {
-        const requestIntercept = axios.interceptors.request.use((config: AxiosRequestConfig<any>) => {
+        const requestIntercept = instance.interceptors.request.use((config: AxiosRequestConfig<any>) => {
             if (config?.headers &&  !config.headers['Authorization']) {
-                config.headers['Authorization'] = `Bearer ${auth?.accessToken}`;
+                config.headers['Authorization'] = `Bearer ${auth?.accessToken || Cookies.get('accessToken') || ''}`;
             }
             return config;
         }, (err) => {
             return Promise.reject(err);
         })
 
-        const responseIntercept = axios.interceptors.response.use((response: any) => {
+        const responseIntercept = instance.interceptors.response.use((response: any) => {
             if (response.status === 403) {
                 navigate(routes.public.login, { replace: true })
                 return;
@@ -39,8 +40,8 @@ const usePrivateAxios = () => {
         })
 
         return () => {
-            axios.interceptors.request.eject(requestIntercept)
-            axios.interceptors.response.eject(responseIntercept)
+            instance.interceptors.request.eject(requestIntercept)
+            instance.interceptors.response.eject(responseIntercept)
         }
     }, [username]);
 

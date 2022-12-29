@@ -7,7 +7,7 @@ import api from '~/config/api';
 import style from './style.module.scss';
 import ClassNames from '~/utils/classNames';
 import { CustomerType } from '~/utils/TypeGlobal';
-import { Button, FormControlLabel, FormControl, Radio, RadioGroup } from '@mui/material';
+import { Button,Radio } from '@mui/material';
 import OrderModal from './OrderModal';
 const cx = ClassNames(style);
 
@@ -22,10 +22,9 @@ function Orders() {
 
     React.useEffect(() => {
         axios.get(`${api.agency.getOrders}`, {
-            params: {agencyId: auth?.user.agencyId}
+            params: {agencyId: auth?.user.id}
         })
             .then(response => {
-                console.log(response)
                 if (response.status === 200) {
                     setCustomers(response.data)
                     setTimeout(() => {
@@ -44,7 +43,7 @@ function Orders() {
         const soldCus: number[] = [];
         customers.forEach(customer => {
             customer.orders.forEach(order => {
-                if (order.soldAt !== null) {
+                if (order.soldDate !== null) {
                     soldCus.push(customer.id)
                 }
             })

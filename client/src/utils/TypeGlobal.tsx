@@ -12,7 +12,7 @@ export interface AgencyType {
 export interface WarehouseType {
     id: number,
     address: string,
-    productDetails: ProductDetailType[]
+    products: ProductType[]
 }
 
 export interface ProductDetailType {
@@ -140,6 +140,6 @@ export interface CustomerType {
 export interface OrderType {
     id: number,
     orderDate: Date,
-    soldAt: Date,
+    soldDate: Date,
     product: ProductType
 }

@@ -1,5 +1,7 @@
 package vnu.uet.prodmove.security;
 
+import java.lang.reflect.Method;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +45,7 @@ public class SecurityConfig {
         http.csrf().disable();
         http.cors();
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, ApiConfig.LOG_IN).permitAll()
+                .antMatchers( ApiConfig.LOG_IN, ApiConfig.LOG_OUT).permitAll()
                 .antMatchers(HttpMethod.POST, ApiConfig.SIGN_UP).hasAuthority(UserRole.MODERATOR.toString())
                 .antMatchers(ApiConfig.MODERATOR).hasAuthority(UserRole.MODERATOR.toString())
                 .antMatchers(ApiConfig.AGENCY).hasAuthority(UserRole.AGENCY.toString())

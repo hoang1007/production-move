@@ -1,12 +1,18 @@
-import React from 'react';
-// import Login from '~/pages/public/Login';
+import Login from '~/pages/public/Login';
 
 import { SidebarAgency, ContentAgency } from '~/pages/private/Agency'
 import { ContentFactory, SidebarFactory } from '~/pages/private/Factory';
 import { ContentWarrantyCenter, SidebarWarrantyCenter } from '~/pages/private/WarrantyCenter';
-import Login from '~/utils/FakeLogin';
+import { ContentAdmin, SidebarAdmin } from '~/pages/private/Admin';
+import NotFound from '~/pages/public/NotFound';
 
 // cái này dùng trong Sidebar ở chỗ Button nhé
+export const adminRoutes = {
+    root: '/admin',
+    dashboard: '/admin/dashboard',
+
+}
+
 export const agencyRoutes = {
     root: '/agency',
     dashboard: '/agency/dashboard',
@@ -37,20 +43,35 @@ export const generalRoutes = {
 
 const routes: { [key: string]: any } = {
     root: '/',
+    toDashboardWithRole: (role: string) => {
+        return `/${role.toLowerCase()}/dashboard`;
+    },
 
     public: {
         login: {
             path: '/login',
             element: <Login />
-        }
+        },
+
+        notFound: {
+            path: '/not-found',
+            element: <NotFound />
+        },
     },
 
     private: {
+
         admin: {
-            path: '/admin',
-            roles: [],
-            Sidebar: <></>,
-            Content: []
+            path: adminRoutes.root,
+            roles: ['MODERATOR', 'ADMIN'],
+            Sidebar: <SidebarAdmin/>,
+            Content: [
+                {
+                    title: 'Dashboard',
+                    path: adminRoutes.dashboard,
+                    element: <ContentAdmin.Dashboard />
+                },
+            ]
         },
 
         manufacturingBase: {

@@ -40,7 +40,7 @@ public class ProductDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(name="stage", nullable = false)
     @Convert(converter = ProductStageConverter.class)
     private ProductStage stage;
 
@@ -63,6 +63,7 @@ public class ProductDetail {
     @ManyToOne(fetch = FetchType.EAGER)
     @Transient
     @JoinColumn(name = "warrantyCenterID")
+    @JsonIgnore
     private WarrantyCenter warrantyCenter;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -72,6 +73,7 @@ public class ProductDetail {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customerID")
+    @JsonIgnore
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -81,6 +83,7 @@ public class ProductDetail {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "agencyID")
+    @JsonIgnore
     private Agency agency;
 
     public ProductDetail() {
@@ -98,7 +101,7 @@ public class ProductDetail {
 
     /**
      * Đánh dấu trạng thái đã hoàn thành.
-     * Cập nhật trường {@value #endAt} thành thời gian hiện tại.
+     * Cập nhật trường {@value #end_at} thành thời gian hiện tại.
      */
     public void markCompleted() {
         this.endAt = LocalDateTime.now();
@@ -106,10 +109,24 @@ public class ProductDetail {
 
     /**
      * Đánh dấu trạng thái chưa hoàn thành.
-     * Cập nhật trường {@value #endAt} thành null.
+     * Cập nhật trường {@value #end_at} thành null.
      */
     public void markUncompleted() {
         this.endAt = null;
     }
 
+    public void copyForeignKey(ProductDetail another) {
+        this.setProduct(another.getProduct());
+        this.setWarehouse(another.getWarehouse());
+        this.setWarrantyCenter(another.getWarrantyCenter());
+        this.setFactory(another.getFactory());
+        this.setAgency(another.getAgency());
+    }
+
+    public ProductDetail clone() {
+        ProductDetail clone = new ProductDetail();
+        clone.setStage(this.getStage());
+        clone.copyForeignKey(this);
+        return clone;
+    }
 }

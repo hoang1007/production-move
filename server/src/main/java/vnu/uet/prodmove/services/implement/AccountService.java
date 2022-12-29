@@ -58,4 +58,14 @@ public class AccountService implements IAccountService {
     public void delete(String id) {
         accountRepository.deleteById(id);
     }
+
+    @Override
+    public Account findByUsername(String username) throws vnu.uet.prodmove.exception.NotFoundException {
+        Account account = accountRepository.findByUsername(username);
+        if (account == null) {
+            throw new vnu.uet.prodmove.exception.NotFoundException("This user does not exist");
+        }
+        return account;
+    }
+    
 }

@@ -1,11 +1,12 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import routes from '~/config/routes';
 
 import RoleBaseRouting from './RoleBaseRouting';
 import ProtectedRoutes from '~/middleware/ProtectedRoutes';
 import Layout from '~/pages/Layout';
 import ContentLayout from '~/pages/components/ContentLayout';
+import NotFound from '~/pages/public/NotFound';
 
 const RoutesApp: React.FC = () => {
     return (
@@ -22,7 +23,7 @@ const RoutesApp: React.FC = () => {
                 })}
 
                 {/* private routes */}
-                <Route path="/" element={<ProtectedRoutes />}>
+                <Route element={<ProtectedRoutes />}>
                     {
                         Object.keys(routes.private).map((key: string, index: number) => {
                             return (
@@ -41,6 +42,8 @@ const RoutesApp: React.FC = () => {
                         })
                     }
                 </Route>
+
+                <Route path="/*" element={<NotFound />} />
 
             </Routes>
         </BrowserRouter>
