@@ -49,7 +49,9 @@ public class ApiConfig {
 
     // warranty center
     public static final String WARRANTY_CENTER = "/warranty_center";
-    public static final String RECEIVE_FROM_AGENCY = "/receive_from_agency";
+    public static final String RECEIVE_FROM_AGENCY = "/receive";
     public static final String RETURN_TO_AGENCY = "/return_to_agency";
     public static final String RETURN_TO_FACTORY = "/return_to_factory";
+    public static final String ALL_NEED_REPAIR_PRODUCTS = "/need_repair";
+    public static final String ALL_REPAIRING_PRODUCTS = "/repairing";
 }

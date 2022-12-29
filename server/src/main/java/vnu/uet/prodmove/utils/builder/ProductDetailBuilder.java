@@ -68,6 +68,7 @@ public class ProductDetailBuilder {
 
             detail.setWarrantyCenter(needRepair.getWarrantyCenter());
             detail.setStage(ProductStage.REPAIRING);
+            detail.setDescription(needRepair.getDescription());
             return detail;
         } else {
             throw new IllegalArgumentException("Product is not in need repair stage");

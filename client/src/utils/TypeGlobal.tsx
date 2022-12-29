@@ -20,6 +20,7 @@ export interface ProductDetailType {
     stage: string,
     startAt: Date,
     endAt?: Date,
+    description?: string,
     product: ProductType
 }
 

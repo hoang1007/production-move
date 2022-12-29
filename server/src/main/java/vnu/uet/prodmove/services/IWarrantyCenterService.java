@@ -13,6 +13,14 @@ public interface IWarrantyCenterService {
     public List<WarrantyCenter> findAll();
 
     /**
+     * Lấy danh sách sản phẩm đang sửa chữa
+     * 
+     * @param warrantyCenterId Mã cơ sở bảo hành
+     * @return
+     */
+    public List<ProductDetail> getRepairingProducts(Integer warrantyCenterId); 
+
+    /**
      * Lấy danh sách sản phẩm cần sửa chữa
      * 
      * @return
@@ -37,9 +45,8 @@ public interface IWarrantyCenterService {
      * Chuyển sản phẩm không thể sửa chữa cho cơ sở sản xuất
      * 
      * @param productIds Danh sách mã sản phẩm
-     * @param factoryId  Mã cơ sở sản xuất
      */
-    public void returnProductsToFactory(Iterable<Integer> productIds, Integer factoryId);
+    public void returnProductsToFactory(Iterable<Integer> productIds);
 
     /**
      * Thông báo tới các bên liên quan về sản phẩm không thể sửa chữa

@@ -23,6 +23,9 @@ const api = {
     },
     warrantyCenter: {
         root: '/api/warranty_center',
+        needRepairProducts: '/api/warranty_center/need_repair',
+        receiveProducts: '/api/warranty_center/receive',
+        repairingProducts: '/api/warranty_center/repairing',
     }
 }
 

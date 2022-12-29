@@ -79,7 +79,7 @@ public class WarrantyCenterService implements IWarrantyCenterService {
     }
 
     @Override
-    public void returnProductsToFactory(Iterable<Integer> productIds, Integer factoryId) {
+    public void returnProductsToFactory(Iterable<Integer> productIds) {
         var products = productRepository.findAllById(productIds);
 
         var newDetails = new ArrayList<ProductDetail>();
@@ -116,6 +116,15 @@ public class WarrantyCenterService implements IWarrantyCenterService {
         return productdetailRepository.findAll().stream().filter(detail -> {
             return detail.getStage().equals(ProductStage.NEED_REPAIR)
                     && !detail.completed();
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductDetail> getRepairingProducts(Integer warrantyCenterId) {
+        return productdetailRepository.findAll().stream().filter(detail -> {
+            return detail.getStage().equals(ProductStage.REPAIRING)
+                    && !detail.completed()
+                    && detail.getWarrantyCenter().getId().equals(warrantyCenterId);
         }).collect(Collectors.toList());
     }
 }
