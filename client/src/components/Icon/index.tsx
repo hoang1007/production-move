@@ -16,7 +16,8 @@ import {
     faGears,
     faEye,
     faEyeSlash,
-    faTruck
+    faTruck,
+    faBackward
 } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faGooglePlus } from '@fortawesome/free-brands-svg-icons';
 import Tippy from '@tippyjs/react';
@@ -81,3 +82,4 @@ export const SettingIcon = CreateIcon(faGears)
 export const EyeIcon = CreateIcon(faEye);
 export const EyeSlashIcon  = CreateIcon(faEyeSlash)
 export const DeliveryIcon = CreateIcon(faTruck);
+export const BackIcon = CreateIcon(faBackward)

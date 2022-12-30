@@ -148,7 +148,7 @@ export interface OrderType {
 
 export interface AccountType {
     username: string,
-    password: string,
+    password: string, // just empty string
     role: string,
     user: {
         id: number,
