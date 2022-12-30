@@ -72,7 +72,7 @@ function Login() {
         }).catch(error => {
             console.log(error)
             setLoading(false)
-            if (error.response.status === 401) {
+            if ((error.response.status === 401) || (error.response.status === 500 && error.response.data.message === 'Invalid credentials')) {
                 toast.error("User name or password is incorrect!");
                 return;
             } else {

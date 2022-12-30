@@ -39,23 +39,6 @@ public class AccountService implements IAccountService {
     }
 
     public Account update(String accountId, AccountModel accountModel) {
-        Optional<Account> wrapperAccount = accountRepository.findById(accountId);
-        if (wrapperAccount.isPresent()) {
-            Account user = wrapperAccount.get();
-            if (accountModel.getUsername() != null) {
-                user.setUsername(accountModel.getUsername());
-            }
-
-            if (accountModel.getPassword() != null) {
-                user.setPassword(passwordEncoder.encode(accountModel.getPassword()));
-            }
-
-            if (accountModel.getRole() != null) {
-                user.setRole(accountModel.getRole());
-            }
-
-            return accountRepository.save(user);
-        }
         return null;
     }
 

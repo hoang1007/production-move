@@ -39,10 +39,32 @@ public class AgencyController {
     @Autowired
     private IAgencyService agencyService;
 
+    @GetMapping(ApiConfig.AGENCY_DISTRIBUTED_PRODUCTS)
+    public ResponseEntity<?> getDistributedProducts(@RequestParam(name = "id") Integer agencyId) {
+        try {
+            var products = agencyService.getDistributedProducts(agencyId);
+            return ResponseEntity.ok().body(products);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(Map.of("message", "Something went wrong."));
+        }
+    }
+
+    @GetMapping(ApiConfig.AGENCY_ALL)
+    public ResponseEntity<?> getAllAgencies() {
+        try {
+            var agencies = agencyService.findAll();
+            return ResponseEntity.ok().body(agencies);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(Map.of("message", "Something went wrong."));
+        }
+    }
+
     /**
      * import all pending products into warehouse of agency.
      * 
-     * @param agencyId id of the current agency
+     * @param agencyId   id of the current agency
      * @param productIds list ids of pending products
      * @return message
      * @throws NotFoundException
@@ -61,7 +83,7 @@ public class AgencyController {
             return ResponseEntity.internalServerError().body(Map.of("message", e.getMessage()));
         }
     }
-    
+
     @GetMapping(ApiConfig.AGENCY_PENDING_PRODUCTS)
     public ResponseEntity<?> getPendingProducts(@RequestParam(name = "agencyId") String agencyId) {
         try {
@@ -73,22 +95,23 @@ public class AgencyController {
                     new Object() {
                         public ArrayList<Product> pendingProducts = _pendingProducts;
                         public Set<Warehouse> warehouses = _warehouses;
-                }
-            );
+                    });
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.internalServerError().body(Map.of("message", "Something went wrong."));
         }
     }
-    
+
     /**
      * Create new warehouse in specific agency.
+     * 
      * @param body WarehouseModel
      * @return message
      * @throws NotFoundException
      */
     @PostMapping(ApiConfig.AGENCY_CREATE_WAREHOUSE)
-    public ResponseEntity<Map<String, String>> createWarehouse(@RequestParam(name="agencyId") String agencyId, @RequestBody WarehouseModel warehouseModel) throws NotFoundException {
+    public ResponseEntity<Map<String, String>> createWarehouse(@RequestParam(name = "agencyId") String agencyId,
+            @RequestBody WarehouseModel warehouseModel) throws NotFoundException {
         try {
             Warehouse warehouse = agencyService.createWarehouse(Integer.parseInt(agencyId), warehouseModel);
             return ResponseEntity.ok().body(Map.of("message", "Create warehouse successfully"));
@@ -100,13 +123,15 @@ public class AgencyController {
 
     /**
      * Get all warehouses of agency
+     * 
      * @param agencyId
      * @return array of warehouse
      * @throws NumberFormatException
      * @throws NotFoundException
      */
     @GetMapping(ApiConfig.AGENCY_ALL_WAREHOUSE)
-    public ResponseEntity<Object> getAllWarehouses(@RequestParam(name="agencyId") String agencyId) throws NumberFormatException, NotFoundException {
+    public ResponseEntity<Object> getAllWarehouses(@RequestParam(name = "agencyId") String agencyId)
+            throws NumberFormatException, NotFoundException {
         try {
             Set<Warehouse> warehouses = (Set<Warehouse>) agencyService.getAllWarehouses(Integer.parseInt(agencyId));
             List<Object> response = new ArrayList<Object>();
@@ -115,7 +140,7 @@ public class AgencyController {
                 Map<Integer, ProductDetail> temp = new HashMap<>();
                 int pdSize = warehouse.getProductdetails().size();
                 List<ProductDetail> pds = warehouse.getProductdetails().stream().collect(Collectors.toList());
-                for (int i = pdSize -1 ; i >= 0 ; i--) {
+                for (int i = pdSize - 1; i >= 0; i--) {
                     temp.put(pds.get(i).getProduct().getId(), pds.get(i));
                 }
 
@@ -127,12 +152,11 @@ public class AgencyController {
                 response.add(new Object() {
                     public Integer id = warehouse.getId();
                     public String address = warehouse.getAddress();
-                    public Set<Product> products = 
-                                    productsD
-                                    .stream()
-                                    .filter(pd -> pd.getStage() == ProductStage.EXPORT_TO_AGENCY && pd.completed())
-                                    .map(pd -> pd.getProduct())
-                                    .collect(Collectors.toSet());
+                    public Set<Product> products = productsD
+                            .stream()
+                            .filter(pd -> pd.getStage() == ProductStage.EXPORT_TO_AGENCY && pd.completed())
+                            .map(pd -> pd.getProduct())
+                            .collect(Collectors.toSet());
                 });
             }
             return ResponseEntity.ok().body(response);
@@ -144,17 +168,18 @@ public class AgencyController {
 
     /**
      * Sell products to a customer
+     * 
      * @param info Includes customerId and array of ID products.
      * @return
      */
     @PostMapping(ApiConfig.AGENCY_SELL_PRODUCT)
     public ResponseEntity<Map<String, String>> sellProducts(@RequestBody Map<String, Object> info) {
         try {
-            Integer customerId = (Integer)info.get("customerId");
+            Integer customerId = (Integer) info.get("customerId");
             List<Integer> productIds = (List<Integer>) info.get("productIds");
             agencyService.sellProducts(customerId, productIds);
             return ResponseEntity.ok().body(Map.of("message", "Sell successfully."));
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.internalServerError().body(Map.of("message", e.getMessage()));
@@ -165,24 +190,26 @@ public class AgencyController {
     public ResponseEntity<Object> getAllOrders(@RequestParam(name = "agencyId") String agencyId) {
         try {
             Set<Order> orders = (HashSet<Order>) agencyService.getAllOrders(Integer.parseInt(agencyId));
+            System.out.println("ORDER => "+ orders.size());
             List<Object> responseObject = new ArrayList<Object>();
             Map<Customer, Set<Order>> temp = new HashMap<>();
             for (Order order : orders) {
                 Customer customer = order.getCustomer();
                 Set<Order> latelyOrders = temp.get(customer);
-                if(latelyOrders == null) latelyOrders = new HashSet<>();
+                if (latelyOrders == null)
+                    latelyOrders = new HashSet<>();
                 latelyOrders.add(order);
                 temp.put(customer, latelyOrders);
             }
             for (Customer customer : temp.keySet()) {
-                    responseObject.add(new Object() {
-                        public Integer id = customer.getId();
-                        public String fullname = customer.getFullname();
-                        public String phoneNumber = customer.getPhoneNumber();
-                        public String email = customer.getEmail();
-                        public Set<Order> orders = temp.get(customer);
-    
-                    });
+                responseObject.add(new Object() {
+                    public Integer id = customer.getId();
+                    public String fullname = customer.getFullname();
+                    public String phoneNumber = customer.getPhoneNumber();
+                    public String email = customer.getEmail();
+                    public Set<Order> orders = temp.get(customer);
+
+                });
             }
 
             return ResponseEntity.ok().body(responseObject);
@@ -195,7 +222,7 @@ public class AgencyController {
     @PostMapping(ApiConfig.AGENCY_TRANSFER_TO_WARRANTY)
     public ResponseEntity<Map<String, String>> transferToWarranty(@RequestBody Map<String, Object> info) {
         try {
-            Integer warrantyId = Integer.parseInt((String)info.get("warrantyId"));
+            Integer warrantyId = Integer.parseInt((String) info.get("warrantyId"));
             List<Integer> productIds = (List<Integer>) info.get("productIds");
             agencyService.transferProductToWarrantyCenter(productIds, warrantyId);
             return ResponseEntity.ok().body(Map.of("message", "Transfer successfully."));

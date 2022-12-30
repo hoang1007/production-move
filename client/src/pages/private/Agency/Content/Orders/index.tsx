@@ -1,5 +1,6 @@
 import React from 'react';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
 
 import Loading from '~/components/Loading';
 import { useAxios , useAuth, useModal} from '~/hooks';
@@ -9,6 +10,7 @@ import ClassNames from '~/utils/classNames';
 import { CustomerType } from '~/utils/TypeGlobal';
 import { Button,Radio } from '@mui/material';
 import OrderModal from './OrderModal';
+import routes from '~/config/routes';
 const cx = ClassNames(style);
 
 function Orders() {
@@ -19,12 +21,14 @@ function Orders() {
     const [dataModal, setDataModal] = React.useState<CustomerType | null>(null);
     const [isSold, setIsSold] = React.useState<boolean>(false);
     const [soldCustomer, setSoldCustomer] = React.useState<number[]>([])
+    const navigate = useNavigate()
 
     React.useEffect(() => {
         axios.get(`${api.agency.getOrders}`, {
             params: {agencyId: auth?.user.id}
         })
             .then(response => {
+                console.log(response)
                 if (response.status === 200) {
                     setCustomers(response.data)
                     setTimeout(() => {
@@ -35,6 +39,9 @@ function Orders() {
             }).catch(error => {
                 console.log(error)
                 setLoading(false)
+                if (error.response.status === 401) {
+                    return navigate(routes.public.login.path)
+                }
                 toast.error(error.message)
             })
     }, [])

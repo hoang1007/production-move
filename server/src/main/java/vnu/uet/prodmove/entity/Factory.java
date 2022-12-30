@@ -41,9 +41,4 @@ public class Factory {
     @OneToMany(mappedBy = "factory", fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Warehouse> warehouses;
-
-    // @OneToOne(mappedBy = "factory", fetch = FetchType.EAGER)
-    // @JsonIgnore
-    // private Account account;
-
 }

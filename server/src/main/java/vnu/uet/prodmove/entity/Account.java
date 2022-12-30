@@ -15,17 +15,17 @@ import lombok.Data;
 import vnu.uet.prodmove.enums.UserRole;
 import vnu.uet.prodmove.utils.converter.db.UserRoleConverter;
 
-
 @Entity
 @Table(name = "account")
 @Data
 public class Account {
 
     @Id
-    @Column(name="username", nullable = false, updatable = false, length = 128)
+    @Column(name = "username", nullable = false, updatable = false, length = 128)
     private String username;
 
-    @Column(name="password", nullable = false, length = 128)
+    @Column(name = "password", nullable = false, length = 128)
+    @JsonIgnore
     private String password;
 
     @Column(nullable = false, name = "role", length = 45)
@@ -39,7 +39,7 @@ public class Account {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "factoryID", referencedColumnName = "ID")
-    // @JsonIgnore
+    @JsonIgnore
     private Factory factory;
 
     @OneToOne(fetch = FetchType.EAGER)

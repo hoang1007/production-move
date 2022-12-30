@@ -15,7 +15,8 @@ import {
     faBoxOpen,
     faGears,
     faEye,
-    faEyeSlash
+    faEyeSlash,
+    faTruck
 } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faGooglePlus } from '@fortawesome/free-brands-svg-icons';
 import Tippy from '@tippyjs/react';
@@ -79,3 +80,4 @@ export const BoxIcon = CreateIcon(faBoxOpen)
 export const SettingIcon = CreateIcon(faGears)
 export const EyeIcon = CreateIcon(faEye);
 export const EyeSlashIcon  = CreateIcon(faEyeSlash)
+export const DeliveryIcon = CreateIcon(faTruck);

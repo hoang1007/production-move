@@ -89,7 +89,6 @@ function Import() {
             }
         })
             .then(response => {
-                console.log(response)
                 if (response.status === 200) {
                     setListWarehouses(response.data.warehouses);
                     setPendingProducts(response.data.pendingProducts);

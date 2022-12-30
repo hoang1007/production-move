@@ -1,7 +1,10 @@
 package vnu.uet.prodmove.services.implement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,6 +18,7 @@ import vnu.uet.prodmove.entity.Productline;
 import vnu.uet.prodmove.entity.Warehouse;
 import vnu.uet.prodmove.enums.ProductStage;
 import vnu.uet.prodmove.repos.AgencyRepository;
+import vnu.uet.prodmove.repos.FactoryRepository;
 import vnu.uet.prodmove.repos.ProductRepository;
 import vnu.uet.prodmove.repos.ProductdetailRepository;
 import vnu.uet.prodmove.repos.ProductlineRepository;
@@ -25,6 +29,9 @@ import vnu.uet.prodmove.utils.querier.ProductDetailQuerier;
 
 @Service
 public class ManufactoringBaseService implements IManufactoringBaseService {
+    @Autowired
+    private FactoryRepository factoryRepository;
+
     @Autowired
     private ProductRepository productRepository;
 
@@ -98,5 +105,23 @@ public class ManufactoringBaseService implements IManufactoringBaseService {
         }
 
         productDetailRepository.saveAll(productDetails);
+    }
+
+    @Override
+    public Collection<Warehouse> getAllWarehouses(Integer factoryId) {
+        var factory = factoryRepository.getReferenceById(factoryId);
+
+        var warehouses = factory.getWarehouses();
+
+        return warehouses;
+    }
+
+    @Override
+    public Collection<Product> getAllCreatedProducts(Integer factoryId) {
+        var products = productDetailRepository.findAll().stream().filter(
+            pd -> pd.getStage().equals(ProductStage.NEW_PRODUCTION) && pd.getFactory().getId().equals(factoryId)
+        ).map(pd -> pd.getProduct()).collect(Collectors.toList());
+
+        return products;
     }
 }

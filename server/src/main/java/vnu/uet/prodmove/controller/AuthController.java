@@ -44,7 +44,6 @@ public class AuthController {
     @PostMapping(ApiConfig.LOG_IN)
     public ResponseEntity<Object> login(HttpServletResponse response, @RequestBody AccountModel accountModel) throws CustomException {
         try {
-            System.out.println("controller");
             Map<String, Object> res = authService.login(accountModel);
             Cookie cookie = new Cookie("accessToken", (String)res.get("accessToken"));
             cookie.setMaxAge(2 * 24 * 60 * 60); // expires in 2 days

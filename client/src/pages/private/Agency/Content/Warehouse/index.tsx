@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { useAuth, useAxios } from '~/hooks';
 import api from '~/config/api';
@@ -7,7 +8,7 @@ import style from './style.module.scss';
 import ClassNames from '~/utils/classNames';
 import Loading from '~/components/Loading';
 import { WarehouseType } from '~/utils/TypeGlobal';
-// import { importedProductsSelector } from '~/utils/selector';
+import routes from '~/config/routes'
 
 const cx = ClassNames(style);
 
@@ -16,6 +17,7 @@ function Warehouse() {
     const axios = useAxios();
     const [listWarehouse, setListWarehouses] = React.useState<WarehouseType[]>([]);
     const [loading, setLoading] = React.useState<boolean>(true)
+    const navigate = useNavigate()
 
     React.useEffect(() => {
         axios.get(api.agency.allWarehouses, {
@@ -34,6 +36,9 @@ function Warehouse() {
             .catch(error => {
                 console.log(error)
                 setLoading(false)
+                if (error.response.status === 401) {
+                    return navigate(routes.public.login.path)
+                }
                 toast.error(error.message)
             })
     }, [])

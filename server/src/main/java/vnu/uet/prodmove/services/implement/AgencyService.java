@@ -70,25 +70,41 @@ public class AgencyService implements IAgencyService {
         if (warehouse == null)
             throw new NotFoundException("Cannot find warehouse in agency.");
 
-        List<ProductDetail> oldProductDetails = new ArrayList<>();
-        List<ProductDetail> newProductDetails = new ArrayList<>();
+        // List<ProductDetail> oldProductDetails = new ArrayList<>();
+        // List<ProductDetail> newProductDetails = new ArrayList<>();
 
         List<Product> products = (List<Product>) productService
                 .findAllByIds(productIds.stream().map(id -> Integer.parseInt(id)).collect(Collectors.toList()));
 
-        for (Product product : products) {
+        // for (Product product : products) {
+        // ProductDetail lastProductDetail = ProductDetailQuerier.of(product).getLast();
+        // oldProductDetails.add(lastProductDetail);
+        // ProductDetail newProductDetail =
+        // ProductDetailBuilder.of(product).exportToAgency(agency);
+        // newProductDetail.setStartAt(lastProductDetail.getStartAt());
+        // newProductDetail.markCompleted();
+        // newProductDetail.copyForeignKey(lastProductDetail);
+        // newProductDetail.setWarehouse(warehouse);
+        // newProductDetails.add(newProductDetail);
+        // }
+
+        // // productDetailService.saveAll(oldProductDetails);
+        // productDetailService.saveAll(newProductDetails);
+        List<ProductDetail> details = new ArrayList<>();
+
+        for (var product : products) {
             ProductDetail lastProductDetail = ProductDetailQuerier.of(product).getLast();
-            oldProductDetails.add(lastProductDetail);
-            ProductDetail newProductDetail = ProductDetailBuilder.of(product).exportToAgency(agency);
-            newProductDetail.setStartAt(lastProductDetail.getStartAt());
-            newProductDetail.markCompleted();
-            newProductDetail.copyForeignKey(lastProductDetail);
-            newProductDetail.setWarehouse(warehouse);
-            newProductDetails.add(newProductDetail);
+
+            if (lastProductDetail.getStage().equals(ProductStage.EXPORT_TO_AGENCY)) {
+                lastProductDetail.markCompleted();
+                lastProductDetail.setWarehouse(warehouse);
+                details.add(lastProductDetail);
+            } else {
+                throw new NotFoundException("Product is not in factory.");
+            }
         }
 
-        // productDetailService.saveAll(oldProductDetails);
-        productDetailService.saveAll(newProductDetails);
+        productDetailService.saveAll(details);
     }
 
     @Override
@@ -109,7 +125,8 @@ public class AgencyService implements IAgencyService {
     }
 
     @Override
-    public void sellProducts(Integer customerId, Collection<Integer> productIds) throws NotFoundException, CloneNotSupportedException {
+    public void sellProducts(Integer customerId, Collection<Integer> productIds)
+            throws NotFoundException, CloneNotSupportedException {
         List<Product> products = (List<Product>) productService.findAllByIds(productIds);
         Customer customer = customerService.findById(customerId);
         customerService.buyProducts(products, customer);
@@ -167,7 +184,12 @@ public class AgencyService implements IAgencyService {
     }
 
     @Override
-    public Collection<Order> getAllOrders(Integer agencyId) throws NotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    public List<Agency> findAll() {
+        return agencyRepository.findAll();
+    }
+
+    public Collection<Order> getAllOrders(Integer agencyId)
+            throws NotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Set<Warehouse> warehouses = (Set<Warehouse>) this.getAllWarehouses(agencyId);
         List<Product> products = new ArrayList<>();
         for (Warehouse warehouse : warehouses) {
@@ -189,11 +211,19 @@ public class AgencyService implements IAgencyService {
 
     @Override
     public Collection<Product> getPendingProducts(Integer agencyId) throws NotFoundException {
-        Agency agency = this.findById(agencyId);
+        // Agency agency = this.findById(agencyId);
         List<ProductDetail> pendingProductDetails = (List<ProductDetail>) productDetailService
                 .findPendingProductDetails(agencyId);
         List<Product> pendingProducts = pendingProductDetails.stream().map(pd -> pd.getProduct())
                 .collect(Collectors.toList());
         return pendingProducts;
+    }
+
+    @Override
+    public Collection<Product> getDistributedProducts(Integer agencyId) {
+        return productDetailService.findAll().stream()
+                .filter(pd -> pd.getStage() == ProductStage.EXPORT_TO_AGENCY && pd.completed())
+                .filter(pd -> pd.getAgency().getId() == agencyId).map(pd -> pd.getProduct())
+                .collect(Collectors.toList());
     }
 }

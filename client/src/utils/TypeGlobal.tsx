@@ -3,6 +3,12 @@ export interface Action {
     payload: any
 }
 
+export interface AgencyType {
+    id: number,
+    name: string,
+    address: string,
+}
+
 export interface WarehouseType {
     id: number,
     address: string,
@@ -14,13 +20,21 @@ export interface ProductDetailType {
     stage: string,
     startAt: Date,
     endAt?: Date,
+    description?: string,
     product: ProductType
+}
+
+export interface BatchProductType {
+    id: number;
+    name: string;
+    quantity: number;
+    importDate: Date;
 }
 
 export interface ProductType {
     id: number,
-    status?: string,
-    productline: ProductLineType
+    productline: ProductLineType,
+    productDetails: ProductDetailType[],
 }
 
 export interface ProductLineType {

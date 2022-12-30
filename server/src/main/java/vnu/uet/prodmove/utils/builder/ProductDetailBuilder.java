@@ -76,16 +76,16 @@ public class ProductDetailBuilder {
 
     public ProductDetail repaired() {
         var querier = new ProductDetailQuerier(this.detail.getProduct());
-        querier.filter(ProductStage.NEED_REPAIR, ProductStage.REPAIRING);
 
         var repairing = querier.getLast();
 
         if (repairing.getStage() == ProductStage.REPAIRING) {
             repairing.markCompleted();
 
-            var needRepair = querier.filter(ProductStage.NEED_REPAIR).getLast();
-
-            detail.setAgency(needRepair.getAgency());
+            var agency = querier.filter(ProductStage.EXPORT_TO_AGENCY).getLast().getAgency();
+            detail.setWarrantyCenter(repairing.getWarrantyCenter());
+            detail.setAgency(agency);
+            detail.setStage(ProductStage.REPAIRED);
 
             return detail;
         } else {

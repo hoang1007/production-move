@@ -1,5 +1,6 @@
 package vnu.uet.prodmove.entity;
 
+import java.util.Set;
 
 import java.util.Set;
 
@@ -25,7 +26,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
 @Table(name = "warehouse")
 @Getter
@@ -37,11 +37,11 @@ import lombok.Setter;
 public class Warehouse {
 
     @Id
-    @Column(name="ID", nullable = false, updatable = false)
+    @Column(name = "ID", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="address", length = 500)
+    @Column(name = "address", length = 500)
     private String address;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -55,7 +55,6 @@ public class Warehouse {
     private Factory factory;
 
     @OneToMany(mappedBy = "warehouse", fetch = FetchType.EAGER)
-    @OrderBy("startAt DESC")
     @JsonIgnore
     private Set<ProductDetail> productdetails;
     

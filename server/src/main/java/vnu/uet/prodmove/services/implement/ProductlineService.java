@@ -1,5 +1,6 @@
 package vnu.uet.prodmove.services.implement;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,10 @@ public class ProductlineService implements IProductlineService {
         if (wrapperProductline.isPresent())
             return wrapperProductline.get();
         throw new NotFoundException("This productline is not found");
+    }
+
+    @Override
+    public List<Productline> getAllProductLines() {
+        return productlineRepository.findAll();
     }
 }
