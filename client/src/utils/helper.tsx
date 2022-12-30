@@ -8,3 +8,10 @@ export const trimObject = (obj: { [key: string]: any }) => {
     })
     return obj
 }
+
+export const getRoleInVietNamese = (role:string): string => {
+    if (role === 'AGENCY') return 'Đại lý'
+    else if (role === 'WARRANTY') return 'Trung tâm bảo hành'
+    else if (role === 'FACTORY') return 'Nhà máy sản xuất'
+    return ''
+}

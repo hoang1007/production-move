@@ -20,22 +20,22 @@ function Sidebar() {
 	return (
 		<Stack id={cx('container')} direction="column" spacing={2}>
 			<Button variant="text" className={cx('navigation-btn')} startIcon={<GridIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, agencyRoutes.dashboard) }}>
-				Dashboard
+				Thống kê
 			</Button>
 			<Button variant="text" className={cx('navigation-btn')} startIcon={<PlusIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, agencyRoutes.import) }}>
-				Import
+				Nhập sản phẩm mới
 			</Button>
 			<Button variant="text" className={cx('navigation-btn')} startIcon={<RepairedIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, agencyRoutes.warranty) }}>
-				Warranty
+				Bảo hành
 			</Button>
 			<Button variant="text" className={cx('navigation-btn')} startIcon={<WarehouseIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, agencyRoutes.warehouse) }}>
-				Warehouse
+				Kho
 			</Button>
 			<Button variant="text" className={cx('navigation-btn')} startIcon={<GroceryIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, agencyRoutes.order) }}>
-				Order
+				Đơn đặt hàng
 			</Button>
 			<Button variant="text" className={cx('navigation-btn')} startIcon={<GroceryIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, agencyRoutes.sell) }}>
-				Sell
+				Bán hàng
 			</Button>
 		</Stack>
 	);

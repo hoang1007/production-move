@@ -81,13 +81,13 @@ function Orders() {
     return (
         <div style={{height: '100%'}}>
             <div className={cx('filter')}>
-                <span className={cx('title')}>Sold:</span>
+                <span className={cx('title')}>Đã bán:</span>
                 <Radio
                     checked={isSold}
                     onChange={() => { setIsSold(true) }}
                     name="radio-buttons"
                 />  
-                <span className={cx('title')}>Pending:</span>
+                <span className={cx('title')}>Đang chờ:</span>
                 <Radio
                     checked={!isSold}
                     onChange={() => { setIsSold(false) }}

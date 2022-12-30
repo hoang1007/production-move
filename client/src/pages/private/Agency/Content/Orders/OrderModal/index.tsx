@@ -18,6 +18,7 @@ interface Props {
 }
 
 function OrderModal({ customer, type, close, sell }: Props) {
+    console.log(customer)
     const axios = useAxios();
     const [loading, setLoading] = React.useState(false);
 
@@ -51,6 +52,10 @@ function OrderModal({ customer, type, close, sell }: Props) {
                         <div>Name: {customer.fullname}</div>
                         <div>Email: {customer.email}</div>
                         <div>Phone number: {customer.phoneNumber || '__'}</div>
+                    </div>
+
+                    <div className={cx('orders')}>
+
                     </div>
                 </div>
 

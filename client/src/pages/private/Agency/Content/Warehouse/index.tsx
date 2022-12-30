@@ -7,8 +7,11 @@ import WarehouseItem from './WarehouseItem';
 import style from './style.module.scss';
 import ClassNames from '~/utils/classNames';
 import Loading from '~/components/Loading';
-import { WarehouseType } from '~/utils/TypeGlobal';
+import { ProductType, WarehouseType } from '~/utils/TypeGlobal';
 import routes from '~/config/routes'
+import { Button } from '@mui/material';
+import { BackIcon } from '~/components/Icon'
+import ProductLineItem from '~/pages/components/ProductLine';
 
 const cx = ClassNames(style);
 
@@ -17,6 +20,7 @@ function Warehouse() {
     const axios = useAxios();
     const [listWarehouse, setListWarehouses] = React.useState<WarehouseType[]>([]);
     const [loading, setLoading] = React.useState<boolean>(true)
+    const [currentProduct, setCurrentProduct] = React.useState<ProductType | null>(null);
     const navigate = useNavigate()
 
     React.useEffect(() => {
@@ -46,14 +50,32 @@ function Warehouse() {
     return (
         <div className={cx('container')}>
             {
-                !loading ?
-                    listWarehouse.map((warehouse: WarehouseType, index: number) => {
-                        return (
-                            <WarehouseItem key={`warehouse-${warehouse.id}-index-${index}`} data={(warehouse)} />
-                        )
-                    })
+                currentProduct === null ? (
+
+                    !loading ?
+                        listWarehouse.map((warehouse: WarehouseType, index: number) => {
+                            return (
+                                <WarehouseItem
+                                    key={`warehouse-${warehouse.id}-index-${index}`}
+                                    data={(warehouse)}
+                                    setCurrentProduct={setCurrentProduct}
+                                />
+                            )
+                        })
+                        :
+                        <Loading />
+                )
                     :
-                    <Loading />
+                    <div className={cx('detail')}>
+                        <div className={cx('actions')}>
+                            <Button className={cx('back')}
+                                onClick={() => setCurrentProduct(null)}
+                            > <BackIcon /> </Button>
+                        </div>
+                        <div className={cx('pdl-detail')}>
+                            <ProductLineItem product={currentProduct.productline} />
+                        </div>
+                    </div>
             }
         </div>
     );

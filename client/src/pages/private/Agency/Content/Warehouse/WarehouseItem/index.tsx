@@ -9,10 +9,11 @@ import { ProductDetailType, WarehouseType } from '~/utils/TypeGlobal';
 const cx = ClassNames(style);
 
 export interface Props {
-    data: WarehouseType
+    data: WarehouseType,
+    setCurrentProduct: Function
 }
 
-function WarehouseItem({ data }: Props) {
+function WarehouseItem({ data, setCurrentProduct }: Props) {
     const [showMore, setShowMore] = React.useState(false);
 
     const toggleShow = () => {
@@ -23,15 +24,15 @@ function WarehouseItem({ data }: Props) {
         <div className={cx('container')}>
             <div className={cx('warehouse')}>
                 <div className={cx('info')}>
-                    <h2 className={cx('name')}>warehouse</h2>
-                    <span className={cx('address')}>Address: {data.address}</span>
-                    <span>The number of Products: {data.products.length}</span>
+                    <h2 className={cx('name')}>Kho</h2>
+                    <span className={cx('address')}>Địa chỉ: {data.address}</span>
+                    <span>Số lượng sản phẩm trong kho: {data.products.length}</span>
                 </div>
 
                 <div className={cx('actions')}>
-                    <Button variant="text" className={cx('go-inside', 'btn')} onClick={() => toggleShow()}>
+                    <Button variant="text" className={cx('go-inside', 'btn')} onClick={() => toggleShow()} >
                         {
-                            showMore ? 'Show less' : 'Show more'
+                            showMore ? 'Thu gọn' : 'Xem kho'
                         }
                     </Button>
                 </div>
@@ -43,11 +44,15 @@ function WarehouseItem({ data }: Props) {
                         showMore && (
                             data.products.length > 0 ? (
                                 data.products.map((product, index: number) => {
-                                    return <Product key={`productdetail-${product.id}-index-${index}`} data={product} />
+                                    return <Product
+                                        key={`productdetail-${product.id}-index-${index}`}
+                                        data={product}
+                                        action={() => setCurrentProduct(product)}
+                                    />
                                 })
                             )
                                 :
-                                <div className={cx('no-product-in-warehouse')}>No products in warehouse</div>
+                                <div className={cx('no-product-in-warehouse')}>Không có sản phẩm</div>
                         )
                     }
                 </div>

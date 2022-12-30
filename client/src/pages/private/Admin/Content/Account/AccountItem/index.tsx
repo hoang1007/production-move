@@ -8,19 +8,13 @@ import EditModal from '../EditModal';
 import ConfirmPassword from '../ConfimPassword';
 import { useAxios } from '~/hooks';
 import api from '~/config/api';
+import { getRoleInVietNamese } from '~/utils/helper';
 const cx = ClassNames(style);
 
 interface Props {
     className?: string,
     account: AccountType,
     listAccountController: Function
-}
-
-const getName = (role:string): string => {
-    if (role === 'AGENCY') return 'Đại lý'
-    else if (role === 'WARRANTY') return 'Trung tâm bảo hành'
-    else if (role === 'FACTORY') return 'Nhà máy sản xuất'
-    return ''
 }
 
 function AccountItem({ className, account, listAccountController }: Props) {
@@ -53,7 +47,7 @@ function AccountItem({ className, account, listAccountController }: Props) {
         <div className={[cx('container'), className].join(' ')}>
             <div className={cx('info')}>
                 <h2 className={cx('role')}>
-                    {getName(account.role)}
+                    {getRoleInVietNamese(account.role)}
                 </h2>
                 <span className={cx('username')}>Tên: {account.username}</span>
                 <span className={cx('address')}>Địa chỉ: {account.user.address}</span>
@@ -80,7 +74,7 @@ function AccountItem({ className, account, listAccountController }: Props) {
                     showConfirmModal &&
                     <div id="modal">
                         <ConfirmPassword
-                            title={`Xóa tài khỏa của ${getName(account.role)}: ${account.username}`}
+                            title={`Xóa tài khỏa của ${getRoleInVietNamese(account.role)}: ${account.username}`}
                             className={cx('confirm-modal')}
                             close={() => setShowConfirmModal(false)}
                             closeSuccess={handleDelete}

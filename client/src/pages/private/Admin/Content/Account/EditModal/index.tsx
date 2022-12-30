@@ -9,6 +9,7 @@ import ConfirmPassword from '../ConfimPassword';
 import { useAxios } from '~/hooks';
 import api from '~/config/api';
 import { toast } from 'react-toastify';
+import { getRoleInVietNamese } from '~/utils/helper';
 const cx = ClassNames(style);
 
 interface Props {
@@ -49,6 +50,8 @@ function EditModal({ className, account, toggleShowModalEdit }: Props) {
             .then((res: { status: number; }) => {
                 if (res.status === 200) {
                     toast.success("Cập nhật thành công!");
+                    toggleShowModalEdit()
+                    setEditing(false)
                 }
             }).catch(error => {
                 console.log(error)
@@ -66,7 +69,7 @@ function EditModal({ className, account, toggleShowModalEdit }: Props) {
         <div id="modal" className={[cx('container'), className].join(' ')}>
             <div className={cx('body')}>
                 <div className={cx('info')}>
-                    <h2 className={cx('role')}>{currentAccount.role}</h2>
+                    <h2 className={cx('role')}>{getRoleInVietNamese(currentAccount.role)}</h2>
                     <div className={cx('username')}>Tên: {currentAccount.username}</div>
                     <span className={cx('address')}>Địa chỉ: {currentAccount.user.address}</span>
                     <div
