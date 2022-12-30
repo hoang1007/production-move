@@ -1,0 +1,55 @@
+.container {
+
+    * {
+        font-size: 1.6rem;
+    }
+
+    .body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+        box-shadow: 0 0 4px black;
+        padding: 1rem;
+        border-radius: 10px;
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-around;
+        & > * {
+            margin: 0.2rem 0;
+            padding: 0.2rem
+        }
+
+        .role {
+            font-size: 3rem;
+        }
+
+        .password {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+
+            .eye {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    }
+
+    .actions {
+        .btn {
+            margin: 1rem 0.4rem;
+        }
+    }
+}
+
+.onlyShow {
+    border: none;
+    background-color: transparent;
+    pointer-events: none;
+}

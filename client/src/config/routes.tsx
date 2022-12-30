@@ -7,8 +7,11 @@ import NotFound from '~/pages/public/NotFound';
 
 // cái này dùng trong Sidebar ở chỗ Button nhé
 export const adminRoutes = {
-    root: '/admin',
-    dashboard: '/admin/dashboard',
+    root: '/moderator',
+    dashboard: '/moderator/dashboard',
+    account: '/moderator/account-management',
+    productLine: '/moderator/product-line',
+    setting: '/setting'
 
 }
 
@@ -42,8 +45,9 @@ const routes: { [key: string]: any } = {
     private: {
 
         admin: {
+            title: 'ADMIN',
             path: adminRoutes.root,
-            roles: ['MODERATOR', 'ADMIN'],
+            roles: ['MODERATOR'],
             Sidebar: <SidebarAdmin/>,
             Content: [
                 {
@@ -51,10 +55,26 @@ const routes: { [key: string]: any } = {
                     path: adminRoutes.dashboard,
                     element: <ContentAdmin.Dashboard />
                 },
+                {
+                    title: 'Account Management',
+                    path: adminRoutes.account,
+                    element: <ContentAdmin.Account />
+                },
+                {
+                    title: 'Product Line Management',
+                    path: adminRoutes.productLine,
+                    element: <ContentAdmin.ProductLine />
+                },
+                {
+                    title: 'Setting',
+                    path: adminRoutes.setting,
+                    element: <ContentAdmin.Setting />
+                },
             ]
         },
 
         manufacturingBase: {
+            title: '/Factory',
             path: '/factory',
             roles: ['FACTORY'],
             Sidebar: <SidebarFactory />,

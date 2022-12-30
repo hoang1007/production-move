@@ -8,7 +8,7 @@ public enum UserRole {
     /** Đại lý phân phối */
     AGENCY("AGENCY"),
     /** Trung tâm bảo hành */
-    REPAIRER("REPAIRER");
+    WARRANTY("WARRANTY");
 
     private final String role;
 

@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import { GridIcon, StockIcon, GroceryIcon, RepairedIcon, PlusIcon, WarehouseIcon } from '~/components/Icon';
-import { agencyRoutes } from '~/config/routes';
+import { GridIcon, UserIcon, BoxIcon, SettingIcon } from '~/components/Icon';
+import { adminRoutes } from '~/config/routes';
 
 import style from './style.module.scss';
 import ClassNames from '~/utils/classNames';
@@ -19,20 +19,17 @@ function Sidebar() {
 
 	return (
 		<Stack id={cx('container')} direction="column" spacing={2}>
-			<Button variant="text" className={cx('navigation-btn')} startIcon={<GridIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, agencyRoutes.dashboard) }}>
+			<Button variant="text" className={cx('navigation-btn')} startIcon={<GridIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, adminRoutes.dashboard) }}>
 				Dashboard
 			</Button>
-			<Button variant="text" className={cx('navigation-btn')} startIcon={<PlusIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, agencyRoutes.import) }}>
-				Import
+			<Button variant="text" className={cx('navigation-btn')} startIcon={<UserIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, adminRoutes.account) }}>
+				Account
 			</Button>
-			<Button variant="text" className={cx('navigation-btn')} startIcon={<RepairedIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, agencyRoutes.warranty) }}>
-				Warranty
+		<Button variant="text" className={cx('navigation-btn')} startIcon={<BoxIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, adminRoutes.productLine) }}>
+				Product Line
 			</Button>
-			<Button variant="text" className={cx('navigation-btn')} startIcon={<WarehouseIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, agencyRoutes.warehouse) }}>
-				Warehouse
-			</Button>
-			<Button variant="text" className={cx('navigation-btn')} startIcon={<GroceryIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, agencyRoutes.order) }}>
-				Order
+			<Button variant="text" className={cx('navigation-btn')} startIcon={<SettingIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, adminRoutes.setting) }}>
+				Setting
 			</Button>
 		</Stack>
 	);

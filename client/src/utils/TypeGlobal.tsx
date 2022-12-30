@@ -129,3 +129,16 @@ export interface OrderType {
     soldDate: Date,
     product: ProductType
 }
+
+///// admin
+
+export interface AccountType {
+    username: string,
+    password: string,
+    role: string,
+    user: {
+        id: number,
+        name: string,
+        address: string
+    }
+}

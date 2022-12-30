@@ -1,10 +1,14 @@
 package vnu.uet.prodmove.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,9 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import vnu.uet.prodmove.utils.dataModel.AccountModel;
 import vnu.uet.prodmove.config.ApiConfig;
+import vnu.uet.prodmove.entity.Account;
 import vnu.uet.prodmove.entity.Product;
 import vnu.uet.prodmove.exception.ConflictException;
+import vnu.uet.prodmove.exception.NotFoundException;
 import vnu.uet.prodmove.services.IBigCorpManagerService;
+import vnu.uet.prodmove.services.implement.BigCorpManagerService;
 
 /**
  * Admin
@@ -29,6 +36,26 @@ public class BigCorpManagerController {
 
     @Autowired
     private IBigCorpManagerService bigCorpManagerService;
+
+    @GetMapping(ApiConfig.MODERATOR_ALL_ACCOUNTS)
+    public ResponseEntity<Object> getAllAccounts() {
+        try {
+            List<Account> accounts = (ArrayList<Account>) bigCorpManagerService.getAllAccounts();
+            return ResponseEntity.ok().body(
+                    accounts.stream().map(acc -> {
+                        return new Object() {
+                            public String username = acc.getUsername();
+                            public String password = "";
+                            public String role = acc.getRole().toString();
+                            public Object user = acc.getUser();
+                        };
+                    }).collect(Collectors.toList())
+            );  
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(Map.of("message", "Something went wrong."));
+        }
+    }
     
     /**
      * Cấp tài khoản cho các role khác
@@ -43,11 +70,22 @@ public class BigCorpManagerController {
         return ResponseEntity.ok().body(Map.of("message", "Create new account successfully"));
     }
     
+    /**
+     * ONLY update password
+     * @param body
+     * @return
+     * @throws ConflictException
+     */
     @PutMapping(ApiConfig.MODERATOR_UPDATE_ACCOUNT)
-    public ResponseEntity<Map<String, String>> updateAccount(@RequestBody Map<String, String> body)
+    public ResponseEntity<Object> updateAccount(@RequestBody Map<String, String> body)
             throws ConflictException {
-        bigCorpManagerService.updateAccount(body);
-        return ResponseEntity.ok().body(Map.of("message", "Update successfully"));
+        try {
+            bigCorpManagerService.updateAccount(body);
+            return ResponseEntity.ok().body(Map.of("message", "Update successfully"));
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 
     @DeleteMapping(ApiConfig.MODERATOR_DELETE_ACCOUNT)
@@ -75,5 +113,21 @@ public class BigCorpManagerController {
             List<Product> products = bigCorpManagerService.getProducts(filter, Integer.parseInt(pageNumber), sortBy,
                     typeSort);
         return ResponseEntity.ok().body(products);
+}
+
+    @PostMapping(ApiConfig.MODERATOR_CHECK_PASSWORD)
+    public ResponseEntity<?> checkPassword(@RequestBody Map<String, String> data) {
+        try {
+            String password = data.get("password");
+            boolean isPasswordCorrect = bigCorpManagerService.checkPassword(password);
+            if (isPasswordCorrect) {
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Some thing went wrong!");
+        }
     }
 }

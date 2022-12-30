@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import vnu.uet.prodmove.custom.CustomUserDetails;
 import vnu.uet.prodmove.entity.Account;
+import vnu.uet.prodmove.entity.Agency;
+import vnu.uet.prodmove.entity.Factory;
+import vnu.uet.prodmove.entity.WarrantyCenter;
 import vnu.uet.prodmove.exception.ConflictException;
 import vnu.uet.prodmove.exception.NotFoundException;
 import vnu.uet.prodmove.services.IAccountService;
@@ -50,7 +53,16 @@ public class AuthService implements IAuthService {
         Map<String, Object> res = new HashMap<String, Object>();
         res.put("username", user.getUsername());
         res.put("role", user.getRole().toString());
-        res.put("id", user.getIdUser());
+        Integer id = -1;
+        if (user.getUser() instanceof Agency) {
+            id = ((Agency)user.getUser()).getId();
+        }else if (user.getUser() instanceof Factory) {
+            id = ((Factory) user.getUser()).getId();
+        }
+        if (user.getUser() instanceof WarrantyCenter) {
+            id = ((WarrantyCenter) user.getUser()).getId();
+        }
+        res.put("id", id);
         res.put("accessToken", accessToken);
         return res;
     }

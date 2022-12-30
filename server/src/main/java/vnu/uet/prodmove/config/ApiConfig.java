@@ -18,9 +18,11 @@ public class ApiConfig {
 
     // moderator
     public static final String MODERATOR = "/moderator";
+    public static final String MODERATOR_ALL_ACCOUNTS = "/all_accounts";
     public static final String MODERATOR_CREATE_ACCOUNT = "/create_account";
     public static final String MODERATOR_DELETE_ACCOUNT = "/delete_account";
     public static final String MODERATOR_UPDATE_ACCOUNT = "/update_account";
+    public static final String MODERATOR_CHECK_PASSWORD = "/check_password";
     public static final String MODERATOR_STATISTICAL_ANALYSIS = "/statistical_analysis";
 
     // agency

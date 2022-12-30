@@ -26,7 +26,6 @@ public class Account {
     private String username;
 
     @Column(name="password", nullable = false, length = 128)
-    @JsonIgnore
     private String password;
 
     @Column(nullable = false, name = "role", length = 45)
@@ -34,38 +33,45 @@ public class Account {
     private UserRole role;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "agencyID")
+    @JoinColumn(name = "agencyID", referencedColumnName="ID")
+    @JsonIgnore
     private Agency agency;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "factoryID")
+    @JoinColumn(name = "factoryID", referencedColumnName = "ID")
+    // @JsonIgnore
     private Factory factory;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "warrantyID")
+    @JsonIgnore
     private WarrantyCenter warrantyCenter;
 
+    @JsonIgnore
     public boolean isAgency() {
         return role.toString().equalsIgnoreCase(UserRole.AGENCY.toString());
     }
-
+    
+    @JsonIgnore
     public boolean isFactory() {
         return role.toString().equalsIgnoreCase(UserRole.FACTORY.toString());
     }
-
+    
+    @JsonIgnore
     public boolean isWarranty() {
-        return role.toString().equalsIgnoreCase(UserRole.REPAIRER.toString());
+        return role.toString().equalsIgnoreCase(UserRole.WARRANTY.toString());
     }
 
-    public Integer getIdUser() {
+    @JsonIgnore
+    public Object getUser() {
         if (this.isAgency()) {
-            return this.getAgency().getId();
+            return this.getAgency();
         } else if (this.isFactory()) {
-            return this.getFactory().getId();
+            return this.getFactory();
         } else if (this.isWarranty()) {
-            return this.getWarrantyCenter().getId();
+            return this.getWarrantyCenter();
         } else
-            return -1;
+            return null;
     }
 
 }

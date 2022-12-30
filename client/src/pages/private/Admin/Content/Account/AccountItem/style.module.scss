@@ -1,0 +1,43 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    // position: relative;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+
+    // .btn-show-password {
+    //     background-color: #ccc;
+    //     color: black !important;
+    //     margin-left: 1rem;
+    //     &:hover {
+    //         background-color: rgb(110, 107, 107);
+    //     }
+    // }
+}
+
+.actions {
+    * {
+        font-size: 1.2rem;
+    }
+
+    .btn {
+        background-color: #ccc;
+        color: black !important;
+        transition: all 0.2s linear;
+        margin: 0 0.4rem;
+
+        &:hover {
+            background-color: rgb(110, 107, 107);
+        }
+    }
+}
+
+.edit-modal {
+    position: absolute;
+}

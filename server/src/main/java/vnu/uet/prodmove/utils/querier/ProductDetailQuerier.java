@@ -66,7 +66,7 @@ public class ProductDetailQuerier {
                     } else {
                         return false;
                     }
-                case REPAIRER:
+                case WARRANTY:
                     if (productDetail.getWarrantyCenter() != null) {
                         return productDetail.getWarrantyCenter().getId() != id;
                     } else {

@@ -1,0 +1,14 @@
+.container {
+    h1 {
+        margin: 1rem;
+    }
+
+    .actions {
+        display: flex;
+        align-items: space-between;
+        justify-content: center;
+        .btn {
+            margin: 1rem
+        }
+    }
+}

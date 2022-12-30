@@ -2,6 +2,13 @@ const api = {
     login: '/api/login',
     logout: '/api/log-out',
 
+    moderator: {
+        root: '/api/moderator',
+        allAccounts: '/api/moderator/all_accounts',
+        checkPassword: '/api/moderator/check_password',
+        updateAccount: '/api/moderator/update_account'
+    },
+
     agency: {
         root: '/api/agency',
         allWarehouses: '/api/agency/warehouses',
