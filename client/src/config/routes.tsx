@@ -20,6 +20,7 @@ export const agencyRoutes = {
     warranty: '/agency/warranty',
     order: '/agency/order',
     warehouse: '/agency/warehouses',
+    sell: '/agency/sell',
 }
 
 export const factoryRoutes = {
@@ -125,7 +126,7 @@ const routes: { [key: string]: any } = {
                     element: <ContentAgency.Import />
                 },
                 {
-                    title: 'Defective & Repaired mobile phone',
+                    title: 'Bảo hành sản phẩm',
                     path: agencyRoutes.warranty,
                     element: <ContentAgency.Warranty />
                 },
@@ -139,6 +140,11 @@ const routes: { [key: string]: any } = {
                     path: agencyRoutes.warehouse,
                     element: <ContentAgency.Warehouse />
                 },
+                {
+                    title: 'Sell',
+                    path: agencyRoutes.sell,
+                    element: <ContentAgency.Sell />
+                }
             ]
         },
 

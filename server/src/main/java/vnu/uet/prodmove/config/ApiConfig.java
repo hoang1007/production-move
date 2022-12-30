@@ -29,7 +29,7 @@ public class ApiConfig {
     public static final String AGENCY_ALL_WAREHOUSE = "/warehouses";
     public static final String AGENCY_SELL_PRODUCT = "/sell_product";
     public static final String AGENCY_ALL_ORDERS = "/orders";
-    public static final String AGENCY_TRANSFER_TO_WARRANTY = "/transfer_to_warranty";
+    public static final String RECEIVE_NEED_REPAIRS = "/receive_need_repairs";
     public static final String AGENCY_ALL = "/all";
     public static final String AGENCY_DISTRIBUTED_PRODUCTS = "/distributed_products";
 
@@ -59,4 +59,11 @@ public class ApiConfig {
     public static final String RETURN_TO_FACTORY = "/return_to_factory";
     public static final String ALL_NEED_REPAIR_PRODUCTS = "/need_repair";
     public static final String ALL_REPAIRING_PRODUCTS = "/repairing";
+
+    // customer
+    public static final String CUSTOMER = "/customer";
+    public static final String CUSTOMER_BY_EMAIL = "/get_by_email";
+    public static final String CUSTOMER_BY_PHONE = "/get_by_phone";
+    public static final String CUSTOMER_CREATE = "/create";
+    public static final String CUSTOMER_ORDERS = "/orders";
 }

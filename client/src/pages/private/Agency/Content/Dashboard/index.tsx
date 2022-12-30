@@ -4,8 +4,8 @@ import { Bar, BarChart, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts"
 import api from "~/config/api";
 import { useAuth } from "~/hooks";
 import usePrivateAxios from "~/hooks/useAxios";
-import { ProductStage } from "~/utils/selector";
-import { ProductType } from "~/utils/TypeGlobal";
+import { groupBy, ProductStage } from "~/utils/selector";
+import { ProductDetailType, ProductType } from "~/utils/TypeGlobal";
 
 export default function Dashboard() {
     const [auth] = useAuth();
@@ -50,52 +50,22 @@ export default function Dashboard() {
         }
     }
 
-    const groupByInterval = (products: ProductType[]) => {
-        var group: Record<number, ProductType[]> = {};
-
-        products.forEach(product => {
-            let intervalId = getIntervalId(product.productDetails[product.productDetails.length - 1].startAt);
-
-            if (group[intervalId]) {
-                group[intervalId].push(product);
-            } else {
-                group[intervalId] = [product];
-            }
-        });
-
-        var ret = Object.entries(group).map(([key, value]) => {
-            return {
-                name: getIntervalLabel(key),
-                value: value
-            }
-        });
-
-        return ret;
-    }
-
-    const groupByStage = (products: ProductType[]) => {
-        var group: Record<string, ProductType[]> = {};
-
-        products.forEach(product => {
-            let stage = product.productDetails[product.productDetails.length - 1].stage;
-            if (group[stage]) {
-                group[stage].push(product);
-            } else {
-                group[stage] = [product];
-            }
-        });
-
-        return Object.entries(group).map(([key, value]) => {
-            return {
-                name: key,
-                value: value
-            }
-        })
+    const filterBy = (products: ProductType[], filter: (product: ProductType) => boolean) => {
+        return products.filter(filter);
     }
 
     const renderStageBarChart = () => {
-        var gr = groupByStage(products).find(item => item.name === stage)?.value || [];
-        var data = groupByInterval(gr).map(item => {
+        var temp: ProductDetailType[] = [];
+        
+        products.forEach(product => {
+            product.productDetails.forEach(detail => {
+                if (detail.stage === stage) {
+                    temp.push(detail);
+                }
+            });
+        });
+
+        const data = groupBy(temp, detail => getIntervalId(detail.startAt), key => getIntervalLabel(key)).map(item => {
             return {
                 name: item.name,
                 value: item.value.length
@@ -115,15 +85,17 @@ export default function Dashboard() {
     }
 
     const renderSoldLineChart = () => {
-        var sold = products.filter(product => {
+        var temp: ProductDetailType[] = [];
+        
+        products.forEach(product => {
             product.productDetails.forEach(detail => {
                 if (detail.stage === ProductStage.SOLD) {
-                    return true;
+                    temp.push(detail);
                 }
             });
         });
 
-        var data = groupByInterval(sold).map(item => {
+        const data = groupBy(temp, detail => getIntervalId(detail.startAt), key => getIntervalLabel(key)).map(item => {
             return {
                 name: item.name,
                 value: item.value.length

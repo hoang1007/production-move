@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -45,11 +44,9 @@ public class ProductDetail {
     private ProductStage stage;
 
     @Column(name = "startAt", nullable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime startAt;
 
     @Column(name = "endAt")
-    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime endAt;
 
     @Column(name = "description")

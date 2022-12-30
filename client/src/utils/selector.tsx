@@ -24,3 +24,26 @@ export const ProductStage = {
     WARRANTY_EXPIRED: 'Warranty expired',
     CANNOT_SOLD: 'Cannot sold'
 }
+
+export const groupBy = function<T>(items: T[], keyExtractor: (item: T) => any, keyLabelGetter?: (key: any) => any) {
+    var group: Record<any, T[]> = {};
+
+    items.forEach(product => {
+        let key = keyExtractor(product);
+
+        if (group[key]) {
+            group[key].push(product);
+        } else {
+            group[key] = [product];
+        }
+    });
+
+    var ret = Object.entries(group).map(([key, value]) => {
+        return {
+            name: keyLabelGetter ? keyLabelGetter(key) : key,
+            value: value
+        }
+    });
+
+    return ret;
+}

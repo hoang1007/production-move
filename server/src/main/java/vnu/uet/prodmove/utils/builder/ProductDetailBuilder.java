@@ -51,10 +51,11 @@ public class ProductDetailBuilder {
         return detail;
     }
 
-    public ProductDetail needRepair() {
+    public ProductDetail needRepair(String reason) {
         detail = ProductDetailQuerier.of(this.detail.getProduct()).getLast();
         if (detail.getStage() == ProductStage.SOLD) {
             detail.setStage(ProductStage.NEED_REPAIR);
+            detail.setDescription(reason);
             return detail;
         }
         throw new IllegalArgumentException("Product is not sold yet.");

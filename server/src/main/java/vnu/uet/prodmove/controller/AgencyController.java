@@ -218,12 +218,13 @@ public class AgencyController {
         }
     }
 
-    @PostMapping(ApiConfig.AGENCY_TRANSFER_TO_WARRANTY)
-    public ResponseEntity<Map<String, String>> transferToWarranty(@RequestBody Map<String, Object> info) {
+    @PostMapping(ApiConfig.RECEIVE_NEED_REPAIRS)
+    public ResponseEntity<Map<String, String>> receiveNeedRepairProducts(@RequestBody Map<String, Object> info) {
         try {
-            Integer warrantyId = Integer.parseInt((String) info.get("warrantyId"));
             List<Integer> productIds = (List<Integer>) info.get("productIds");
-            agencyService.transferProductToWarrantyCenter(productIds, warrantyId);
+            List<String> reasons = (List<String>) info.get("reasons");
+
+            agencyService.receiveNeedRepairProducts(productIds, reasons);
             return ResponseEntity.ok().body(Map.of("message", "Transfer successfully."));
         } catch (Exception e) {
             e.printStackTrace();

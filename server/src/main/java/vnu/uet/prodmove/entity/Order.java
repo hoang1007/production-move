@@ -1,5 +1,6 @@
 package vnu.uet.prodmove.entity;
 
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
@@ -35,11 +36,11 @@ public class Order {
     private Integer id;
 
     @Column(name = "orderDate")
-    private OffsetDateTime orderDate;
+    private LocalDateTime orderDate;
 
 
     @Column(name = "soldDate")
-    private OffsetDateTime soldDate;
+    private LocalDateTime soldDate;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productID", nullable = false)
