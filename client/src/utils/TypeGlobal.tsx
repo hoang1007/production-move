@@ -15,13 +15,20 @@ export interface WarehouseType {
     products: ProductType[]
 }
 
+export interface WarrantyCenter {
+    id: number,
+    name: string,
+    address: string,
+}
+
 export interface ProductDetailType {
     id: number,
     stage: string,
     startAt: Date,
     endAt?: Date,
     description?: string,
-    product: ProductType
+    product: ProductType,
+    warrantyCenter: AgencyType,
 }
 
 export interface BatchProductType {

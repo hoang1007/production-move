@@ -3,7 +3,6 @@ package vnu.uet.prodmove.services.implement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.hibernate.Session;
@@ -25,7 +24,6 @@ import vnu.uet.prodmove.repos.ProductlineRepository;
 import vnu.uet.prodmove.repos.WarehouseRepository;
 import vnu.uet.prodmove.services.IManufactoringBaseService;
 import vnu.uet.prodmove.utils.builder.ProductDetailBuilder;
-import vnu.uet.prodmove.utils.querier.ProductDetailQuerier;
 
 @Service
 public class ManufactoringBaseService implements IManufactoringBaseService {
@@ -64,7 +62,7 @@ public class ManufactoringBaseService implements IManufactoringBaseService {
 
             ProductDetail newProd = ProductDetailBuilder.of(product).newProduction(warehouse);
             product.addProductDetail(newProd);
-            
+
             session.save(product);
             session.save(newProd);
         }
@@ -77,10 +75,10 @@ public class ManufactoringBaseService implements IManufactoringBaseService {
     @Override
     public void exportToAgency(Iterable<Integer> productIds, Integer agencyId) {
         Agency agency = agencyRepository.getReferenceById(agencyId);
-        
+
         List<Product> products = productRepository.findAllById(productIds);
         List<ProductDetail> productDetails = new ArrayList<ProductDetail>();
-    
+
         for (Product product : products) {
             productDetails.add(ProductDetailBuilder.of(product).exportToAgency(agency));
         }
@@ -92,16 +90,10 @@ public class ManufactoringBaseService implements IManufactoringBaseService {
     public void receiveReturnedProducts(Iterable<Integer> productIds) {
         List<Product> products = productRepository.findAllById(productIds);
         List<ProductDetail> productDetails = new ArrayList<ProductDetail>();
-        
-        for (Product product : products) {
-            ProductDetail returned = new ProductDetailQuerier(product).getLast();
 
-            if (returned.getStage() == ProductStage.RETURNED_TO_FACTORY && !returned.completed()) {
-                returned.markCompleted();
-                productDetails.add(returned);
-            } else {
-                throw new RuntimeException("Product is not returned to factory");
-            }
+        for (Product product : products) {
+            var detail = ProductDetailBuilder.of(product).returnedToFactory();
+            productDetails.addAll(detail);
         }
 
         productDetailRepository.saveAll(productDetails);
@@ -119,8 +111,8 @@ public class ManufactoringBaseService implements IManufactoringBaseService {
     @Override
     public Collection<Product> getAllCreatedProducts(Integer factoryId) {
         var products = productDetailRepository.findAll().stream().filter(
-            pd -> pd.getStage().equals(ProductStage.NEW_PRODUCTION) && pd.getFactory().getId().equals(factoryId)
-        ).map(pd -> pd.getProduct()).collect(Collectors.toList());
+                pd -> pd.getStage().equals(ProductStage.NEW_PRODUCTION) && pd.getFactory().getId().equals(factoryId))
+                .map(pd -> pd.getProduct()).collect(Collectors.toList());
 
         return products;
     }

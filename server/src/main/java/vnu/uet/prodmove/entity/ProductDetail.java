@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -54,13 +53,10 @@ public class ProductDetail {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productID", referencedColumnName = "ID")
-    @JsonIgnore
     private Product product;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @Transient
     @JoinColumn(name = "warrantyCenterID")
-    @JsonIgnore
     private WarrantyCenter warrantyCenter;
 
     @ManyToOne(fetch = FetchType.EAGER)

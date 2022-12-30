@@ -52,20 +52,16 @@ public class WarrantyCenterService implements IWarrantyCenterService {
     }
 
     @Override
-    public void receiveProductsFromAgency(Iterable<Integer> productIds) {
+    public void receiveProductsFromAgency(Iterable<Integer> productIds, Integer warrantyCenterId) {
         var products = productRepository.findAllById(productIds);
+        var warrantyCenter = warrantyCenterRepository.getReferenceById(warrantyCenterId);
+
         var newDetails = new ArrayList<ProductDetail>();
 
         for (var product : products) {
-            var needRepair = ProductDetailQuerier.of(product).getLast();
-
-            if (needRepair.getStage() == ProductStage.NEED_REPAIR && needRepair != null && !needRepair.completed()) {
-                needRepair.markCompleted();
-
-                newDetails.add(ProductDetailBuilder.of(product).repairing());
-            } else {
-                throw new RuntimeException("Product is not in need repair stage");
-            }
+            var detail = ProductDetailBuilder.of(product).repairing(warrantyCenter);
+            System.out.println(detail.get(0).getWarrantyCenter().getName());
+            newDetails.addAll(detail);
         }
 
         productdetailRepository.saveAll(newDetails);
@@ -77,7 +73,7 @@ public class WarrantyCenterService implements IWarrantyCenterService {
         var newDetails = new ArrayList<ProductDetail>();
 
         for (var product : products) {
-            newDetails.add(ProductDetailBuilder.of(product).repaired());
+            newDetails.addAll(ProductDetailBuilder.of(product).repaired());
         }
 
         productdetailRepository.saveAll(newDetails);
@@ -90,7 +86,7 @@ public class WarrantyCenterService implements IWarrantyCenterService {
         var newDetails = new ArrayList<ProductDetail>();
 
         for (var product : products) {
-            newDetails.add(ProductDetailBuilder.of(product).needReturnToFactory());
+            newDetails.addAll(ProductDetailBuilder.of(product).needReturnToFactory());
         }
 
         productdetailRepository.saveAll(newDetails);

@@ -1,10 +1,13 @@
 package vnu.uet.prodmove.utils.builder;
 
+import java.util.List;
+
 import vnu.uet.prodmove.entity.Agency;
 import vnu.uet.prodmove.entity.Customer;
 import vnu.uet.prodmove.entity.Product;
 import vnu.uet.prodmove.entity.ProductDetail;
 import vnu.uet.prodmove.entity.Warehouse;
+import vnu.uet.prodmove.entity.WarrantyCenter;
 import vnu.uet.prodmove.enums.ProductStage;
 import vnu.uet.prodmove.utils.querier.ProductDetailQuerier;
 
@@ -46,14 +49,14 @@ public class ProductDetailBuilder {
     }
 
     public ProductDetail sold(Customer customer) {
-        // detail.setCustomer(customer);
+        detail.setCustomer(customer);
         detail.setStage(ProductStage.SOLD);
         return detail;
     }
 
     public ProductDetail needRepair(String reason) {
-        detail = ProductDetailQuerier.of(this.detail.getProduct()).getLast();
-        if (detail.getStage() == ProductStage.SOLD) {
+        var lastDetail = ProductDetailQuerier.of(this.detail.getProduct()).getLast();
+        if (lastDetail.getStage().equals(ProductStage.SOLD)) {
             detail.setStage(ProductStage.NEED_REPAIR);
             detail.setDescription(reason);
             return detail;
@@ -61,21 +64,22 @@ public class ProductDetailBuilder {
         throw new IllegalArgumentException("Product is not sold yet.");
     }
 
-    public ProductDetail repairing() {
+    public List<ProductDetail> repairing(WarrantyCenter warrantyCenter) {
         var needRepair = ProductDetailQuerier.of(this.detail.getProduct()).getLast();
 
-        if (needRepair.getStage() == ProductStage.NEED_REPAIR) {
+        if (needRepair.getStage().equals(ProductStage.NEED_REPAIR)) {
             needRepair.markCompleted();
 
-            detail.setWarrantyCenter(needRepair.getWarrantyCenter());
+            detail.setWarrantyCenter(warrantyCenter);
+            detail.setDescription(needRepair.getDescription());
             detail.setStage(ProductStage.REPAIRING);
-            return detail;
+            return List.of(detail, needRepair);
         } else {
             throw new IllegalArgumentException("Product is not in need repair stage");
         }
     }
 
-    public ProductDetail repaired() {
+    public List<ProductDetail> repaired() {
         var querier = new ProductDetailQuerier(this.detail.getProduct());
 
         var repairing = querier.getLast();
@@ -86,15 +90,16 @@ public class ProductDetailBuilder {
             var agency = querier.filter(ProductStage.EXPORT_TO_AGENCY).getLast().getAgency();
             detail.setWarrantyCenter(repairing.getWarrantyCenter());
             detail.setAgency(agency);
+            detail.setDescription(repairing.getDescription());
             detail.setStage(ProductStage.REPAIRED);
 
-            return detail;
+            return List.of(detail, repairing);
         } else {
             throw new IllegalArgumentException("Product is not in repairing stage");
         }
     }
 
-    public ProductDetail needReturnToFactory() {
+    public List<ProductDetail> needReturnToFactory() {
         var querier = new ProductDetailQuerier(this.detail.getProduct());
 
         var repairing = querier.getLast();
@@ -105,14 +110,16 @@ public class ProductDetailBuilder {
             var factory = querier.filter(ProductStage.NEW_PRODUCTION).getLast().getFactory();
 
             detail.setFactory(factory);
+            detail.setDescription(repairing.getDescription());
+            detail.setWarrantyCenter(repairing.getWarrantyCenter());
             detail.setStage(ProductStage.NEED_RETURN_TO_FACTORY);
-            return detail;
+            return List.of(detail, repairing);
         } else {
             throw new IllegalArgumentException("Product is not in repairing stage");
         }
     }
 
-    public ProductDetail returnedToFactory() {
+    public List<ProductDetail> returnedToFactory() {
         var querier = new ProductDetailQuerier(this.detail.getProduct());
 
         var needReturnToFactory = querier.getLast();
@@ -123,9 +130,29 @@ public class ProductDetailBuilder {
             detail.setFactory(needReturnToFactory.getFactory());
             detail.setStage(ProductStage.RETURNED_TO_FACTORY);
             detail.markCompleted();
-            return detail;
+            return List.of(detail, needReturnToFactory);
         } else {
             throw new IllegalArgumentException("Product is not in need return to factory stage");
+        }
+    }
+
+    public List<ProductDetail> returnedToCustomer() {
+        var querier = new ProductDetailQuerier(this.detail.getProduct());
+
+        var repaired = querier.getLast();
+
+        if (repaired.getStage() == ProductStage.REPAIRED) {
+            repaired.markCompleted();
+
+            var customer = querier.filter(ProductStage.SOLD).getLast().getCustomer();
+
+            detail.setCustomer(customer);
+            detail.setFactory(repaired.getFactory());
+            detail.setStage(ProductStage.RETURNED_TO_CUSTOMER);
+            detail.markCompleted();
+            return List.of(detail, repaired);
+        } else {
+            throw new IllegalArgumentException("Product is not in repaired stage");
         }
     }
 }

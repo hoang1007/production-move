@@ -85,7 +85,14 @@ public interface IAgencyService {
      * @param productId Mã sản phẩm
      * @param customerId Mã khách hàng
      */
-    public void returnToCustomer(Integer productId, Integer customerId);
+    public void returnToCustomer(List<Integer> productId);
+
+    /**
+     * Bồi thường cho khách hàng
+     * @param productId
+     * @param customerId
+     */
+    public void compensateCustomer(Integer productId, Integer customerId);
 
     /**
      * Triệu hồi các sản phẩm của dòng sản phẩm bị lỗi
