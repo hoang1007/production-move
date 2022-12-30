@@ -43,7 +43,9 @@ public class AccountService implements IAccountService {
 
     @Override
     public Account findByUsername(String username) throws vnu.uet.prodmove.exception.NotFoundException {
+        System.out.println(username);
         Account account = accountRepository.findByUsername(username);
+
         if (account == null) {
             throw new vnu.uet.prodmove.exception.NotFoundException("This user does not exist");
         }

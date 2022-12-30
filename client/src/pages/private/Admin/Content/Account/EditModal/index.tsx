@@ -46,7 +46,7 @@ function EditModal({ className, account, toggleShowModalEdit }: Props) {
             username: currentAccount.username,
             password: currentAccount.password
         })
-            .then(res => {
+            .then((res: { status: number; }) => {
                 if (res.status === 200) {
                     toast.success("Cập nhật thành công!");
                 }

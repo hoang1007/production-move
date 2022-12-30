@@ -49,6 +49,9 @@ public class ProductDetail {
     @Column(name = "endAt")
     private LocalDateTime endAt;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productID", referencedColumnName = "ID")
     @JsonIgnore

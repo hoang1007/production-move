@@ -1,6 +1,8 @@
+CREATE DATABASE  IF NOT EXISTS `webdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `webdb`;
 -- MySQL dump 10.13  Distrib 8.0.31, for Linux (x86_64)
 --
--- Host: 127.0.0.1    Database: productmove
+-- Host: localhost    Database: webdb
 -- ------------------------------------------------------
 -- Server version	8.0.31-0ubuntu0.22.04.1
 
@@ -29,13 +31,7 @@ CREATE TABLE `account` (
   `agencyID` int DEFAULT NULL,
   `factoryID` int DEFAULT NULL,
   `warrantyID` int DEFAULT NULL,
-  PRIMARY KEY (`username`),
-  KEY `agencyID` (`agencyID`),
-  KEY `factoryID` (`factoryID`),
-  KEY `warrantyID` (`warrantyID`),
-  CONSTRAINT `account_ibfk_1` FOREIGN KEY (`agencyID`) REFERENCES `agency` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `account_ibfk_2` FOREIGN KEY (`factoryID`) REFERENCES `factory` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `account_ibfk_3` FOREIGN KEY (`warrantyID`) REFERENCES `warrantycenter` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -45,7 +41,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES ('admin','$2a$10$f.hu.iZFa.0iXlYg1pLdouJuJJly/ncrlQo6ea3F2.pEtt1Bbj3gW','MODERATOR',1,NULL,NULL),('HoangAnh','$2a$10$5FuYPhmYEW9qrrSDGzkumOyL0FCvhuFVEWTiwq0C/SysNjvVd1czG','AGENCY',4,NULL,NULL),('user1','$2a$10$CxTViWelaArogaMwpHHH1OjxhOPeIs5VTzf78uMRdhRdgetBH/z92','AGENCY',1,NULL,NULL),('user5','12345','FACTORY',NULL,2,NULL),('user6','12345','WARRANTY',NULL,NULL,1);
+INSERT INTO `account` VALUES ('admin','$2a$10$uWgeJi.aPWbVz1872NLl2u19BC6rxmhaCQT03MM2r2ROEVIrMp3VO','MODERATOR',NULL,NULL,NULL),('agency','$2a$10$11pR6j0uGbJBUypFLRKY7.0W0D1BUfzZfHi1pCg5ZWbC9Nr7TZP6O','AGENCY',1,NULL,NULL),('factory','$2a$10$f.hu.iZFa.0iXlYg1pLdouJuJJly/ncrlQo6ea3F2.pEtt1Bbj3gW','FACTORY',NULL,1,NULL),('warranty','$2a$10$mmGrN4f4O3QuIrmQH0r3pO24OBOwKwG18EJzwTvc6t8o3Krnrq2aC','WARRANTY',NULL,NULL,1);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,7 +57,7 @@ CREATE TABLE `agency` (
   `name` varchar(256) NOT NULL,
   `address` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +66,7 @@ CREATE TABLE `agency` (
 
 LOCK TABLES `agency` WRITE;
 /*!40000 ALTER TABLE `agency` DISABLE KEYS */;
-INSERT INTO `agency` VALUES (1,'Cơ sở sản xuất 1','Đường Láng, Đống Đa, Hà Nội'),(2,'agency2','HCM city'),(4,'Agency-Ha','Nam Dinh'),(5,'Agency-Ha','Nam Dinh'),(6,'Agency-Ha','Nam Dinh'),(7,'Agency-Ha','Nam Dinh');
+INSERT INTO `agency` VALUES (1,'Đại lý phân phối số 1','Đường Láng, Đống Đa, Hà Nội'),(2,'Đại lý phân phối số 2','Duy Tân, Cầu Giấy, Hà Nội');
 /*!40000 ALTER TABLE `agency` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,13 +79,13 @@ DROP TABLE IF EXISTS `customer`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customer` (
   `ID` int NOT NULL AUTO_INCREMENT,
-  `fullname` varchar(85) DEFAULT NULL,
+  `fullname` varchar(85) NOT NULL,
   `phoneNumber` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `phoneNumber_UNIQUE` (`phoneNumber`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +94,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (1,'Hoang Anh','0981066360','vha31102002@gmail.com'),(2,'Hung','1234567','hung@gmail.com');
+INSERT INTO `customer` VALUES (1,'Vũ Huy Hoàng','0398123043','hvh@gmail.com'),(3,'Vũ Hoàng Anh',NULL,'hav@gmail.com');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,7 +110,7 @@ CREATE TABLE `factory` (
   `name` varchar(256) NOT NULL,
   `address` tinytext,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,7 +119,7 @@ CREATE TABLE `factory` (
 
 LOCK TABLES `factory` WRITE;
 /*!40000 ALTER TABLE `factory` DISABLE KEYS */;
-INSERT INTO `factory` VALUES (2,'factory 1','HCM city'),(3,'factory 2','THanh Hoa');
+INSERT INTO `factory` VALUES (1,'Cơ sở sản xuất 1','Xuân Thủy, Cầu Giấy, Hà Nội');
 /*!40000 ALTER TABLE `factory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -146,7 +142,7 @@ CREATE TABLE `orders` (
   KEY `fk_order_customer_idx` (`customerID`),
   CONSTRAINT `fk_order_customer` FOREIGN KEY (`customerID`) REFERENCES `customer` (`ID`),
   CONSTRAINT `fk_order_product` FOREIGN KEY (`productID`) REFERENCES `product` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -155,7 +151,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (2,2,1,'2022-12-29 01:18:05','2022-12-29 02:12:49'),(3,3,1,'2022-12-29 02:08:01','2022-12-29 02:12:49');
+INSERT INTO `orders` VALUES (9,36,1,'2022-12-30 10:56:27',NULL),(10,51,1,'2022-12-30 10:56:27',NULL);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,7 +168,7 @@ CREATE TABLE `product` (
   PRIMARY KEY (`ID`),
   KEY `fk_producline_idx` (`productlineID`),
   CONSTRAINT `fk_productline` FOREIGN KEY (`productlineID`) REFERENCES `productline` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,7 +177,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (2,100),(3,102);
+INSERT INTO `product` VALUES (34,96),(35,96),(36,96),(45,8065),(46,8065),(47,8065),(31,8858),(32,8858),(33,8858),(48,8858),(49,8858),(60,9732),(61,9732),(62,9732),(63,9732),(50,10261),(51,10261),(52,10261),(53,10261),(54,10261),(55,10261),(56,10261),(57,10261),(58,10261),(59,10261),(37,10355),(38,10355),(39,10355),(40,10355),(41,10355),(42,10444),(43,10444),(44,10444);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,6 +199,7 @@ CREATE TABLE `productdetail` (
   `customerID` int DEFAULT NULL,
   `factoryID` int DEFAULT NULL,
   `agencyID` int DEFAULT NULL,
+  `description` tinytext,
   PRIMARY KEY (`ID`),
   KEY `fk_product_idx` (`productID`),
   KEY `fk_productdetail_1_idx` (`agencyID`),
@@ -211,12 +208,12 @@ CREATE TABLE `productdetail` (
   KEY `fk_productdetail_4_idx` (`warehouseID`),
   KEY `fk_productdetail_5_idx` (`warrantyCenterID`),
   CONSTRAINT `fk_product` FOREIGN KEY (`productID`) REFERENCES `product` (`ID`),
+  CONSTRAINT `fk_productdetail_1` FOREIGN KEY (`agencyID`) REFERENCES `agency` (`ID`),
+  CONSTRAINT `fk_productdetail_2` FOREIGN KEY (`factoryID`) REFERENCES `factory` (`ID`),
   CONSTRAINT `fk_productdetail_3` FOREIGN KEY (`customerID`) REFERENCES `customer` (`ID`),
   CONSTRAINT `fk_productdetail_4` FOREIGN KEY (`warehouseID`) REFERENCES `warehouse` (`ID`),
-  CONSTRAINT `productdetail_ibfk_1` FOREIGN KEY (`warrantyCenterID`) REFERENCES `warrantycenter` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `productdetail_ibfk_2` FOREIGN KEY (`factoryID`) REFERENCES `factory` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `productdetail_ibfk_3` FOREIGN KEY (`agencyID`) REFERENCES `agency` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `fk_productdetail_5` FOREIGN KEY (`warrantyCenterID`) REFERENCES `warrantycenter` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,6 +222,7 @@ CREATE TABLE `productdetail` (
 
 LOCK TABLES `productdetail` WRITE;
 /*!40000 ALTER TABLE `productdetail` DISABLE KEYS */;
+INSERT INTO `productdetail` VALUES (51,31,'2022-12-29 17:49:35','2022-12-29 17:49:35','New production',NULL,1,NULL,1,NULL,NULL),(52,32,'2022-12-29 17:49:36','2022-12-29 17:49:36','New production',NULL,1,NULL,1,NULL,NULL),(53,33,'2022-11-29 17:49:36','2022-11-29 17:49:36','New production',NULL,1,NULL,1,NULL,NULL),(54,34,'2022-10-29 18:11:35','2022-10-29 18:11:35','New production',NULL,2,NULL,1,NULL,NULL),(55,35,'2022-12-29 18:11:59','2022-12-29 18:11:59','New production',NULL,2,NULL,1,NULL,NULL),(56,36,'2022-11-29 18:11:59','2022-11-29 18:11:59','New production',NULL,2,NULL,1,NULL,NULL),(57,37,'2022-12-29 19:09:33','2022-12-29 19:09:33','New production',NULL,1,NULL,1,NULL,NULL),(58,38,'2022-12-29 19:09:33','2022-12-29 19:09:33','New production',NULL,1,NULL,1,NULL,NULL),(59,39,'2022-12-29 19:09:33','2022-12-29 19:09:33','New production',NULL,1,NULL,1,NULL,NULL),(60,40,'2022-12-29 19:09:33','2022-12-29 19:09:33','New production',NULL,1,NULL,1,NULL,NULL),(61,41,'2022-12-29 19:09:33','2022-12-29 19:09:33','New production',NULL,1,NULL,1,NULL,NULL),(62,42,'2022-12-29 19:11:17','2022-12-29 19:11:17','New production',NULL,1,NULL,1,NULL,NULL),(63,43,'2022-12-29 19:11:17','2022-12-29 19:11:17','New production',NULL,1,NULL,1,NULL,NULL),(64,44,'2022-12-29 19:11:17','2022-12-29 19:11:17','New production',NULL,1,NULL,1,NULL,NULL),(65,45,'2022-12-29 19:16:33','2022-12-29 19:16:33','New production',NULL,2,NULL,1,NULL,NULL),(66,46,'2022-12-29 19:16:33','2022-12-29 19:16:33','New production',NULL,2,NULL,1,NULL,NULL),(67,47,'2022-12-29 19:16:33','2022-12-29 19:16:33','New production',NULL,2,NULL,1,NULL,NULL),(68,48,'2022-12-29 19:17:46','2022-12-29 19:17:46','New production',NULL,2,NULL,1,NULL,NULL),(69,49,'2022-12-29 19:17:46','2022-12-29 19:17:46','New production',NULL,2,NULL,1,NULL,NULL),(70,34,'2022-10-29 19:56:44','2022-10-29 23:21:18','Export to agency',NULL,3,NULL,NULL,1,NULL),(71,36,'2022-11-29 19:56:44','2022-11-29 23:21:18','Export to agency',NULL,3,NULL,NULL,1,NULL),(72,49,'2022-12-29 19:56:44','2022-12-29 23:21:18','Export to agency',NULL,3,NULL,NULL,1,NULL),(76,50,'2022-12-29 23:37:29','2022-12-29 23:37:29','New production',NULL,1,NULL,1,NULL,NULL),(77,51,'2022-12-29 23:37:29','2022-12-29 23:37:29','New production',NULL,1,NULL,1,NULL,NULL),(78,52,'2022-12-29 23:37:29','2022-12-29 23:37:29','New production',NULL,1,NULL,1,NULL,NULL),(79,53,'2022-12-29 23:37:29','2022-12-29 23:37:29','New production',NULL,1,NULL,1,NULL,NULL),(80,54,'2022-12-29 23:37:29','2022-12-29 23:37:29','New production',NULL,1,NULL,1,NULL,NULL),(81,55,'2022-12-29 23:37:29','2022-12-29 23:37:29','New production',NULL,1,NULL,1,NULL,NULL),(82,56,'2022-12-29 23:37:29','2022-12-29 23:37:29','New production',NULL,1,NULL,1,NULL,NULL),(83,57,'2022-12-29 23:37:29','2022-12-29 23:37:29','New production',NULL,1,NULL,1,NULL,NULL),(84,58,'2022-12-29 23:37:29','2022-12-29 23:37:29','New production',NULL,1,NULL,1,NULL,NULL),(85,59,'2022-12-29 23:37:29','2022-12-29 23:37:29','New production',NULL,1,NULL,1,NULL,NULL),(87,51,'2022-12-29 23:37:44','2022-12-29 23:38:22','Export to agency',NULL,3,NULL,NULL,1,NULL),(88,52,'2022-12-29 23:37:44','2022-12-30 10:49:56','Export to agency',NULL,3,NULL,NULL,1,NULL),(89,54,'2022-12-29 23:37:44','2022-12-30 10:49:56','Export to agency',NULL,3,NULL,NULL,1,NULL),(90,55,'2022-12-29 23:37:44','2022-12-30 10:49:56','Export to agency',NULL,3,NULL,NULL,1,NULL),(91,58,'2022-12-29 23:37:44','2022-12-30 10:49:56','Export to agency',NULL,3,NULL,NULL,1,NULL),(92,39,'2022-12-29 23:37:44','2022-12-30 10:49:56','Export to agency',NULL,3,NULL,NULL,1,NULL),(93,40,'2022-12-29 23:37:44','2022-12-30 10:49:56','Export to agency',NULL,3,NULL,NULL,1,NULL),(94,41,'2022-12-29 23:37:44','2022-12-30 10:49:56','Export to agency',NULL,3,NULL,NULL,1,NULL),(100,60,'2022-12-30 10:48:28','2022-12-30 10:48:29','New production',NULL,1,NULL,1,NULL,NULL),(101,61,'2022-12-30 10:48:29','2022-12-30 10:48:29','New production',NULL,1,NULL,1,NULL,NULL),(102,62,'2022-12-30 10:48:29','2022-12-30 10:48:29','New production',NULL,1,NULL,1,NULL,NULL),(103,63,'2022-12-30 10:48:29','2022-12-30 10:48:29','New production',NULL,1,NULL,1,NULL,NULL),(106,36,'2022-12-30 10:56:27','2022-12-30 10:56:35','Need repair',NULL,NULL,NULL,NULL,NULL,'Hỏng bàn phím'),(107,51,'2022-12-30 10:56:27','2022-12-30 10:56:35','Sold',NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `productdetail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -349,13 +347,13 @@ CREATE TABLE `warehouse` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `factoryID` int DEFAULT NULL,
   `agencyID` int DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL,
+  `address` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `fk_warehouse_factory_idx` (`factoryID`),
   KEY `fk_warehouse_agency_idx` (`agencyID`),
   CONSTRAINT `fk_warehouse_agency` FOREIGN KEY (`agencyID`) REFERENCES `agency` (`ID`),
   CONSTRAINT `fk_warehouse_factory` FOREIGN KEY (`factoryID`) REFERENCES `factory` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -364,7 +362,7 @@ CREATE TABLE `warehouse` (
 
 LOCK TABLES `warehouse` WRITE;
 /*!40000 ALTER TABLE `warehouse` DISABLE KEYS */;
-INSERT INTO `warehouse` VALUES (1,NULL,1,'Xuân Thủy, Cầu Giấy, Hà Nội'),(2,NULL,1,'Ho Chi Minh city');
+INSERT INTO `warehouse` VALUES (1,1,NULL,'Xuân Thủy, Cầu Giấy, Hà Nội'),(2,1,NULL,'Mai Dịch, Cầu Giấy, Hà Nội'),(3,NULL,1,'Duy Tân, Cầu Giấy, Hà Nội');
 /*!40000 ALTER TABLE `warehouse` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -389,7 +387,7 @@ CREATE TABLE `warrantycenter` (
 
 LOCK TABLES `warrantycenter` WRITE;
 /*!40000 ALTER TABLE `warrantycenter` DISABLE KEYS */;
-INSERT INTO `warrantycenter` VALUES (1,'warranty 1','HCM city');
+INSERT INTO `warrantycenter` VALUES (1,'Trung tâm bảo hành số 1','Nguyễn Hoàng, Mỹ Đình 2, Hà Nội');
 /*!40000 ALTER TABLE `warrantycenter` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -402,4 +400,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-30 17:01:12
+-- Dump completed on 2022-12-30 18:34:06
