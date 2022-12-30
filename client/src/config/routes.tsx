@@ -23,6 +23,7 @@ export const agencyRoutes = {
     warranty: '/agency/warranty',
     order: '/agency/order',
     warehouse: '/agency/warehouses',
+    sell: '/agency/sell',
 }
 
 export const factoryRoutes = {
@@ -154,6 +155,11 @@ const routes: { [key: string]: any } = {
                     path: agencyRoutes.warehouse,
                     element: <ContentAgency.Warehouse />
                 },
+                {
+                    title: 'Sell',
+                    path: agencyRoutes.sell,
+                    element: <ContentAgency.Sell />
+                }
             ]
         },
 

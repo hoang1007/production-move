@@ -34,6 +34,9 @@ function Sidebar() {
 			<Button variant="text" className={cx('navigation-btn')} startIcon={<GroceryIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, agencyRoutes.order) }}>
 				Order
 			</Button>
+			<Button variant="text" className={cx('navigation-btn')} startIcon={<GroceryIcon className={cx('icon')} />} onClick={(e) => { handleNavigate(e, agencyRoutes.sell) }}>
+				Sell
+			</Button>
 		</Stack>
 	);
 }

@@ -128,36 +128,46 @@ public class AgencyService implements IAgencyService {
     public void sellProducts(Integer customerId, Collection<Integer> productIds)
             throws NotFoundException, CloneNotSupportedException {
         List<Product> products = (List<Product>) productService.findAllByIds(productIds);
-        Customer customer = customerService.findById(customerId);
-        customerService.buyProducts(products, customer);
-    }
+        List<ProductDetail> details = new ArrayList<>();
 
-    @Override
-    public void receiveNeedRepairProducts(Iterable<Integer> productIds, Integer warehouseId) throws NotFoundException {
-        Warehouse warehouse = warehouseService.findById(warehouseId);
-        List<Product> products = (List<Product>) productService.findAllByIds(productIds);
-        List<ProductDetail> productDetails = new ArrayList<>();
-        for (Product product : products) {
-            ProductDetail productDetail = ProductDetailBuilder.of(product).needRepair();
-            productDetail.setWarehouse(warehouse);
-            productDetails.add(productDetail);
+        for (var product : products) {
+            var detail = ProductDetailQuerier.of(product).filter(ProductStage.SOLD).getLast();
+            detail.markCompleted();
+            details.add(detail);
         }
-        productDetailService.saveAll(productDetails);
+
+        productDetailService.saveAll(details);
     }
 
     @Override
-    public void transferProductToWarrantyCenter(Iterable<Integer> productIds, Integer warrantyCenterId)
+    public void receiveNeedRepairProducts(Iterable<Integer> productIds, Iterable<String> reasons)
             throws NotFoundException {
         List<Product> products = (List<Product>) productService.findAllByIds(productIds);
-        // WarrantyCenter warrantyCenter =
-        // warrantyCenterService.findById(warrantyCenterId);
         List<ProductDetail> productDetails = new ArrayList<>();
+
+        var reasonIter = reasons.iterator();
         for (Product product : products) {
-            ProductDetail productDetail = ProductDetailBuilder.of(product).repairing();
+            ProductDetail productDetail = ProductDetailBuilder.of(product).needRepair(reasonIter.next());
             productDetails.add(productDetail);
         }
         productDetailService.saveAll(productDetails);
     }
+
+    // @Override
+    // public void transferProductToWarrantyCenter(Iterable<Integer> productIds,
+    // Iterable<String> reasons)
+    // throws NotFoundException {
+    // List<Product> products = (List<Product>)
+    // productService.findAllByIds(productIds);
+    // // WarrantyCenter warrantyCenter =
+    // // warrantyCenterService.findById(warrantyCenterId);
+    // List<ProductDetail> productDetails = new ArrayList<>();
+    // for (Product product : products) {
+    // ProductDetail productDetail = ProductDetailBuilder.of(product).needRepair();
+    // productDetails.add(productDetail);
+    // }
+    // productDetailService.saveAll(productDetails);
+    // }
 
     @Override
     public void recallProducts(Integer productlineId) {
@@ -202,7 +212,7 @@ public class AgencyService implements IAgencyService {
         }
         Set<Order> orders = new HashSet<Order>();
         for (Product p : products) {
-            if (p.getOrder() != null) {
+            if (p.getOrder() != null && p.getOrder().getSoldDate() == null) {
                 orders.add(p.getOrder());
             }
         }

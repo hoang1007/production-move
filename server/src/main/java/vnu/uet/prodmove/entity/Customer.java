@@ -32,7 +32,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="fullname", length = 85)
+    @Column(name="fullname", nullable = false, length = 85)
     private String fullname;
 
     @Column(name="phoneNumber", unique = true, length = 45)

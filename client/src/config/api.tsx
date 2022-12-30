@@ -24,6 +24,7 @@ const api = {
         sellProduct: '/api/agency/sell_product',
         allAgencies: '/api/agency/all',
         distributedProducts: '/api/agency/distributed_products',
+        receiveNeedRepairs: '/api/agency/receive_need_repairs',
     },
     factory: {
         root: '/api/factory',
@@ -41,6 +42,13 @@ const api = {
         needRepairProducts: '/api/warranty_center/need_repair',
         receiveProducts: '/api/warranty_center/receive',
         repairingProducts: '/api/warranty_center/repairing',
+    },
+    customer: {
+        root: '/api/customer',
+        getByEmail: '/api/customer/get_by_email/',
+        getByPhone: '/api/customer/get_by_phone/',
+        create: '/api/customer/create',
+        order: '/api/customer/orders',
     }
 }
 
