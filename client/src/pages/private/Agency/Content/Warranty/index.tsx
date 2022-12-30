@@ -6,6 +6,9 @@ import Box from '@mui/material/Box';
 import NeedRepair from './NeedRepair';
 import ClassNames from '~/utils/classNames';
 import style from './style.module.scss';
+import Repairing from './Repairing';
+import Repaired from './Repaired';
+import ReturnedToFactory from './ReturnedToFactory';
 
 const cx = ClassNames(style);
 
@@ -55,16 +58,20 @@ export default function Warranty() {
                     <Tab label="Cần bảo hành" {...a11yProps(0)} />
                     <Tab label="Đang bảo hành" {...a11yProps(1)} />
                     <Tab label="Đã bảo hành" {...a11yProps(2)} />
+                    <Tab label="Không bảo hành được" {...a11yProps(3)} />
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
                 <NeedRepair />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                Đang bảo hành
+                <Repairing />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                Đã bảo hành
+                <Repaired />
+            </TabPanel>
+            <TabPanel value={value} index={3}>
+                <ReturnedToFactory />
             </TabPanel>
         </Box>
     );

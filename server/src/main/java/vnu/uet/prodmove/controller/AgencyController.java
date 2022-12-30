@@ -39,6 +39,31 @@ public class AgencyController {
     @Autowired
     private IAgencyService agencyService;
 
+    @PostMapping(ApiConfig.AGENCY_COMPENSATE)
+    public ResponseEntity<?> compensateCustomer(@RequestBody Map<String, Object> body) {
+        try {
+            var customerId = (Integer) body.get("customerId");
+            var productId = (Integer) body.get("productId");
+            agencyService.compensateCustomer(productId, customerId);
+            return ResponseEntity.ok().body(Map.of("message", "Compensate successfully."));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(Map.of("message", "Something went wrong."));
+        }
+    }
+
+    @PostMapping(ApiConfig.RETURN_TO_CUSTOMER)
+    public ResponseEntity<?> returnToCustomer(@RequestBody Map<String, Object> body) {
+        try {
+            var productIds = (List<Integer>) body.get("productIds");
+            agencyService.returnToCustomer(productIds);
+            return ResponseEntity.ok().body(Map.of("message", "Return successfully."));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(Map.of("message", "Something went wrong."));
+        }
+    }
+
     @GetMapping(ApiConfig.AGENCY_DISTRIBUTED_PRODUCTS)
     public ResponseEntity<?> getDistributedProducts(@RequestParam(name = "id") Integer agencyId) {
         try {
@@ -190,7 +215,7 @@ public class AgencyController {
     public ResponseEntity<Object> getAllOrders(@RequestParam(name = "agencyId") String agencyId) {
         try {
             Set<Order> orders = (HashSet<Order>) agencyService.getAllOrders(Integer.parseInt(agencyId));
-            System.out.println("ORDER => "+ orders.size());
+            System.out.println("ORDER => " + orders.size());
             List<Object> responseObject = new ArrayList<Object>();
             Map<Customer, Set<Order>> temp = new HashMap<>();
             for (Order order : orders) {

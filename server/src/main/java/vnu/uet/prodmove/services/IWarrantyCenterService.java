@@ -36,7 +36,7 @@ public interface IWarrantyCenterService {
      * 
      * @param productIds Danh sách mã sản phẩm
      */
-    public void receiveProductsFromAgency(Iterable<Integer> productIds);
+    public void receiveProductsFromAgency(Iterable<Integer> productIds, Integer warrantyCenterId);
 
     /**
      * Chuyển sản phẩm đã sửa chữa xong tới đại lý phân phối

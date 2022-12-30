@@ -88,7 +88,7 @@ export default function NeedRepair() {
             selectedCustomer[0].orders.forEach(order => {
                 const product = order.product;
                 const detail = product.productDetails[product.productDetails.length - 1];
-                if (detail.stage === ProductStage.SOLD) {
+                if (detail.stage === ProductStage.SOLD && detail.endAt) {
                     options.push(product);
                 }
             });

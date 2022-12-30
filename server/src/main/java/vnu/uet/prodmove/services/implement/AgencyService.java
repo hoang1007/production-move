@@ -1,6 +1,7 @@
 package vnu.uet.prodmove.services.implement;
 
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -22,6 +23,9 @@ import vnu.uet.prodmove.entity.Warehouse;
 import vnu.uet.prodmove.enums.ProductStage;
 import vnu.uet.prodmove.exception.NotFoundException;
 import vnu.uet.prodmove.repos.AgencyRepository;
+import vnu.uet.prodmove.repos.CustomerRepository;
+import vnu.uet.prodmove.repos.OrderRepository;
+import vnu.uet.prodmove.repos.ProductRepository;
 import vnu.uet.prodmove.services.IAgencyService;
 import vnu.uet.prodmove.services.ICustomerService;
 import vnu.uet.prodmove.services.IProductService;
@@ -47,6 +51,15 @@ public class AgencyService implements IAgencyService {
 
     @Autowired
     private ICustomerService customerService;
+
+    @Autowired
+    private OrderRepository orderRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @Override
     public Agency findById(Integer id) throws NotFoundException {
@@ -129,14 +142,19 @@ public class AgencyService implements IAgencyService {
             throws NotFoundException, CloneNotSupportedException {
         List<Product> products = (List<Product>) productService.findAllByIds(productIds);
         List<ProductDetail> details = new ArrayList<>();
+        List<Order> orders = new ArrayList<>();
 
         for (var product : products) {
             var detail = ProductDetailQuerier.of(product).filter(ProductStage.SOLD).getLast();
             detail.markCompleted();
             details.add(detail);
+
+            product.getOrder().setOrderDate(LocalDateTime.now());
+            orders.add(product.getOrder());
         }
 
         productDetailService.saveAll(details);
+        orderRepository.saveAll(orders);
     }
 
     @Override
@@ -188,8 +206,16 @@ public class AgencyService implements IAgencyService {
     }
 
     @Override
-    public void returnToCustomer(Integer productId, Integer customerId) {
-        // TODO Auto-generated method stub
+    public void returnToCustomer(List<Integer> productIds) {
+        var products = productRepository.findAllById(productIds);
+        var details = new ArrayList<ProductDetail>();
+
+        for (var product : products) {
+            var detail = ProductDetailBuilder.of(product).returnedToCustomer();
+            details.addAll(detail);
+        }
+
+        productDetailService.saveAll(details);
 
     }
 
@@ -249,5 +275,19 @@ public class AgencyService implements IAgencyService {
     public void delete(Integer id) {
         agencyRepository.deleteById(id);
     }
-    
+
+    @Override
+    public void compensateCustomer(Integer productId, Integer customerId) {
+        var product = productRepository.getReferenceById(productId);
+        var customer = customerRepository.getReferenceById(customerId);
+
+        var detail = new ProductDetail();
+
+        detail.setCustomer(customer);
+        detail.setStage(ProductStage.COMPENSATE);
+        detail.setProduct(product);
+
+        productDetailService.saveAll(List.of(detail));
+    }
+
 }

@@ -25,6 +25,7 @@ const api = {
         allAgencies: '/api/agency/all',
         distributedProducts: '/api/agency/distributed_products',
         receiveNeedRepairs: '/api/agency/receive_need_repairs',
+        returnToCustomer: '/api/agency/return_to_customer',
     },
     factory: {
         root: '/api/factory',
@@ -42,6 +43,8 @@ const api = {
         needRepairProducts: '/api/warranty_center/need_repair',
         receiveProducts: '/api/warranty_center/receive',
         repairingProducts: '/api/warranty_center/repairing',
+        returnToAgency: '/api/warranty_center/return_to_agency',
+        returnToFactory: '/api/warranty_center/return_to_factory',
     },
     customer: {
         root: '/api/customer',

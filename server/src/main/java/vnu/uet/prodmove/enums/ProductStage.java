@@ -26,7 +26,9 @@ public enum ProductStage {
     /** Hết thời gian bảo hành */
     WARRANTY_EXPIRED("Warranty expired"),
     /** Trả lại cơ sở sản xuất (do lâu không bán được) */
-    CANNOT_SOLD("Cannot sold");
+    CANNOT_SOLD("Cannot sold"),
+    /** Bồi thường */
+    COMPENSATE("Compensate");
 
     private final String type;
 

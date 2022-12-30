@@ -34,6 +34,8 @@ public class ApiConfig {
     public static final String RECEIVE_NEED_REPAIRS = "/receive_need_repairs";
     public static final String AGENCY_ALL = "/all";
     public static final String AGENCY_DISTRIBUTED_PRODUCTS = "/distributed_products";
+    public static final String AGENCY_COMPENSATE = "/compensate";
+    public static final String RETURN_TO_CUSTOMER = "/return_to_customer";
 
     // warehouse
     public static final String WAREHOUSE = "/warehouse";
