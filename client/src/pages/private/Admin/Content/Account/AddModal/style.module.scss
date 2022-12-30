@@ -1,0 +1,42 @@
+.container {
+    min-width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem auto;
+    padding: 1rem;
+    margin-top: 2rem;
+    box-shadow: 0 0 4px black;
+
+    * {
+        font-size: large !important;
+    }
+}
+
+.title {
+    display: inline-block;
+    margin: 1rem 0;
+    font-size: x-large !important;
+}
+
+.form-create {
+    width: 100%;
+    display: flex;   
+    flex-direction: column;
+
+    .input {
+        input {
+            font-size: 1.6rem !important;
+        }
+        margin: 1rem 0;
+    }
+
+    .actions {
+        margin: 1rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+}

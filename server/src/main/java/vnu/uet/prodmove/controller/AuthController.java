@@ -28,18 +28,18 @@ public class AuthController {
     @Autowired
     private IAuthService authService;
     
-    @PostMapping(ApiConfig.SIGN_UP)
-    public ResponseEntity<Map<String, String>> signup(@RequestBody AccountModel accountModel) throws CustomException {
-        try {
-            authService.signup(accountModel);
-            return ResponseEntity.ok().body(Map.of("message", "Register successfully!"));
-        } catch (ConflictException ce) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", ce.getMessage()));
-        } 
-        catch (Exception e) {
-            return ResponseEntity.internalServerError().body(Map.of("message", e.getMessage()));
-        }
-    }
+    // @PostMapping(ApiConfig.SIGN_UP)
+    // public ResponseEntity<Map<String, String>> signup(@RequestBody AccountModel accountModel) throws CustomException {
+    //     try {
+    //         authService.signup(accountModel);
+    //         return ResponseEntity.ok().body(Map.of("message", "Register successfully!"));
+    //     } catch (ConflictException ce) {
+    //         return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", ce.getMessage()));
+    //     } 
+    //     catch (Exception e) {
+    //         return ResponseEntity.internalServerError().body(Map.of("message", e.getMessage()));
+    //     }
+    // }
 
     @PostMapping(ApiConfig.LOG_IN)
     public ResponseEntity<Object> login(HttpServletResponse response, @RequestBody AccountModel accountModel) throws CustomException {

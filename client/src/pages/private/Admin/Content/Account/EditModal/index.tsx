@@ -5,7 +5,7 @@ import ClassNames from '~/utils/classNames';
 import { AccountType } from '~/utils/TypeGlobal';
 import {EyeIcon, EyeSlashIcon} from '~/components/Icon';
 import { Button, IconButton, Input, TextField } from '@mui/material';
-import ConfirmPassword from '../components/ConfimPassword';
+import ConfirmPassword from '../ConfimPassword';
 import { useAxios } from '~/hooks';
 import api from '~/config/api';
 import { toast } from 'react-toastify';
@@ -33,12 +33,12 @@ function EditModal({ className, account, toggleShowModalEdit }: Props) {
 
     const save = () => {
         if (!currentAccount.password) {
-            toast.error("Password cannot be empty")
+            toast.error("Mật khẩu không được để trống")
             return
         }
 
         if (currentAccount.password.length < 8) {
-            toast.error("New password is too short. At least 8 characters.");
+            toast.error("Mật khẩu quá ngắn, ít nhất 8 ký tự");
             return
         }
 
@@ -48,11 +48,11 @@ function EditModal({ className, account, toggleShowModalEdit }: Props) {
         })
             .then(res => {
                 if (res.status === 200) {
-                    toast.success("Update successfully!");
+                    toast.success("Cập nhật thành công!");
                 }
             }).catch(error => {
                 console.log(error)
-                toast.error('Cannot update.')
+                toast.error('Không thể cập nhật.')
             })
     }
 
@@ -67,12 +67,12 @@ function EditModal({ className, account, toggleShowModalEdit }: Props) {
             <div className={cx('body')}>
                 <div className={cx('info')}>
                     <h2 className={cx('role')}>{currentAccount.role}</h2>
-                    <div className={cx('username')}>Name: {currentAccount.username}</div>
-                    <span className={cx('address')}>Address: {currentAccount.user.address}</span>
+                    <div className={cx('username')}>Tên: {currentAccount.username}</div>
+                    <span className={cx('address')}>Địa chỉ: {currentAccount.user.address}</span>
                     <div
                         className={cx('password')}
                     >
-                        Password:
+                        Mật khẩu:
                         <input
                             className={cx('input', { onlyShow: !editing })}
                             type={showPassword ? 'text' : 'password'}
@@ -117,7 +117,7 @@ function EditModal({ className, account, toggleShowModalEdit }: Props) {
                                         else setShowConfirmPassword(true)
                                     }}
                                 >
-                                    {editing ? 'Save' : 'Edit'}
+                                    {editing ? 'Lưu' : 'Chỉnh sửa'}
                                 </Button>
                             </>
                     }

@@ -25,17 +25,12 @@ public class AccountService implements IAccountService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Account create(AccountModel accountModel) throws ConflictException {
-        Account existingAccount = accountRepository.findByUsername(accountModel.getUsername());
+    public Account create(Account acc) throws ConflictException {
+        Account existingAccount = accountRepository.findByUsername(acc.getUsername());
         if (existingAccount != null) {
-            throw new ConflictException("User with username " + accountModel.getUsername() + "is already used!");
+            throw new ConflictException("User with username " + acc.getUsername() + "is already used!");
         }
-
-        Account newUser = new Account();
-        newUser.setUsername(accountModel.getUsername());
-        newUser.setPassword(passwordEncoder.encode(accountModel.getPassword()));
-        newUser.setRole(accountModel.getRole());
-        return accountRepository.save(newUser);
+        return accountRepository.save(acc);
     }
 
     public Account update(String accountId, AccountModel accountModel) {

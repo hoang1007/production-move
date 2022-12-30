@@ -1,5 +1,6 @@
 package vnu.uet.prodmove.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -32,17 +33,17 @@ public class Account {
     @Convert(converter = UserRoleConverter.class)
     private UserRole role;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "agencyID", referencedColumnName="ID")
     @JsonIgnore
     private Agency agency;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "factoryID", referencedColumnName = "ID")
     @JsonIgnore
     private Factory factory;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "warrantyID")
     @JsonIgnore
     private WarrantyCenter warrantyCenter;

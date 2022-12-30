@@ -12,18 +12,21 @@ import { AccountType } from '~/utils/TypeGlobal';
 const cx = ClassNames(style);
 
 interface Props {
+    title?: string,
     close: Function,
     closeSuccess: Function,
+    id?: string,
+    className?:string
 }
 
-function ConfirmPassword({ close, closeSuccess }: Props) {
+function ConfirmPassword({title, className, close, closeSuccess, id }: Props) {
     const [password, setPassword] = React.useState<string>('');
     const [loading, setLoading] = React.useState<boolean>(false)
     const axios = useAxios();
 
     const confirm = () => {
         if (!password.trim()) {
-            toast.error('Password must be not empty!')
+            toast.error('Mật khẩu không được để trống.')
             return
         }
         
@@ -40,7 +43,7 @@ function ConfirmPassword({ close, closeSuccess }: Props) {
                 console.log(err)
                 setLoading(false)
                 if (err.response.status === 401) {
-                    toast.error('Password is incorrect!')
+                    toast.error('Mật khẩu không chính xác.')
                     return;
                 }
                 toast.error(err.message)
@@ -50,8 +53,11 @@ function ConfirmPassword({ close, closeSuccess }: Props) {
     }
 
     return (
-        <div className={cx('container')}>
-            <h1>Please submit your password to confirm!</h1>
+        <div className={[cx('container'), className].join(' ')} id={id}>
+            {
+                title && <h1 className={cx('title')}>{title}</h1>
+            }
+            <h3>Nhập mật khẩu để tiếp tục</h3>
             <TextField
                 fullWidth={true}
                 label="password"
@@ -67,14 +73,14 @@ function ConfirmPassword({ close, closeSuccess }: Props) {
                         close()
                         setPassword('')
                     }}
-                >Cancel</Button>
+                >Hủy</Button>
                 <LoadingButton
                     className={cx('btn', 'btn-confirm')}
                     variant="contained"
                     onClick={confirm}
                     loading={loading}
                 >
-                    Confirm
+                    Xác nhận
                 </LoadingButton>
             </div>
         </div>

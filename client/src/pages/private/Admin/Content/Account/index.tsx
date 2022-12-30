@@ -1,5 +1,5 @@
 import React from 'react';
-import { Radio } from '@mui/material';
+import { Button, Radio } from '@mui/material';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,11 +10,14 @@ import routes from '~/config/routes';
 import style from './style.module.scss';
 import ClassNames from '~/utils/classNames';
 import AccountItem from './AccountItem';
+import {PlusIcon, BackIcon} from '~/components/Icon'
+import AddModal from './AddModal';
 const cx = ClassNames(style);
 
 function Account() {
     const [filter, setFilter] = React.useState<'all' | 'agency' | 'factory' | 'warranty'>('all');
     const [accounts, setAccounts] = React.useState<AccountType[]>([]);
+    const [showAddForm, setShowAddForm] = React.useState(false);
     const axios = useAxios();
     const navigate = useNavigate();
 
@@ -40,50 +43,79 @@ function Account() {
 
     return (
         <div className={cx('container')}>
-            <div className={cx('filter')}>
-                <span className={cx('title')}>All:</span>
-                <Radio
-                    checked={filter === 'all'}
-                    onChange={() => { setFilter('all') }}
-                    name="radio-buttons"
-                />
+            {
+                showAddForm ?
+                    <>
+                        <Button className={cx('back')}
+                            onClick={
+                                () => setShowAddForm(false)
+                            }
+                        >
+                            <BackIcon />
+                        </Button>
+                        <AddModal />
+                    </>
+                    :
+                    <>
+                        <div className={cx('filter')}>
+                            <span className={cx('title')}>Tất cả:</span>
+                            <Radio
+                                checked={filter === 'all'}
+                                onChange={() => { setFilter('all') }}
+                                name="radio-buttons"
+                            />
                 
-                <span className={cx('title')}>Agency:</span>
-                <Radio
-                    checked={filter === 'agency'}
-                    onChange={() => { setFilter('agency') }}
-                    name="radio-buttons"
-                />
+                            <span className={cx('title')}>Đại lý:</span>
+                            <Radio
+                                checked={filter === 'agency'}
+                                onChange={() => { setFilter('agency') }}
+                                name="radio-buttons"
+                            />
 
-                <span className={cx('title')}>Factory:</span>
-                <Radio
-                    checked={filter === 'factory'}
-                    onChange={() => { setFilter('factory') }}
-                    name="radio-buttons"
-                />
+                            <span className={cx('title')}>Nhà máy sản xuất:</span>
+                            <Radio
+                                checked={filter === 'factory'}
+                                onChange={() => { setFilter('factory') }}
+                                name="radio-buttons"
+                            />
 
-                <span className={cx('title')}>Warranty:</span>
-                <Radio
-                    checked={filter === 'warranty'}
-                    onChange={() => { setFilter('warranty') }}
-                    name="radio-buttons"
-                />
-            </div>
+                            <span className={cx('title')}>Trung tâm bảo hành:</span>
+                            <Radio
+                                checked={filter === 'warranty'}
+                                onChange={() => { setFilter('warranty') }}
+                                name="radio-buttons"
+                            />
 
-            <div className={cx('info-general')}>
-                <span>Total: {selector(accounts).length}</span>
-            </div>
+                            <Button
+                                className={cx('add-account')}
+                                startIcon={<PlusIcon />}
+                                onClick={() => setShowAddForm(true)}
+                            >
+                                Thêm
+                            </Button>
+                        </div>
 
-            <div className={cx('body')}>
-                {
-                    selector(accounts).length === 0 ?
-                        <div className="no-accounts">No accounts</div>
-                        :
-                        selector(accounts).map((account, index) => {
-                            return <AccountItem  key={`account-${account.user.id}-index-${index}`} className={cx('account-item')} account={account}/>
-                        })
-                }
-            </div>
+                        <div className={cx('info-general')}>
+                            <span>Tìm thấy: {selector(accounts).length}</span>
+                        </div>
+
+                        <div className={cx('body')}>
+                            {
+                                selector(accounts).length === 0 ?
+                                    <div className="no-accounts">No accounts</div>
+                                    :
+                                    selector(accounts).map((account, index) => {
+                                        return <AccountItem
+                                            key={`account-${account.user.id}-index-${index}`}
+                                            className={cx('account-item')}
+                                            account={account}
+                                            listAccountController={setAccounts}
+                                        />
+                                    })
+                            }
+                        </div>
+                    </>
+            }
         </div>
     );
 }

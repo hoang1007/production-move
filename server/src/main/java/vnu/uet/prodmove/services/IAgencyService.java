@@ -17,6 +17,10 @@ public interface IAgencyService {
 
     Warehouse createWarehouse(Integer agencyId, WarehouseModel warehouseModel) throws Exception;
 
+    Agency create(String name, String address);
+
+    void delete(Integer id);
+
     /**
      * Get all agencies
      * @return

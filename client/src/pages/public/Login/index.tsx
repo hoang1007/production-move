@@ -35,6 +35,7 @@ function Login() {
     }
 
     const handleLogin = () => {
+        if (loading) return;
         const resUsername = validateUsername(username)
         const resPassword = validatePassword(password)
 

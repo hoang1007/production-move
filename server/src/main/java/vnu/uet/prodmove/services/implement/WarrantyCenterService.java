@@ -47,6 +47,11 @@ public class WarrantyCenterService implements IWarrantyCenterService {
     }
 
     @Override
+    public void delete(Integer id) {
+        warrantyCenterRepository.deleteById(id);
+    }
+
+    @Override
     public void receiveProductsFromAgency(Iterable<Integer> productIds) {
         var products = productRepository.findAllById(productIds);
         var newDetails = new ArrayList<ProductDetail>();
@@ -126,5 +131,13 @@ public class WarrantyCenterService implements IWarrantyCenterService {
                     && !detail.completed()
                     && detail.getWarrantyCenter().getId().equals(warrantyCenterId);
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public WarrantyCenter create(String name, String address) {
+        WarrantyCenter warrantyCenter = new WarrantyCenter();
+        warrantyCenter.setName(name);
+        warrantyCenter.setAddress(address);
+        return warrantyCenterRepository.save(warrantyCenter);
     }
 }

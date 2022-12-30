@@ -41,3 +41,12 @@
 .edit-modal {
     position: absolute;
 }
+
+.confirm-modal {
+    background-color: #fff;
+    max-width: 50%;
+    min-width: 40rem;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 4px black;
+}

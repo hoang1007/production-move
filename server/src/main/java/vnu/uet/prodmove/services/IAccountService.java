@@ -10,7 +10,7 @@ import vnu.uet.prodmove.exception.NotFoundException;
 import vnu.uet.prodmove.utils.dataModel.AccountModel;
 
 public interface IAccountService {
-    public Account create(AccountModel accountModel) throws ConflictException;
+    public Account create(Account acc) throws ConflictException;
 
     @Deprecated
     public Account update(String accountId, AccountModel accountModel);

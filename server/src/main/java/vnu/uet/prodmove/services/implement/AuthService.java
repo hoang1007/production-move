@@ -34,10 +34,6 @@ public class AuthService implements IAuthService {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    public Account signup(AccountModel accountModel) throws ConflictException {
-        return accountService.create(accountModel);
-    }
-
     public Map<String, Object> login(AccountModel accountModel) throws NotFoundException {
         String username = accountModel.getUsername();
         String password = accountModel.getPassword();

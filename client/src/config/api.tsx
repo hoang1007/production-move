@@ -6,7 +6,9 @@ const api = {
         root: '/api/moderator',
         allAccounts: '/api/moderator/all_accounts',
         checkPassword: '/api/moderator/check_password',
-        updateAccount: '/api/moderator/update_account'
+        updateAccount: '/api/moderator/update_account',
+        createAccount: '/api/moderator/create_account',
+        deleteAccount: '/api/moderator/delete_account',
     },
 
     productline: {

@@ -1,33 +1,66 @@
 import React from 'react';
+import {toast} from'react-toastify'
 import style from './style.module.scss';
 import ClassNames from '~/utils/classNames';
 import { AccountType } from '~/utils/TypeGlobal';
 import { Button } from '@mui/material';
 import EditModal from '../EditModal';
+import ConfirmPassword from '../ConfimPassword';
+import { useAxios } from '~/hooks';
+import api from '~/config/api';
 const cx = ClassNames(style);
 
 interface Props {
     className?: string,
-    account: AccountType
+    account: AccountType,
+    listAccountController: Function
 }
 
-function AccountItem({ className, account }: Props) {
+const getName = (role:string): string => {
+    if (role === 'AGENCY') return 'Đại lý'
+    else if (role === 'WARRANTY') return 'Trung tâm bảo hành'
+    else if (role === 'FACTORY') return 'Nhà máy sản xuất'
+    return ''
+}
+
+function AccountItem({ className, account, listAccountController }: Props) {
     const [showEditModal, setShowEditModal] = React.useState(false);
+    const [showConfirmModal, setShowConfirmModal] = React.useState(false);
+    const axios = useAxios();
 
     const toggleShowModalEdit = () => {
         setShowEditModal(pre => !pre)
+    }
+
+    const handleDelete = () => {
+        axios.delete(api.moderator.deleteAccount, { 
+            params: {
+                username: account.username
+            }
+         })
+            .then(res => {
+                if (res.status === 200) {
+                    toast.success('Xóa thành công.')
+                    listAccountController((prevList: AccountType[]) => prevList.filter(acc => acc.username !== account.username))
+                }
+            }).catch(err => {
+                console.log(err)
+                toast.error(err.message)
+        })
     }
     
     return (
         <div className={[cx('container'), className].join(' ')}>
             <div className={cx('info')}>
-                <h2 className={cx('role')}>{account.role}</h2>
-                <span className={cx('username')}>Name: {account.username}</span>
-                <span className={cx('address')}>Address: {account.user.address}</span>
+                <h2 className={cx('role')}>
+                    {getName(account.role)}
+                </h2>
+                <span className={cx('username')}>Tên: {account.username}</span>
+                <span className={cx('address')}>Địa chỉ: {account.user.address}</span>
                 <div
                     className={cx('password')}
                 >
-                    Password: {'*'.repeat(8)}
+                    Mật khẩu: {'*'.repeat(8)}
                 </div>
             </div>
 
@@ -36,7 +69,25 @@ function AccountItem({ className, account }: Props) {
                     size='large'
                     className={cx('btn-see-edit', 'btn')}
                     onClick={toggleShowModalEdit}
-                >Edit</Button>
+                >Chỉnh sửa</Button>
+                <Button
+                    size='large'
+                    className={cx('btn-see-edit', 'btn')}
+                    onClick={() => setShowConfirmModal(true)}
+                >Xóa</Button>
+
+                {
+                    showConfirmModal &&
+                    <div id="modal">
+                        <ConfirmPassword
+                            title={`Xóa tài khỏa của ${getName(account.role)}: ${account.username}`}
+                            className={cx('confirm-modal')}
+                            close={() => setShowConfirmModal(false)}
+                            closeSuccess={handleDelete}
+                        />
+                    </div>
+                }
+                            
             </div>
 
             {

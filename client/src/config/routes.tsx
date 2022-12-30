@@ -72,24 +72,19 @@ const routes: { [key: string]: any } = {
             Sidebar: <SidebarAdmin/>,
             Content: [
                 {
-                    title: 'Dashboard',
+                    title: 'Thống kê',
                     path: adminRoutes.dashboard,
                     element: <ContentAdmin.Dashboard />
                 },
                 {
-                    title: 'Account Management',
+                    title: 'Quản lý tài khoản',
                     path: adminRoutes.account,
                     element: <ContentAdmin.Account />
                 },
                 {
-                    title: 'Product Line Management',
+                    title: 'Dòng sản phẩm',
                     path: adminRoutes.productLine,
                     element: <ContentAdmin.ProductLine />
-                },
-                {
-                    title: 'Setting',
-                    path: adminRoutes.setting,
-                    element: <ContentAdmin.Setting />
                 },
             ]
         },
@@ -135,27 +130,27 @@ const routes: { [key: string]: any } = {
             Sidebar: <SidebarAgency />,
             Content: [
                 {
-                    title: 'Dashboard',
+                    title: 'Thống kê',
                     path: agencyRoutes.dashboard,
                     element: <ContentAgency.Dashboard />
                 },
                 {
-                    title: 'Import new mobile phone',
+                    title: 'Nhập sản phẩm mới',
                     path: agencyRoutes.import,
                     element: <ContentAgency.Import />
                 },
                 {
-                    title: 'Defective & Repaired mobile phone',
+                    title: 'Thiết bị lỗi',
                     path: agencyRoutes.warranty,
                     element: <ContentAgency.Warranty />
                 },
                 {
-                    title: 'Orders',
+                    title: 'Lô hàng',
                     path: agencyRoutes.order,
                     element: <ContentAgency.Orders />
                 },
                 {
-                    title: 'All warehouses',
+                    title: 'Nhà kho.',
                     path: agencyRoutes.warehouse,
                     element: <ContentAgency.Warehouse />
                 },

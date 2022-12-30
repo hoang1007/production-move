@@ -10,6 +10,10 @@ public interface IWarrantyCenterService {
 
     WarrantyCenter findById(Integer id) throws NotFoundException;
 
+    WarrantyCenter create(String name, String address);
+
+    void delete(Integer id);
+
     public List<WarrantyCenter> findAll();
 
     /**

@@ -78,7 +78,7 @@ function Header({ className }: Props) {
                                             className={cx('btn-logout')}
                                             onClick={handleLogout}
                                         >
-                                            Log out
+                                            Đăng xuất
                                         </Button>
                                     </div>
                                 }

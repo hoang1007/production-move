@@ -226,4 +226,18 @@ public class AgencyService implements IAgencyService {
                 .filter(pd -> pd.getAgency().getId() == agencyId).map(pd -> pd.getProduct())
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Agency create(String name, String address) {
+        Agency agency = new Agency();
+        agency.setName(name);
+        agency.setAddress(address);
+        return agencyRepository.save(agency);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        agencyRepository.deleteById(id);
+    }
+    
 }

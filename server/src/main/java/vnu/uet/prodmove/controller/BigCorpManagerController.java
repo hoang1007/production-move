@@ -64,9 +64,9 @@ public class BigCorpManagerController {
      * @throws ConflictException
      */
     @PostMapping(ApiConfig.MODERATOR_CREATE_ACCOUNT)
-    public ResponseEntity<Map<String, String>> createAccount(@RequestBody AccountModel accountModel)
+    public ResponseEntity<Map<String, String>> createAccount(@RequestBody Map<String, String> info)
             throws ConflictException {
-        bigCorpManagerService.createAccount(accountModel);
+        bigCorpManagerService.createAccount(info);
         return ResponseEntity.ok().body(Map.of("message", "Create new account successfully"));
     }
     
@@ -89,9 +89,18 @@ public class BigCorpManagerController {
     }
 
     @DeleteMapping(ApiConfig.MODERATOR_DELETE_ACCOUNT)
-    public ResponseEntity<Map<String, String>> deleteAccount(@RequestBody String accountId) throws ConflictException {
-        bigCorpManagerService.deleteAccount(accountId);
-        return ResponseEntity.ok().body(Map.of("message", "Delete successfully"));
+    public ResponseEntity<Object> deleteAccount(@RequestParam String username) throws ConflictException {
+        try {
+            System.out.println("DELETE => " + username);
+            bigCorpManagerService.deleteAccount(username);
+            return ResponseEntity.ok().body("Delete successfully");
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This user was not found");
+        } catch(Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 
     /**
