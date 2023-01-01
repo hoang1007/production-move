@@ -15,10 +15,10 @@ export default function Dashboard() {
     const { get } = usePrivateAxios();
     const [products, setProducts] = useState<ProductType[]>([]);
     const [alignment, setAlignment] = useState("month");
-    const [stage, setStage] = useState(ProductStage.EXPORT_TO_AGENCY);
+    const [stage, setStage] = useState(ProductStage.NEW_PRODUCTION);
 
     useEffect(() => {
-        get(api.agency.distributedProducts, { params: { id: auth?.user.id } }).then(res => {
+        get(api.agency.distributedProducts, { params: { id: 1 } }).then(res => {
             setProducts(res.data);
         }).catch(err => {
             console.log(err);
@@ -143,11 +143,7 @@ export default function Dashboard() {
                 onChange={ev => setStage(ev.target.value as string)}
             >
                 {Object.entries(ProductStage).map(([key, value], index) => {
-                    if (value === ProductStage.NEW_PRODUCTION) {
-                        return null;
-                    } else {
-                        return <MenuItem key={`menu-item-${key}-index-${index}`} value={value}>{value}</MenuItem>
-                    }
+                    return <MenuItem key={`menu-item-${key}-index-${index}`} value={value}>{value}</MenuItem>
                 })
                 }
             </Select>

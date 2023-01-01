@@ -7,7 +7,7 @@ import Loading from '~/components/Loading';
 import style from './style.module.scss';
 import ClassNames from '~/utils/classNames';
 import { toast } from 'react-toastify';
-import { Button } from '@mui/material';
+import { Box, Button, Container } from '@mui/material';
 import { BackIcon } from '~/components/Icon';
 import {
     DataGrid, GridColDef,
@@ -126,7 +126,14 @@ function ProductLine() {
                             > <BackIcon /> </Button>
                         </div>
                         <div className={cx('pdl-detail')}>
-                            <ProductLineItem product={currentProductLine} />
+                            <Container sx={{ display: "flex" , flexDirection: "row", justifyContent: "space-between" }}>
+                                <Box
+                                    component="img"
+                                    src={currentProductLine.pictureUrlSmall}
+                                    sx={{ width: "fit-content", height: "fit-content" }}
+                                />
+                                <ProductLineItem product={currentProductLine} />
+                            </Container>
                         </div>
                     </div>
             }
